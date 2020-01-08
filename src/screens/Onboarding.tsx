@@ -15,6 +15,7 @@ import SafeAreaView from '../components/SafeAreaView'
 import OnboardingSlide from '../components/OnboardingSlide'
 
 import { colors } from '../util/style'
+import * as Store from '../util/store'
 
 import logoSrc from '../assets/ololo-logo.png'
 
@@ -65,6 +66,7 @@ export default function OnboardingScreen() {
 
   function handleSkipPress() {
     navigation.navigate('Auth')
+    Store.set('@ololo/skip-onboarding', true)
   }
 
   function handleContinuePress() {

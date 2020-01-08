@@ -2,11 +2,25 @@ import React from 'react'
 import { View, StyleSheet, ActivityIndicator } from 'react-native'
 import { useNavigation } from 'react-navigation-hooks'
 
+import * as Store from '../util/store'
+
 export default function AppLoading() {
   const navigation = useNavigation()
 
   React.useEffect(() => {
-    navigation.navigate('Onboarding')
+    async function performRedirect() {
+      let shouldSkipOnboarding = false
+
+      try {
+        shouldSkipOnboarding = await Store.get('@ololo/skip-onboarding')
+      } catch (error) {
+        console.log(error)
+      }
+
+      navigation.navigate(shouldSkipOnboarding ? 'Auth' : 'Onboarding')
+    }
+
+    performRedirect()
   }, [])
 
   return (
