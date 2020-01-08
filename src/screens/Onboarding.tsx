@@ -9,6 +9,7 @@ import {
   ScrollView,
   Dimensions
 } from 'react-native'
+import {useNavigation} from 'react-navigation-hooks'
 
 import SafeAreaView from '../components/SafeAreaView'
 import OnboardingSlide from '../components/OnboardingSlide'
@@ -37,6 +38,7 @@ const slidesData = [
 ]
 
 export default function OnboardingScreen() {
+  const navigation = useNavigation()
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0)
   const scrollViewRef = React.useRef()
   const { width: screenWidth } = Dimensions.get('window')
@@ -51,14 +53,26 @@ export default function OnboardingScreen() {
     }
   }
 
-  function handlePageIndicatorPress(index) {
+  function scrollToIndex (index: number) {
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollTo({ x: index * screenWidth })
     }
   }
 
+  function handlePageIndicatorPress(index) {
+    scrollToIndex(index)
+  }
+
   function handleSkipPress() {
-    console.log('Skip!')
+    navigation.navigate('Auth')
+  }
+
+  function handleContinuePress() {
+    if (isOnLastPage) {
+      return handleSkipPress()
+    }
+
+    scrollToIndex(currentSlideIndex + 1)
   }
 
   return (
@@ -119,6 +133,7 @@ export default function OnboardingScreen() {
           </View>
 
           <TouchableOpacity
+            onPress={handleContinuePress}
             style={[styles.navButton, { width: screenWidth / 3 }]}
           >
             <Text style={[styles.navButtonText, styles.navButtonContinueText]}>
