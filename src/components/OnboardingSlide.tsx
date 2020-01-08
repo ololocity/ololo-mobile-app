@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
 
     paddingTop: 103,
     paddingBottom: 80,
-    paddingHorizontal: 20,
+    paddingHorizontal: 25,
   },
   circleWrapper: {
     flex: 1,
