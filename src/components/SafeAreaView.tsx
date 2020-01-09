@@ -3,7 +3,12 @@ import { SafeAreaView as RNSafeAreaView, Platform } from "react-native";
 
 const ANDROID_TOP_PADDING = 25;
 
-export default function SafeAreaView({ style, ...restProps }) {
+interface Props {
+  style?: Object,
+  children: React.ReactNode
+}
+
+export default function SafeAreaView({ style, ...restProps }: Props) {
   return (
     <RNSafeAreaView
       style={[
