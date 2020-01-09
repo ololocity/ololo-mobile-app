@@ -1,7 +1,15 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Image,
+  StyleSheet,
+  Platform,
+  TouchableOpacity
+} from 'react-native'
 
 import SafeAreaView from './SafeAreaView'
+
+export const HEIGHT = Platform.OS === 'ios' ? 80 : 70
 
 const ICONS = {
   back: {
@@ -15,27 +23,29 @@ const ICONS = {
 }
 
 interface Props {
-  iconName: string,
+  iconName: string
   onButtonPress: () => void
 }
 
 export default function AuthHeader({ iconName, onButtonPress }: Props) {
   const iconSrc = ICONS[iconName].default
   return (
-    <View>
-      <SafeAreaView>
-        <TouchableOpacity style={styles.button} onPress={onButtonPress}>
-          {iconSrc ? (
-            <Image source={iconSrc} />
-          ) : null}
-        </TouchableOpacity>
-      </SafeAreaView>
+    <View style={styles.root}>
+      <TouchableOpacity style={styles.button} onPress={onButtonPress}>
+        {iconSrc ? <Image source={iconSrc} /> : null}
+      </TouchableOpacity>
     </View>
   )
 }
 
-
 const styles = StyleSheet.create({
+  root: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    height: HEIGHT,
+
+    backgroundColor: 'transparent'
+  },
   button: {
     padding: 20
   }
