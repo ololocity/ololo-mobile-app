@@ -5,13 +5,13 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableOpacity,
-  TextInput,
   StyleSheet,
   Platform,
   Text
 } from 'react-native'
 
 import AuthHeader, { HEIGHT as HEADER_HEIGHT } from '../components/AuthHeader'
+import TextInput from '../components/TextInput'
 import { colors } from '../util/style'
 
 export default function AuthScreen() {
@@ -42,8 +42,10 @@ export default function AuthScreen() {
       Animated.spring(keyboardAnimValue, { toValue: 0 }).start()
     }
 
-    const showEventName = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow'
-    const hideEventName = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide'
+    const showEventName =
+      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow'
+    const hideEventName =
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide'
 
     Keyboard.addListener(showEventName, handleKeyboardShow)
     Keyboard.addListener(hideEventName, handleKeyboardHide)
@@ -54,7 +56,9 @@ export default function AuthScreen() {
     }
   }, [])
 
-  function handleSubmitButtonPress() {}
+  function handleSubmitButtonPress() {
+    Keyboard.dismiss()
+  }
 
   return (
     <KeyboardAvoidingView
@@ -64,18 +68,36 @@ export default function AuthScreen() {
     >
       <View style={styles.wrapper}>
         <View style={styles.content}>
-          <View style={styles.title}>
-            <Text style={styles.titleText}>Введите свой номер телефона</Text>
-          </View>
-          <View>
-            <Text style={styles.subTitleText}>Чтобы зарегистрироваться на мероприятие</Text>
+          <View style={styles.header}>
+            <View style={styles.title}>
+              <Text style={styles.titleText}>Введите свой номер телефона</Text>
+            </View>
+            <View>
+              <Text style={styles.subTitleText}>
+                Чтобы зарегистрироваться на мероприятие
+              </Text>
+            </View>
           </View>
 
-          <TextInput />
+          <TextInput
+            label="Номер телефона"
+            inputProps={{ placeholder: '+996', keyboardType: 'phone-pad' }}
+          />
         </View>
 
-        <Animated.View style={[styles.footer, { paddingHorizontal: footerHorizontalPadding, paddingBottom: footerBottomPadding }]}>
-          <TouchableOpacity style={styles.submitButton} onPress={handleSubmitButtonPress}>
+        <Animated.View
+          style={[
+            styles.footer,
+            {
+              paddingHorizontal: footerHorizontalPadding,
+              paddingBottom: footerBottomPadding
+            }
+          ]}
+        >
+          <TouchableOpacity
+            style={styles.submitButton}
+            onPress={handleSubmitButtonPress}
+          >
             <Animated.View
               style={[
                 styles.submitButtonContent,
@@ -114,6 +136,9 @@ const styles = StyleSheet.create({
     flex: 1,
 
     paddingHorizontal: 16
+  },
+  header: {
+    marginBottom: 24
   },
   title: {
     marginBottom: 16
