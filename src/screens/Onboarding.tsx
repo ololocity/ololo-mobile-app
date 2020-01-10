@@ -9,7 +9,7 @@ import {
   ScrollView,
   Dimensions
 } from 'react-native'
-import {useNavigation} from 'react-navigation-hooks'
+import { useNavigation } from 'react-navigation-hooks'
 
 import SafeAreaView from '../components/SafeAreaView'
 import OnboardingSlide from '../components/OnboardingSlide'
@@ -18,32 +18,21 @@ import { colors } from '../util/style'
 import * as Store from '../util/store'
 
 import logoSrc from '../assets/ololo-logo.png'
+import i18n from '../localization'
 
 const PAGE_INDICATOR_SIZE = 8
 const CURRENT_PAGE_INDICATOR_SIZE = 12
 const PAGE_INDICATOR_HIT_SLOP = 12
 
-const slidesData = [
-  {
-    title: 'Посещай классные ивенты',
-    subTitle: 'Смотри афишу и записывайся на мероприятия в Ololohaus'
-  },
-  {
-    title: 'Знакомься с людьми',
-    subTitle: 'Быстро и легко обменивайся контактами с посетителями мероприятий'
-  },
-  {
-    title: 'Оставляй фидбек',
-    subTitle: 'Ставь оценки мероприятиям, пиши нам, помогай нам стать лучше!'
-  }
-]
+const slideI18nKeys = ['events', 'networking', 'feedback']
+const slideCount = slideI18nKeys.length
 
 export default function OnboardingScreen() {
   const navigation = useNavigation()
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0)
   const scrollViewRef = React.useRef()
   const { width: screenWidth } = Dimensions.get('window')
-  const isOnLastPage = currentSlideIndex === slidesData.length - 1
+  const isOnLastPage = currentSlideIndex === slideCount - 1
   const isSkipEnabled = !isOnLastPage
 
   function handleScroll(event) {
@@ -54,7 +43,7 @@ export default function OnboardingScreen() {
     }
   }
 
-  function scrollToIndex (index: number) {
+  function scrollToIndex(index: number) {
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollTo({ x: index * screenWidth })
     }
@@ -89,8 +78,12 @@ export default function OnboardingScreen() {
         scrollEventThrottle={150}
         onScroll={handleScroll}
       >
-        {slidesData.map((item, index) => (
-          <OnboardingSlide key={index.toString()} {...item} />
+        {slideI18nKeys.map((item, index) => (
+          <OnboardingSlide
+            key={index.toString()}
+            title={i18n.t(`onboardingScreen.slides.${item}.title`)}
+            subTitle={i18n.t(`onboardingScreen.slides.${item}.subTitle`)}
+          />
         ))}
       </ScrollView>
       <SafeAreaView style={styles.container} pointerEvents="box-none">
@@ -114,12 +107,12 @@ export default function OnboardingScreen() {
             disabled={!isSkipEnabled}
           >
             <Text style={[styles.navButtonText, styles.navButtonSkipText]}>
-              Пропустить
+              {i18n.t('onboardingScreen.skip')}
             </Text>
           </TouchableOpacity>
 
           <View style={styles.pager}>
-            {slidesData.map((_, index) => (
+            {slideI18nKeys.map((_, index) => (
               <TouchableWithoutFeedback
                 key={index.toString()}
                 onPress={() => handlePageIndicatorPress(index)}
@@ -139,7 +132,9 @@ export default function OnboardingScreen() {
             style={[styles.navButton, { width: screenWidth / 3 }]}
           >
             <Text style={[styles.navButtonText, styles.navButtonContinueText]}>
-              {isOnLastPage ? 'Начать' : 'Далее'}
+              {isOnLastPage
+                ? i18n.t('onboardingScreen.start')
+                : i18n.t('onboardingScreen.next')}
             </Text>
           </TouchableOpacity>
         </View>

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native'
+import { useColorScheme } from 'react-native-appearance'
 
 import { colors } from '../util/style'
 
@@ -39,6 +40,7 @@ export default function TextInput({
   onFocus,
   onBlur
 }) {
+  const colorScheme = useColorScheme()
   const [isFocused, setFocusState] = React.useState(false)
   const [value, setValue] = React.useState('')
 
@@ -76,6 +78,7 @@ export default function TextInput({
       <View
         style={[
           styles.field,
+          colorScheme === 'dark' && styles.fieldDark,
           inputWrapperStyle,
           isFocused && styles.fieldFocused,
           hasError && styles.fieldHasError
@@ -99,6 +102,7 @@ export default function TextInput({
             <Text
               style={[
                 styles.labelText,
+                colorScheme === 'dark' && styles.labelTextDark,
                 shouldFloat && styles.labelTextFloating
               ]}
             >
@@ -122,6 +126,9 @@ const styles = StyleSheet.create({
 
     borderBottomColor: 'rgba(0, 0, 0, 0.16)',
     borderBottomWidth: 2
+  },
+  fieldDark: {
+    borderBottomColor: 'rgba(255, 255, 255, 0.16)',
   },
   fieldFocused: {
     borderBottomColor: colors.blue
@@ -152,6 +159,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
 
     color: 'rgba(0, 0, 0, 0.54)'
+  },
+  labelTextDark: {
+    color: 'rgba(255, 255, 255, 0.54)'
   },
   labelTextFloating: {
     fontSize: 12,

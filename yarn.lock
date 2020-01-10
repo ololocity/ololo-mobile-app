@@ -2659,6 +2659,13 @@ expo-linear-gradient@~8.0.0:
   resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-8.0.0.tgz#972d33e92714d4a4485635683b5bfa357ecec41b"
   integrity sha512-5G3ePGAHUoyBWbGITw5RtdJpssH8TXhCgt55cV+5LTTFjr51OZcuOmGua1vRoVFKBC/9ibLW465GEx9H/HS07Q==
 
+expo-localization@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/expo-localization/-/expo-localization-8.0.0.tgz#29c8a94c629442d8972173693418e4aac3c6650d"
+  integrity sha512-NGxiNU4G67dhi+yngN034kgA+99rWhrPJ6mTIM7nY70F/UceoMIEs8Hgg9ZIPvlN0XFAUU2EybzR8wzYOzOR7w==
+  dependencies:
+    rtl-detect "^1.0.2"
+
 expo-location@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-8.0.0.tgz#58dd54e47b12e26f9f2a97ded3cd15f8fa959b85"
@@ -3219,6 +3226,11 @@ hyphenate-style-name@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.3.tgz#097bb7fa0b8f1a9cf0bd5c734cf95899981a9b48"
   integrity sha512-EcuixamT82oplpoJ2XU4pDtKGWQ7b00CD9f1ug9IaQ3p1bkHMiKCZ9ut9QDI6qsa6cpUuB+A/I+zLtdNK4n2DQ==
+
+i18n-js@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.5.1.tgz#9787450894059bec1af791123231e59898eb97c1"
+  integrity sha512-nJgbE5Vj9qzOQfjdVd/uoMoO8ppVaB/3LB6KOmMfD8IQ1vNNh307iHyQLK8ZnLYWkAszfPvVpYmUt1Le/RuHMQ==
 
 iconv-lite@0.4.24, iconv-lite@^0.4.17, iconv-lite@~0.4.13:
   version "0.4.24"
@@ -5344,6 +5356,15 @@ react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
+react-native-appearance@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-appearance/-/react-native-appearance-0.3.2.tgz#e458e76917778eb1fcb8d17c09a78096115704c9"
+  integrity sha512-4laRJovChQe5ualJczWoPyThOlYc0m2jmipdnrx34kAFzzk/JqYZwbkRE3uuLRNnPhaWWZZ8YlFhq0RNFB/G+A==
+  dependencies:
+    fbemitter "^2.1.1"
+    invariant "^2.2.4"
+    use-subscription "^1.0.0"
+
 react-native-gesture-handler@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.5.3.tgz#191b44701fab7ba54c27a2438cb5eaa252666e66"
@@ -5770,6 +5791,11 @@ rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"
   integrity sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA==
+
+rtl-detect@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/rtl-detect/-/rtl-detect-1.0.2.tgz#8eca316f5c6563d54df4e406171dd7819adda67f"
+  integrity sha512-5X1422hvphzg2a/bo4tIDbjFjbJUOaPZwqE6dnyyxqwFqfR+tBcvfqapJr0o0VygATVCGKiODEewhZtKF+90AA==
 
 run-async@^2.2.0:
   version "2.3.0"
@@ -6596,6 +6622,13 @@ url-parse@^1.4.4:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
+
+use-subscription@^1.0.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/use-subscription/-/use-subscription-1.3.0.tgz#3df13a798e826c8d462899423293289a3362e4e6"
+  integrity sha512-buZV7FUtnbOr+65dN7PHK7chHhQGfk/yjgqfpRLoWuHIAc4klAD/rdot2FsPNtFthN1ZydvA8tR/mWBMQ+/fDQ==
+  dependencies:
+    object-assign "^4.1.1"
 
 use@^3.1.0:
   version "3.1.1"

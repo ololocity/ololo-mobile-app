@@ -9,12 +9,16 @@ import {
   Platform,
   Text
 } from 'react-native'
+import { useColorScheme } from 'react-native-appearance'
 
 import AuthHeader, { HEIGHT as HEADER_HEIGHT } from '../components/AuthHeader'
 import TextInput from '../components/TextInput'
 import { colors } from '../util/style'
 
+import i18n from '../localization'
+
 export default function AuthScreen() {
+  const colorScheme = useColorScheme()
   const [keyboardAnimValue] = React.useState(new Animated.Value(0))
   const buttonRadius = keyboardAnimValue.interpolate({
     inputRange: [0, 1],
@@ -62,7 +66,7 @@ export default function AuthScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.root}
+      style={[styles.root, colorScheme === 'dark' && styles.rootDark]}
       enabled
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
@@ -70,17 +74,29 @@ export default function AuthScreen() {
         <View style={styles.content}>
           <View style={styles.header}>
             <View style={styles.title}>
-              <Text style={styles.titleText}>Введите свой номер телефона</Text>
+              <Text
+                style={[
+                  styles.titleText,
+                  colorScheme === 'dark' && styles.titleTextDark
+                ]}
+              >
+                {i18n.t('authScreen.title')}
+              </Text>
             </View>
             <View>
-              <Text style={styles.subTitleText}>
-                Чтобы зарегистрироваться на мероприятие
+              <Text
+                style={[
+                  styles.subTitleText,
+                  colorScheme === 'dark' && styles.titleTextDark
+                ]}
+              >
+                {i18n.t('authScreen.subTitle')}
               </Text>
             </View>
           </View>
 
           <TextInput
-            label="Номер телефона"
+            label={i18n.t('authScreen.phoneInputLabel')}
             inputProps={{ placeholder: '+996', keyboardType: 'phone-pad' }}
           />
         </View>
@@ -104,7 +120,9 @@ export default function AuthScreen() {
                 { borderRadius: buttonRadius, height: buttonHeight }
               ]}
             >
-              <Text style={styles.submitButtonText}>Войти</Text>
+              <Text style={styles.submitButtonText}>
+                {i18n.t('authScreen.logIn')}
+              </Text>
             </Animated.View>
           </TouchableOpacity>
         </Animated.View>
@@ -127,7 +145,12 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
 
-    paddingTop: HEADER_HEIGHT
+    paddingTop: HEADER_HEIGHT,
+
+    backgroundColor: colors.white
+  },
+  rootDark: {
+    backgroundColor: 'transparent'
   },
   wrapper: {
     flex: 1
@@ -146,6 +169,9 @@ const styles = StyleSheet.create({
   titleText: {
     fontWeight: 'bold',
     fontSize: 23
+  },
+  titleTextDark: {
+    color: colors.white
   },
   subTitleText: {
     fontSize: 13

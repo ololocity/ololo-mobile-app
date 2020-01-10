@@ -12,6 +12,9 @@
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "ios": {
+      "userInterfaceStyle": "automatic"
+    }
   }
 }

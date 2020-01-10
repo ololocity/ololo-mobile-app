@@ -6,6 +6,7 @@ import {
   Platform,
   TouchableOpacity
 } from 'react-native'
+import { useColorScheme } from 'react-native-appearance'
 
 import SafeAreaView from './SafeAreaView'
 
@@ -28,7 +29,8 @@ interface Props {
 }
 
 export default function AuthHeader({ iconName, onButtonPress }: Props) {
-  const iconSrc = ICONS[iconName].default
+  const colorScheme = useColorScheme()
+  const iconSrc = ICONS[iconName][colorScheme === 'dark' ? 'dark' : 'default']
   return (
     <View style={styles.root}>
       <TouchableOpacity style={styles.button} onPress={onButtonPress}>
