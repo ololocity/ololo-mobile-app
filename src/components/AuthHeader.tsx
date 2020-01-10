@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import { useColorScheme } from 'react-native-appearance'
 
-import SafeAreaView from './SafeAreaView'
+import { colors } from '../util/style'
 
 export const HEIGHT = Platform.OS === 'ios' ? 80 : 70
 
@@ -32,7 +32,7 @@ export default function AuthHeader({ iconName, onButtonPress }: Props) {
   const colorScheme = useColorScheme()
   const iconSrc = ICONS[iconName][colorScheme === 'dark' ? 'dark' : 'default']
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, colorScheme === 'dark' && styles.rootDark]}>
       <TouchableOpacity style={styles.button} onPress={onButtonPress}>
         {iconSrc ? <Image source={iconSrc} /> : null}
       </TouchableOpacity>
@@ -46,7 +46,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     height: HEIGHT,
 
-    backgroundColor: 'transparent'
+    backgroundColor: colors.white
+  },
+  rootDark: {
+    backgroundColor: colors.black
   },
   button: {
     padding: 20

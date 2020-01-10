@@ -25,5 +25,12 @@ export default {
 
     logIn: 'Войти',
     next: 'Далее'
+  },
+  authNameScreen: {
+    title: 'Введите имя',
+    subTitle: 'Чтобы посетителям мероприятий было легче с вами знакомиться',
+    nameInputLabel: 'Имя',
+
+    next: 'Далее'
   }
 }

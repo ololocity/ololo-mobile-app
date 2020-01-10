@@ -25,5 +25,12 @@ export default {
 
     logIn: 'Sign in',
     next: 'Next'
+  },
+  authNameScreen: {
+    title: 'Enter your name',
+    subTitle: 'To make it easier to connect with event attendees',
+    nameInputLabel: 'Full name',
+
+    next: 'Next'
   }
 }

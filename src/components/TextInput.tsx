@@ -26,7 +26,7 @@ interface Props {
 }
 
 export default function TextInput({
-  inputProps,
+  inputProps = {},
   inputRef,
   label,
   inputWrapperStyle,

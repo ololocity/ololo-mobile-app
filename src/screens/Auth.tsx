@@ -10,6 +10,7 @@ import {
   Text
 } from 'react-native'
 import { useColorScheme } from 'react-native-appearance'
+import { useNavigation } from 'react-navigation-hooks'
 
 import AuthHeader, { HEIGHT as HEADER_HEIGHT } from '../components/AuthHeader'
 import TextInput from '../components/TextInput'
@@ -20,8 +21,10 @@ import i18n from '../localization'
 
 export default function AuthScreen() {
   const colorScheme = useColorScheme()
+  const navigation = useNavigation()
   const inputRef = React.useRef()
   const [isInputFocused, setInputFocusState] = React.useState(false)
+  const [phoneNumber, setPhoneNumber] = React.useState('')
 
   function handleInputFocus() {
     setInputFocusState(true)
@@ -31,7 +34,15 @@ export default function AuthScreen() {
     setInputFocusState(false)
   }
 
+  function handleInputChange (nextValue) {
+    setPhoneNumber(nextValue)
+  }
+
   function handleSubmitButtonPress() {
+    if (phoneNumber) {
+      return navigation.navigate('AuthName', { phoneNumber })
+    }
+
     if (inputRef.current) {
       inputRef.current.focus()
     }
@@ -75,6 +86,7 @@ export default function AuthScreen() {
               inputProps={{ placeholder: '+996', keyboardType: 'phone-pad' }}
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
+              onChange={handleInputChange}
             />
           </View>
 
@@ -113,7 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white
   },
   rootDark: {
-    backgroundColor: 'transparent'
+    backgroundColor: colors.black,
   },
   wrapper: {
     flex: 1
