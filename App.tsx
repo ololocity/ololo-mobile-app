@@ -7,10 +7,9 @@ import AppLoading from './src/screens/AppLoading'
 import Onboarding from './src/screens/Onboarding'
 import EventFeed from './src/screens/EventFeed'
 import Auth from './src/screens/Auth'
-import { colors } from './src/util/style'
+import AuthName from './src/screens/AuthName'
 
-
-const AuthStack = createStackNavigator({ Auth })
+const AuthStack = createStackNavigator({ Auth, AuthName })
 const AppStack = createStackNavigator({ EventFeed }, { headerMode: 'none' })
 
 const AppContainer = createAppContainer(

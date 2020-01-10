@@ -23,6 +23,7 @@ export default {
     subTitle: 'Чтобы зарегистрироваться на мероприятие',
     phoneInputLabel: 'Номер телефона',
 
-    logIn: 'Войти'
+    logIn: 'Войти',
+    next: 'Далее'
   }
 }

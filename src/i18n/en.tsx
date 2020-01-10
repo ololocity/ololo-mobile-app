@@ -23,6 +23,7 @@ export default {
     subTitle: 'To sign up to an event',
     phoneInputLabel: 'Phone number',
 
-    logIn: 'Sign in'
+    logIn: 'Sign in',
+    next: 'Next'
   }
 }

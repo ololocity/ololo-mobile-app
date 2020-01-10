@@ -11,27 +11,23 @@ import { useColorScheme } from 'react-native-appearance'
 import { colors } from '../util/style'
 
 interface Props {
-  inputProps: Object
-  style?: any
-  inputWrapperStyle?: any
-  inputStyle?: any
+  inputProps: Object,
+  inputRef?: any,
+  style?: any,
+  inputWrapperStyle?: any,
+  inputStyle?: any,
 
-  value?: any
-  onFocus?: Function
-  onBlur?: Function
-  onChange?: Function
+  value?: any,
+  onFocus?: Function,
+  onBlur?: Function,
+  onChange?: Function,
 
   label?: string
 }
 
-type State = {
-  isFocused: boolean
-  isSecureEnabled: boolean
-  value: any
-}
-
 export default function TextInput({
   inputProps,
+  inputRef,
   label,
   inputWrapperStyle,
   inputStyle,
@@ -86,6 +82,7 @@ export default function TextInput({
       >
         <RNTextInput
           {...inputProps}
+          ref={inputRef}
           placeholder={hasLabel && !isFocused ? undefined : inputProps.placeholder}
           style={[styles.input, hasError && styles.inputHasError, inputStyle]}
           onChangeText={handleChange}
