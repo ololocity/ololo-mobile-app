@@ -4,7 +4,7 @@ import {
   Animated,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   StyleSheet,
   Platform,
   Text
@@ -32,6 +32,7 @@ export default function AuthNameScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View style={styles.wrapper}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.content}>
           <View style={styles.header}>
             <View style={styles.title}>
@@ -60,10 +61,12 @@ export default function AuthNameScreen() {
             label={i18n.t('authNameScreen.nameInputLabel')}
           />
         </View>
+        </TouchableWithoutFeedback>
 
         <View style={styles.footer}>
           <AuthButton
             onPress={handleSubmitButtonPress}
+            disabled
             label={i18n.t('authNameScreen.next')}
           />
         </View>

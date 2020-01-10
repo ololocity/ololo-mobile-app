@@ -49,13 +49,14 @@ export default function AuthScreen() {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+
       <KeyboardAvoidingView
         style={[styles.root, colorScheme === 'dark' && styles.rootDark]}
         enabled
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <View style={styles.wrapper}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <View style={styles.content}>
             <View style={styles.header}>
               <View style={styles.title}>
@@ -89,10 +90,12 @@ export default function AuthScreen() {
               onChange={handleInputChange}
             />
           </View>
+          </TouchableWithoutFeedback>
 
           <View style={styles.footer}>
             <AuthButton
               onPress={handleSubmitButtonPress}
+              disabled={isInputFocused && !phoneNumber}
               label={
                 isInputFocused
                   ? i18n.t('authScreen.next')
@@ -102,7 +105,7 @@ export default function AuthScreen() {
           </View>
         </View>
       </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+
   )
 }
 

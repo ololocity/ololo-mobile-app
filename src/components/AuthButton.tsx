@@ -16,7 +16,7 @@ interface Props {
   disabled?: boolean
 }
 
-export default function AuthButton({ onPress, label }: Props) {
+export default function AuthButton({ onPress, label, disabled }: Props) {
   const [keyboardAnimValue] = React.useState(new Animated.Value(0))
   const buttonRadius = keyboardAnimValue.interpolate({
     inputRange: [0, 1],
@@ -68,10 +68,15 @@ export default function AuthButton({ onPress, label }: Props) {
         }
       ]}
     >
-      <TouchableOpacity style={styles.button} onPress={onPress}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={onPress}
+        {...{ disabled }}
+      >
         <Animated.View
           style={[
             styles.content,
+            disabled && styles.contentDisabled,
             { borderRadius: buttonRadius, height: buttonHeight }
           ]}
         >
@@ -95,7 +100,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
-    backgroundColor: '#2F80ED'
+    backgroundColor: 'rgba(47,128,237,1)'
+  },
+  contentDisabled: {
+    backgroundColor: 'rgba(47,128,237,.3)'
   },
   labelText: {
     textAlign: 'center',
