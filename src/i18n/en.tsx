@@ -5,16 +5,16 @@ export default {
     start: 'Start',
     slides: {
       events: {
-        title: 'Attend great events',
-        subTitle: 'Look at the schedule and sign up to the events at ololohaus'
+        title: 'Attend engaging events',
+        subTitle: 'Look at the schedule and sign up for the events at ololohaus'
       },
       networking: {
-        title: 'Meet amazing people',
-        subTitle: 'Connect with event attendees quick and easy'
+        title: 'Meet inspiring people',
+        subTitle: 'Connect with event attendees quickly and easily'
       },
       feedback: {
         title: 'Leave feedback',
-        subTitle: 'Rate events, help us become better!'
+        subTitle: 'Rate events, help us to become better!'
       }
     }
   },
