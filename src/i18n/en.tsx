@@ -32,5 +32,12 @@ export default {
     nameInputLabel: 'Full name',
 
     next: 'Next'
+  },
+  authEmailScreen: {
+    title: 'Enter e-mail',
+    subTitle: 'as aditional communication method',
+    emailInputLabel: 'E-mail',
+    subscribeText: 'Stay up to date with events',
+    finish: 'Finish'
   }
 }
