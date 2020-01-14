@@ -4,21 +4,25 @@ on: [push, pull_request]
 
 jobs:
     prettier:
+        name: Prettier
         runs-on: ubuntu-latest
+
         steps:
-            - uses: actions/checkout@v1
+        - uses: actions/checkout@v1
+        - name: Use Node.js v10.x
+          uses: actions/setup-node@v1
+          with:
+            version: '10.x'
 
-            - name: Install
-              run: yarn install
-              env:
-                  CI: true
+        - name: Install yarn, run prettier
+          run: |
+            npm install -g yarn
+            yarn install
+            yarn run prettier --write 'src/**/*.{tsx,js}'
 
-            - name: Run prettier
-              run: yarn run prettier --write 'src/**/*.{tsx,js}'
-
-            - uses: stefanzweifel/git-auto-commit-action@v2.1.0
-              with:
-                  commit_message: Apply prettier changes
-                  branch: ${{ github.head_ref }}
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        - uses: stefanzweifel/git-auto-commit-action@v2.1.0
+          with:
+              commit_message: Apply prettier changes
+              branch: ${{ github.head_ref }}
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
