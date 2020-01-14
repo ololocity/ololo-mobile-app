@@ -7,29 +7,28 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
   Platform,
-  Text
+  Text, 
+  Switch
 } from 'react-native'
 import { useColorScheme } from 'react-native-appearance'
-import { useNavigation } from 'react-navigation-hooks'
 
 import AuthHeader, { HEIGHT as HEADER_HEIGHT } from '../components/AuthHeader'
 import TextInput from '../components/TextInput'
 import AuthButton from '../components/AuthButton'
-import { colors } from '../util/style'
+import { colors, uiColors } from '../util/style'
 
 import i18n from '../localization'
 
-export default function AuthNameScreen() {
+export default function AuthEmailScreen() {
   const colorScheme = useColorScheme()
-  const navigation = useNavigation()
-  const [name, setName] = React.useState('')
+  const [isSubscribed, setSubscribedState] = React.useState(false)
 
   function handleSubmitButtonPress() {
-    navigation.navigate('AuthEmail')
+    Keyboard.dismiss()
   }
 
-  function handleTextInputChange(value) {
-    setName(value)
+  function handleSubscribeValueChange(value) {
+    setSubscribedState(value)
   }
 
   return (
@@ -49,7 +48,7 @@ export default function AuthNameScreen() {
                   colorScheme === 'dark' && styles.titleTextDark
                 ]}
               >
-                {i18n.t('authNameScreen.title')}
+                {i18n.t('authEmailScreen.title')}
               </Text>
             </View>
             <View>
@@ -59,23 +58,38 @@ export default function AuthNameScreen() {
                   colorScheme === 'dark' && styles.titleTextDark
                 ]}
               >
-                {i18n.t('authNameScreen.subTitle')}
+                {i18n.t('authEmailScreen.subTitle')}
               </Text>
             </View>
           </View>
 
           <TextInput
-            label={i18n.t('authNameScreen.nameInputLabel')}
-            onChange={handleTextInputChange}
+            label={i18n.t('authEmailScreen.emailInputLabel')}
+            inputProps={ {keyboardType: 'email-address'} }
           />
+
+          <View style={styles.subscriptionWrapper}>
+            <Text
+              style={[
+                styles.subscribeText,
+                colorScheme === 'dark' && styles.subscribeTextDark
+              ]}
+            >
+            {i18n.t('authEmailScreen.subscribeText')}
+            </Text>
+
+            <Switch onValueChange={handleSubscribeValueChange} value={isSubscribed} thumbColor={isSubscribed ? uiColors.switch.thumbEnabled : undefined} trackColor={uiColors.switch.track} />
+          </View>
+
         </View>
         </TouchableWithoutFeedback>
+
 
         <View style={styles.footer}>
           <AuthButton
             onPress={handleSubmitButtonPress}
-            disabled={!name}
-            label={i18n.t('authNameScreen.next')}
+            disabled
+            label={i18n.t('authEmailScreen.finish')}
           />
         </View>
       </View>
@@ -83,7 +97,7 @@ export default function AuthNameScreen() {
   )
 }
 
-AuthNameScreen.navigationOptions = ({ navigation }) => ({
+AuthEmailScreen.navigationOptions = ({ navigation }) => ({
   headerTransparent: true,
   header: () => (
     <AuthHeader
@@ -128,8 +142,16 @@ const styles = StyleSheet.create({
   subTitleText: {
     fontSize: 13
   },
-  subTitleTextDark: {
+  subscribeText: {
+    fontSize: 13
+  },
+  subscribeTextDark: {
     color: colors.white
+  },
+  subscriptionWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   footer: {
     flexDirection: 'row'

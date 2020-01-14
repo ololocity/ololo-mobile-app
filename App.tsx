@@ -8,8 +8,10 @@ import Onboarding from './src/screens/Onboarding'
 import EventFeed from './src/screens/EventFeed'
 import Auth from './src/screens/Auth'
 import AuthName from './src/screens/AuthName'
+import AuthEmail from './src/screens/AuthEmail'
 
-const AuthStack = createStackNavigator({ Auth, AuthName })
+
+const AuthStack = createStackNavigator({ Auth, AuthName, AuthEmail })
 const AppStack = createStackNavigator({ EventFeed }, { headerMode: 'none' })
 
 const AppContainer = createAppContainer(

@@ -32,5 +32,12 @@ export default {
     nameInputLabel: 'Имя',
 
     next: 'Далее'
+  },
+  authEmailScreen: {
+    title: 'Введите e-mail',
+    subTitle: 'в качестве дополнительного способа связи',
+    emailInputLabel: 'E-mail',
+    subscribeText: 'Быть в курсе акций и мероприятий',
+    finish: 'Завершить'
   }
 }

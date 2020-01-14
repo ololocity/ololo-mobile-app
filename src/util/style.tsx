@@ -5,3 +5,13 @@ export const colors = {
   yellow: '#F1C40F',
   red: '#FF1744'
 }
+
+export const uiColors = {
+	switch: {
+		thumbEnabled: '#2C98F0',
+		track: {
+			false: '#C6C6C6',
+			true: 'rgba(47,128,237,.5)'
+		}
+	}
+}
