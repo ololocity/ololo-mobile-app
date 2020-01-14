@@ -34,7 +34,7 @@ export default function AuthScreen() {
     setInputFocusState(false)
   }
 
-  function handleInputChange (nextValue) {
+  function handleInputChange(nextValue) {
     setPhoneNumber(nextValue)
   }
 
@@ -49,13 +49,12 @@ export default function AuthScreen() {
   }
 
   return (
-
-      <KeyboardAvoidingView
-        style={[styles.root, colorScheme === 'dark' && styles.rootDark]}
-        enabled
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <View style={styles.wrapper}>
+    <KeyboardAvoidingView
+      style={[styles.root, colorScheme === 'dark' && styles.rootDark]}
+      enabled
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <View style={styles.wrapper}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <View style={styles.content}>
             <View style={styles.header}>
@@ -90,22 +89,21 @@ export default function AuthScreen() {
               onChange={handleInputChange}
             />
           </View>
-          </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
 
-          <View style={styles.footer}>
-            <AuthButton
-              onPress={handleSubmitButtonPress}
-              disabled={isInputFocused && !phoneNumber}
-              label={
-                isInputFocused
-                  ? i18n.t('authScreen.next')
-                  : i18n.t('authScreen.logIn')
-              }
-            />
-          </View>
+        <View style={styles.footer}>
+          <AuthButton
+            onPress={handleSubmitButtonPress}
+            disabled={isInputFocused && !phoneNumber}
+            label={
+              isInputFocused
+                ? i18n.t('authScreen.next')
+                : i18n.t('authScreen.logIn')
+            }
+          />
         </View>
-      </KeyboardAvoidingView>
-
+      </View>
+    </KeyboardAvoidingView>
   )
 }
 
@@ -128,7 +126,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white
   },
   rootDark: {
-    backgroundColor: colors.black,
+    backgroundColor: colors.black
   },
   wrapper: {
     flex: 1

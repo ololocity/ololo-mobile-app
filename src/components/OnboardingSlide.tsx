@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
     flex: 1,
 
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   container: {
     flex: 1,
 
     paddingTop: 103,
     paddingBottom: 80,
-    paddingHorizontal: 25,
+    paddingHorizontal: 25
   },
   circleWrapper: {
     flex: 1,

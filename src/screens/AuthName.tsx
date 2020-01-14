@@ -39,36 +39,36 @@ export default function AuthNameScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View style={styles.wrapper}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.content}>
-          <View style={styles.header}>
-            <View style={styles.title}>
-              <Text
-                style={[
-                  styles.titleText,
-                  colorScheme === 'dark' && styles.titleTextDark
-                ]}
-              >
-                {i18n.t('authNameScreen.title')}
-              </Text>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={styles.content}>
+            <View style={styles.header}>
+              <View style={styles.title}>
+                <Text
+                  style={[
+                    styles.titleText,
+                    colorScheme === 'dark' && styles.titleTextDark
+                  ]}
+                >
+                  {i18n.t('authNameScreen.title')}
+                </Text>
+              </View>
+              <View>
+                <Text
+                  style={[
+                    styles.subTitleText,
+                    colorScheme === 'dark' && styles.titleTextDark
+                  ]}
+                >
+                  {i18n.t('authNameScreen.subTitle')}
+                </Text>
+              </View>
             </View>
-            <View>
-              <Text
-                style={[
-                  styles.subTitleText,
-                  colorScheme === 'dark' && styles.titleTextDark
-                ]}
-              >
-                {i18n.t('authNameScreen.subTitle')}
-              </Text>
-            </View>
-          </View>
 
-          <TextInput
-            label={i18n.t('authNameScreen.nameInputLabel')}
-            onChange={handleTextInputChange}
-          />
-        </View>
+            <TextInput
+              label={i18n.t('authNameScreen.nameInputLabel')}
+              onChange={handleTextInputChange}
+            />
+          </View>
         </TouchableWithoutFeedback>
 
         <View style={styles.footer}>
@@ -86,10 +86,7 @@ export default function AuthNameScreen() {
 AuthNameScreen.navigationOptions = ({ navigation }) => ({
   headerTransparent: true,
   header: () => (
-    <AuthHeader
-      onButtonPress={() => navigation.goBack()}
-      iconName="back"
-    />
+    <AuthHeader onButtonPress={() => navigation.goBack()} iconName="back" />
   )
 })
 
