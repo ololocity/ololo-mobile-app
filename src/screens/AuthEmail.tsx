@@ -7,7 +7,7 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
   Platform,
-  Text, 
+  Text,
   Switch
 } from 'react-native'
 import { useColorScheme } from 'react-native-appearance'
@@ -38,52 +38,57 @@ export default function AuthEmailScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View style={styles.wrapper}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.content}>
-          <View style={styles.header}>
-            <View style={styles.title}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={styles.content}>
+            <View style={styles.header}>
+              <View style={styles.title}>
+                <Text
+                  style={[
+                    styles.titleText,
+                    colorScheme === 'dark' && styles.titleTextDark
+                  ]}
+                >
+                  {i18n.t('authEmailScreen.title')}
+                </Text>
+              </View>
+              <View>
+                <Text
+                  style={[
+                    styles.subTitleText,
+                    colorScheme === 'dark' && styles.titleTextDark
+                  ]}
+                >
+                  {i18n.t('authEmailScreen.subTitle')}
+                </Text>
+              </View>
+            </View>
+
+            <TextInput
+              label={i18n.t('authEmailScreen.emailInputLabel')}
+              inputProps={{ keyboardType: 'email-address' }}
+            />
+
+            <View style={styles.subscriptionWrapper}>
               <Text
                 style={[
-                  styles.titleText,
-                  colorScheme === 'dark' && styles.titleTextDark
+                  styles.subscribeText,
+                  colorScheme === 'dark' && styles.subscribeTextDark
                 ]}
               >
-                {i18n.t('authEmailScreen.title')}
+                {i18n.t('authEmailScreen.subscribeText')}
               </Text>
-            </View>
-            <View>
-              <Text
-                style={[
-                  styles.subTitleText,
-                  colorScheme === 'dark' && styles.titleTextDark
-                ]}
-              >
-                {i18n.t('authEmailScreen.subTitle')}
-              </Text>
+
+              <Switch
+                onValueChange={handleSubscribeValueChange}
+                value={isSubscribed}
+                thumbColor={
+                  isSubscribed ? uiColors.switch.thumbEnabled : undefined
+                }
+                trackColor={uiColors.switch.track}
+              />
             </View>
           </View>
-
-          <TextInput
-            label={i18n.t('authEmailScreen.emailInputLabel')}
-            inputProps={ {keyboardType: 'email-address'} }
-          />
-
-          <View style={styles.subscriptionWrapper}>
-            <Text
-              style={[
-                styles.subscribeText,
-                colorScheme === 'dark' && styles.subscribeTextDark
-              ]}
-            >
-            {i18n.t('authEmailScreen.subscribeText')}
-            </Text>
-
-            <Switch onValueChange={handleSubscribeValueChange} value={isSubscribed} thumbColor={isSubscribed ? uiColors.switch.thumbEnabled : undefined} trackColor={uiColors.switch.track} />
-          </View>
-
-        </View>
         </TouchableWithoutFeedback>
-
 
         <View style={styles.footer}>
           <AuthButton
@@ -100,10 +105,7 @@ export default function AuthEmailScreen() {
 AuthEmailScreen.navigationOptions = ({ navigation }) => ({
   headerTransparent: true,
   header: () => (
-    <AuthHeader
-      onButtonPress={() => navigation.goBack()}
-      iconName="back"
-    />
+    <AuthHeader onButtonPress={() => navigation.goBack()} iconName="back" />
   )
 })
 

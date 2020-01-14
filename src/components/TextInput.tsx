@@ -11,16 +11,16 @@ import { useColorScheme } from 'react-native-appearance'
 import { colors } from '../util/style'
 
 interface Props {
-  inputProps: Object,
-  inputRef?: any,
-  style?: any,
-  inputWrapperStyle?: any,
-  inputStyle?: any,
+  inputProps: Object
+  inputRef?: any
+  style?: any
+  inputWrapperStyle?: any
+  inputStyle?: any
 
-  value?: any,
-  onFocus?: Function,
-  onBlur?: Function,
-  onChange?: Function,
+  value?: any
+  onFocus?: Function
+  onBlur?: Function
+  onChange?: Function
 
   label?: string
 }
@@ -83,7 +83,9 @@ export default function TextInput({
         <RNTextInput
           {...inputProps}
           ref={inputRef}
-          placeholder={hasLabel && !isFocused ? undefined : inputProps.placeholder}
+          placeholder={
+            hasLabel && !isFocused ? undefined : inputProps.placeholder
+          }
           style={[styles.input, hasError && styles.inputHasError, inputStyle]}
           onChangeText={handleChange}
           onFocus={handleFocus}
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2
   },
   fieldDark: {
-    borderBottomColor: 'rgba(255, 255, 255, 0.16)',
+    borderBottomColor: 'rgba(255, 255, 255, 0.16)'
   },
   fieldFocused: {
     borderBottomColor: colors.blue

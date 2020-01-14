@@ -7,11 +7,11 @@ export const colors = {
 }
 
 export const uiColors = {
-	switch: {
-		thumbEnabled: '#2C98F0',
-		track: {
-			false: '#C6C6C6',
-			true: 'rgba(47,128,237,.5)'
-		}
-	}
+  switch: {
+    thumbEnabled: '#2C98F0',
+    track: {
+      false: '#C6C6C6',
+      true: 'rgba(47,128,237,.5)'
+    }
+  }
 }
