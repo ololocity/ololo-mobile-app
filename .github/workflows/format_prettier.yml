@@ -1,10 +1,6 @@
 name: Format (prettier)
 
-on:
-    pull_request:
-        paths:
-            - '**.tsx'
-            - '**.js'
+on: [push, pull_request]
 
 jobs:
     prettier:
