@@ -15,10 +15,7 @@ import { EventFeedItem } from '../screens/EventFeed'
 import EventPreview from './EventPreview'
 import { colors } from '../util/style'
 
-const backIconSrc = {
-  default: require('../assets/header-left-back.png'),
-  dark: require('../assets/header-left-back-dark.png')
-}
+const backIconSrc = require('../assets/header-left-back-dark.png')
 
 const PREVIEW_HEIGHT = 361
 const SPRING_CONFIG = {
@@ -142,9 +139,7 @@ export default function EventPreviewModal({
           style={styles.dismissButton}
           onPress={handleDismissButtonPress}
         >
-          <Image
-            source={backIconSrc[colorScheme === 'dark' ? 'dark' : 'default']}
-          />
+          <Image source={backIconSrc} />
         </TouchableOpacity>
       </Animated.View>
     </View>
@@ -189,6 +184,6 @@ const styles = StyleSheet.create({
   },
   dismissButton: {
     padding: 20,
-    paddingTop: 50,
+    paddingTop: 50
   }
 })
