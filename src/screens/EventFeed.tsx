@@ -6,7 +6,7 @@ import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
 
 export interface EventFeedItem {
-  id: string,
+  id: string
   hostName: string
   title: string
   locationName: string
