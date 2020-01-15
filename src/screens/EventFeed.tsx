@@ -1,10 +1,86 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, SectionList, StyleSheet } from 'react-native'
+
+import SafeAreaView from '../components/SafeAreaView'
+import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
+import EventFeedItem from '../components/EventFeedItem'
+
+export interface EventFeedItem {
+  hostName: string
+  title: string
+  locationName: string
+  startAt: number
+  durationMinutes: number
+}
+
+interface SectionItem {
+  title: string
+  data: Array<EventFeedItem>
+}
+
+interface SectionData {
+  [index: number]: SectionItem
+}
+
+const DATA: SectionData = [
+  {
+    title: 'Сегодня',
+    data: [
+      {
+        hostName: 'Павел Исаенко',
+        title: 'Платный воркшоп по фотографии',
+        locationName: 'ololoErkindik',
+        startAt: 1579092422351,
+        durationMinutes: 60
+      }
+    ]
+  },
+  {
+    title: 'Другие ивенты',
+    data: [
+      {
+        hostName: 'Николай Соколов',
+        title: 'Платный воркшоп по интерфейсам',
+        locationName: 'ololoErkindik',
+        startAt: 1579092422351,
+        durationMinutes: 60
+      },
+      {
+        hostName: 'Михаил Романенко',
+        title: 'Бесплатный воркшоп по фотографии',
+        locationName: 'ololoVictory',
+        startAt: 1579092422351,
+        durationMinutes: 60
+      }
+    ]
+  }
+]
 
 export default function EventFeed() {
   return (
-    <View>
-      <Text>EventFeed</Text>
-    </View>
+    <SafeAreaView style={styles.root}>
+      <SectionList
+        style={styles.list}
+        contentContainerStyle={styles.listContent}
+        sections={DATA}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => <EventFeedItem {...{ item }} />}
+        renderSectionHeader={({ section: { title } }) => (
+          <EventFeedSectionTitle {...{ title }} />
+        )}
+      />
+    </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1
+  },
+  list: {
+    flex: 1
+  },
+  listContent: {
+    paddingHorizontal: 16
+  }
+})
