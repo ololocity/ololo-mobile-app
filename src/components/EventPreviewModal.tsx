@@ -5,7 +5,7 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  Text,
+  ScrollView,
   Animated
 } from 'react-native'
 import { useColorScheme } from 'react-native-appearance'
@@ -68,8 +68,12 @@ export default function EventPreviewModal({
     outputRange: [0, 1]
   })
   const contentTop = revealAnimValue.interpolate({
-    inputRange: [0.8, 1],
-    outputRange: [-1 * windowHeight, 0]
+    inputRange: [0, 1],
+    outputRange: [initialLayout.py, 0]
+  })
+  const contentHeight = revealAnimValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, windowHeight]
   })
 
   React.useEffect(() => {
@@ -92,27 +96,30 @@ export default function EventPreviewModal({
 
   return (
     <View style={styles.root} pointerEvents="box-none">
-      <Animated.ScrollView
+      <Animated.View
         style={[
-          styles.content,
-          colorScheme === 'dark' && styles.contentDark,
-          { height: windowHeight, top: contentTop }
+          styles.scrollWrapper,
+          { height: contentHeight, top: contentTop }
         ]}
-        contentContainerStyle={styles.contentContainer}
-        scrollEnabled={isRevealed}
       >
-        <Markdown
-          style={{
-            root: {
-              color: colorScheme === 'dark' ? colors.white : colors.black,
-              fontSize: 13
-            }
-          }}
-          mergeStyle
+        <ScrollView
+          style={[styles.scroll, colorScheme === 'dark' && styles.scrollDark]}
+          contentContainerStyle={styles.contentContainer}
+          scrollEnabled={isRevealed}
         >
-          {dummyEventDescription}
-        </Markdown>
-      </Animated.ScrollView>
+          <Markdown
+            style={{
+              root: {
+                color: colorScheme === 'dark' ? colors.white : colors.black,
+                fontSize: 13
+              }
+            }}
+            mergeStyle
+          >
+            {dummyEventDescription}
+          </Markdown>
+        </ScrollView>
+      </Animated.View>
 
       <Animated.View
         style={[
@@ -153,14 +160,21 @@ const styles = StyleSheet.create({
   preview: {
     position: 'absolute'
   },
-  content: {
+  scrollWrapper: {
     position: 'absolute',
     left: 0,
     right: 0,
 
+    overflow: 'hidden'
+  },
+  scroll: {
+    ...StyleSheet.absoluteFillObject,
+
+    flex: 1,
+
     backgroundColor: colors.white
   },
-  contentDark: {
+  scrollDark: {
     backgroundColor: colors.black
   },
   contentContainer: {
@@ -171,9 +185,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
 
     left: 0,
-    top: 30
+    top: 0
   },
   dismissButton: {
-    padding: 20
+    padding: 20,
+    paddingTop: 50,
   }
 })
