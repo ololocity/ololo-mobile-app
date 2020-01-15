@@ -15,7 +15,7 @@ import { colors } from '../util/style'
 
 const locationIconSrc = require('../assets/map-marker.png')
 
-function getRandomUnsplashImage (id: string): string {
+function getRandomUnsplashImage(id: string): string {
   return `https://source.unsplash.com/random/${id}`
 }
 
