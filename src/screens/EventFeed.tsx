@@ -4,6 +4,9 @@ import { SectionList, StyleSheet } from 'react-native'
 import SafeAreaView from '../components/SafeAreaView'
 import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
+import EventPreviewModal from '../components/EventPreviewModal'
+
+import { getUnsplashImageUrl } from '../util/misc'
 
 import i18n from '../localization'
 
@@ -14,6 +17,7 @@ export interface EventFeedItem {
   locationName: string
   startsAt: number
   durationMinutes: number
+  coverImageUrl: string
 }
 
 interface SectionItem {
@@ -21,62 +25,94 @@ interface SectionItem {
   data: Array<EventFeedItem>
 }
 
-interface SectionData {
-  [index: number]: SectionItem
-}
+interface SectionData extends Array<SectionItem> {}
 
+const EVENTS = [
+  {
+    id: 'event1',
+    hostName: 'Павел Исаенко',
+    title: 'Платный воркшоп по фотографии',
+    locationName: 'ololoErkindik',
+    startsAt: 1579092422351,
+    durationMinutes: 60,
+    coverImageUrl: getUnsplashImageUrl('WLUHO9A_xik', 375, 361)
+  },
+  {
+    id: 'event2',
+    hostName: 'Николай Соколов',
+    title: 'Платный воркшоп по интерфейсам',
+    locationName: 'ololoErkindik',
+    startsAt: 1579092422351,
+    durationMinutes: 60,
+    coverImageUrl: getUnsplashImageUrl('WLUHO9A_xik', 375, 361)
+  },
+  {
+    id: 'event3',
+    hostName: 'Михаил Романенко',
+    title: 'Бесплатный воркшоп по фотографии',
+    locationName: 'ololoVictory',
+    startsAt: 1579092422351,
+    durationMinutes: 60,
+    coverImageUrl: getUnsplashImageUrl('WLUHO9A_xik', 375, 361)
+  }
+]
+const [todayEvent, ...restEvents] = EVENTS
 const DATA: SectionData = [
   {
     title: i18n.t('eventFeed.now'),
-    data: [
-      {
-        id: 'event1',
-        hostName: 'Павел Исаенко',
-        title: 'Платный воркшоп по фотографии',
-        locationName: 'ololoErkindik',
-        startsAt: 1579092422351,
-        durationMinutes: 60
-      }
-    ]
+    data: [todayEvent]
   },
   {
     title: i18n.t('eventFeed.futureEvents'),
-    data: [
-      {
-        id: 'event2',
-        hostName: 'Николай Соколов',
-        title: 'Платный воркшоп по интерфейсам',
-        locationName: 'ololoErkindik',
-        startsAt: 1579092422351,
-        durationMinutes: 60
-      },
-      {
-        id: 'event3',
-        hostName: 'Михаил Романенко',
-        title: 'Бесплатный воркшоп по фотографии',
-        locationName: 'ololoVictory',
-        startsAt: 1579092422351,
-        durationMinutes: 60
-      }
-    ]
+    data: restEvents
   }
 ]
 
 export default function EventFeed() {
+  const [activeItem, setActiveItem] = React.useState(undefined)
+  const [activeItemLayout, setActiveItemLayout] = React.useState(undefined)
+
+  function handleItemPress(item, layout) {
+    setActiveItemLayout(layout)
+    setActiveItem(item)
+  }
+
+  function handlePreviewModalDismiss() {
+    setActiveItem(undefined)
+    setActiveItemLayout(undefined)
+  }
+
   return (
-    <SafeAreaView style={styles.root}>
-      <SectionList
-        style={styles.list}
-        contentContainerStyle={styles.listContent}
-        sections={DATA}
-        stickySectionHeadersEnabled={false}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }) => <EventFeedItem {...{ item }} />}
-        renderSectionHeader={({ section: { title } }) => (
-          <EventFeedSectionTitle {...{ title }} />
-        )}
-      />
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={styles.root}>
+        <SectionList
+          style={styles.list}
+          contentContainerStyle={styles.listContent}
+          sections={DATA}
+          stickySectionHeadersEnabled={false}
+          keyExtractor={(_, index) => index.toString()}
+          renderItem={({ item }) => (
+            <EventFeedItem
+              isActive={activeItem && activeItem.id === item.id}
+              {...{
+                item,
+                onPress: dimensions => handleItemPress(item, dimensions)
+              }}
+            />
+          )}
+          renderSectionHeader={({ section: { title } }) => (
+            <EventFeedSectionTitle {...{ title }} />
+          )}
+        />
+      </SafeAreaView>
+      {activeItem && activeItemLayout ? (
+        <EventPreviewModal
+          item={activeItem}
+          initialLayout={activeItemLayout}
+          onDismiss={handlePreviewModalDismiss}
+        />
+      ) : null}
+    </>
   )
 }
 

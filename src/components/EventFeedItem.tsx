@@ -1,37 +1,35 @@
 import React from 'react'
-import {
-  View,
-  TouchableWithoutFeedback,
-  Animated,
-  Text,
-  Image,
-  StyleSheet
-} from 'react-native'
-import format from 'date-fns/format'
-import add from 'date-fns/add'
+import { Animated, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 
 import { EventFeedItem as EventFeedItemType } from '../screens/EventFeed'
-import { colors } from '../util/style'
-
-const locationIconSrc = require('../assets/map-marker.png')
-
-function getRandomUnsplashImage (id: string): string {
-  return `https://source.unsplash.com/random/${id}`
-}
+import EventPreview from './EventPreview'
 
 interface Props {
   item: EventFeedItemType
+  onPress: Function
+  isActive: boolean
 }
 
-export default function EventFeedItem({ item }: Props) {
+export default function EventFeedItem({ item, onPress, isActive }: Props) {
+  const rootRef = React.useRef()
   const [scaleAnimValue] = React.useState(new Animated.Value(1))
-  const startsAt = new Date(item.startsAt)
-  const endsAt = add(new Date(item.startsAt), { minutes: item.durationMinutes })
-  const dateLabel = format(startsAt, 'MMMM dd')
-  const durationLabel = [
-    format(startsAt, 'HH:mm'),
-    format(endsAt, 'HH:mm')
-  ].join('-')
+  const [rootSize, setRootSize] = React.useState({
+    width: 0,
+    height: 0,
+    px: 0,
+    py: 0
+  })
+
+  function handleRootLayout() {
+    if (
+      rootRef.current &&
+      rootRef.current._component.measure instanceof Function
+    ) {
+      rootRef.current._component.measure((fx, fy, width, height, px, py) => {
+        setRootSize({ width, height, px, py })
+      })
+    }
+  }
 
   function handlePressIn() {
     Animated.spring(scaleAnimValue, { toValue: 0.93 }).start()
@@ -45,52 +43,22 @@ export default function EventFeedItem({ item }: Props) {
     }).start()
   }
 
-  function handlePress() {}
+  function handlePress() {
+    onPress(rootSize)
+  }
 
   return (
     <TouchableWithoutFeedback
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       onPress={handlePress}
-      style={styles.root}
     >
       <Animated.View
-        style={[styles.root, { transform: [{ scale: scaleAnimValue }] }]}
+        ref={rootRef}
+        onLayout={handleRootLayout}
+        style={[styles.root, isActive && styles.rootActive, { transform: [{ scale: scaleAnimValue }] }]}
       >
-        <Image
-          style={styles.picture}
-          source={{ uri: getRandomUnsplashImage(item.id) }}
-        />
-
-        <View>
-          <View>
-            <Text style={[styles.text, styles.hostText]}>
-              {String(item.hostName).toUpperCase()}
-            </Text>
-          </View>
-          <View>
-            <Text style={[styles.text, styles.titleText]}>{item.title}</Text>
-          </View>
-        </View>
-
-        <View style={styles.footer}>
-          <View>
-            <View>
-              <Text style={[styles.text, styles.dateText]}>{dateLabel}</Text>
-            </View>
-            <View>
-              <Text style={[styles.text, styles.dateText]}>
-                {durationLabel}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.location}>
-            <Image style={styles.locationIcon} source={locationIconSrc} />
-            <Text style={[styles.text, styles.locationText]}>
-              {item.locationName}
-            </Text>
-          </View>
-        </View>
+        <EventPreview {...{ item }} />
       </Animated.View>
     </TouchableWithoutFeedback>
   )
@@ -98,49 +66,9 @@ export default function EventFeedItem({ item }: Props) {
 
 const styles = StyleSheet.create({
   root: {
-    position: 'relative',
-
     height: 230,
-    justifyContent: 'space-between',
-    padding: 16,
-    marginBottom: 16,
-    borderRadius: 13,
-    overflow: 'hidden',
-
-    backgroundColor: '#333'
   },
-  picture: {
-    ...StyleSheet.absoluteFillObject,
-
-    resizeMode: 'cover',
-
-    opacity: 0.72
-  },
-  text: {
-    color: colors.white
-  },
-  hostText: {
-    fontSize: 12
-  },
-  titleText: {
-    fontSize: 23,
-    fontWeight: 'bold'
-  },
-  footer: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'space-between'
-  },
-  dateText: {
-    fontSize: 13
-  },
-  location: {
-    flexDirection: 'row'
-  },
-  locationIcon: {
-    marginRight: 3
-  },
-  locationText: {
-    fontSize: 13
+  rootActive: {
+    opacity: 0
   }
 })
