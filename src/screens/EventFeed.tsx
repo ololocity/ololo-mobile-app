@@ -70,16 +70,21 @@ const DATA: SectionData = [
 export default function EventFeed() {
   const [activeItem, setActiveItem] = React.useState(undefined)
   const [activeItemLayout, setActiveItemLayout] = React.useState(undefined)
+  const lastScrollY = React.useRef(0)
   const hasActiveItem = activeItem && activeItemLayout
 
   function handleItemPress(item, layout) {
-    setActiveItemLayout(layout)
+    setActiveItemLayout(({ ...layout, py: layout.py - lastScrollY.current }))
     setActiveItem(item)
   }
 
   function handlePreviewModalDismiss() {
     setActiveItem(undefined)
     setActiveItemLayout(undefined)
+  }
+
+  function handleScroll({ nativeEvent: { contentOffset: { y } } }) {
+    lastScrollY.current = y
   }
 
   return (
@@ -91,6 +96,8 @@ export default function EventFeed() {
         sections={DATA}
         stickySectionHeadersEnabled={false}
         keyExtractor={(_, index) => index.toString()}
+        onScroll={handleScroll}
+        scrollEventThrottle={1}
         renderItem={({ item }) => (
           <EventFeedItem
             isActive={activeItem && activeItem.id === item.id}
@@ -124,6 +131,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingTop: 45,
+    paddingBottom: 20,
     paddingHorizontal: 16
   }
 })
