@@ -6,10 +6,11 @@ import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
 
 export interface EventFeedItem {
+  id: string,
   hostName: string
   title: string
   locationName: string
-  startAt: number
+  startsAt: number
   durationMinutes: number
 }
 
@@ -27,10 +28,11 @@ const DATA: SectionData = [
     title: 'Сегодня',
     data: [
       {
+        id: 'event1',
         hostName: 'Павел Исаенко',
         title: 'Платный воркшоп по фотографии',
         locationName: 'ololoErkindik',
-        startAt: 1579092422351,
+        startsAt: 1579092422351,
         durationMinutes: 60
       }
     ]
@@ -39,17 +41,19 @@ const DATA: SectionData = [
     title: 'Другие ивенты',
     data: [
       {
+        id: 'event2',
         hostName: 'Николай Соколов',
         title: 'Платный воркшоп по интерфейсам',
         locationName: 'ololoErkindik',
-        startAt: 1579092422351,
+        startsAt: 1579092422351,
         durationMinutes: 60
       },
       {
+        id: 'event3',
         hostName: 'Михаил Романенко',
         title: 'Бесплатный воркшоп по фотографии',
         locationName: 'ololoVictory',
-        startAt: 1579092422351,
+        startsAt: 1579092422351,
         durationMinutes: 60
       }
     ]
@@ -63,6 +67,7 @@ export default function EventFeed() {
         style={styles.list}
         contentContainerStyle={styles.listContent}
         sections={DATA}
+        stickySectionHeadersEnabled={false}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => <EventFeedItem {...{ item }} />}
         renderSectionHeader={({ section: { title } }) => (
