@@ -41,5 +41,9 @@ export default {
     emailInputLabel: 'E-mail',
     subscribeText: 'Быть в курсе акций и мероприятий',
     finish: 'Завершить'
+  },
+  eventFeed: {
+    now: 'Сегодня',
+    futureEvents: 'Другие ивенты'
   }
 }

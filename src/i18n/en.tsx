@@ -39,5 +39,9 @@ export default {
     emailInputLabel: 'E-mail',
     subscribeText: 'Stay up to date with events',
     finish: 'Finish'
+  },
+  eventFeed: {
+    now: 'Now',
+    futureEvents: 'Future Events'
   }
 }
