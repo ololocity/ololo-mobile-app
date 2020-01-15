@@ -1,5 +1,12 @@
 import React from 'react'
-import { Dimensions, View, Image, TouchableOpacity, StyleSheet, Animated } from 'react-native'
+import {
+  Dimensions,
+  View,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Animated
+} from 'react-native'
 import { useColorScheme } from 'react-native-appearance'
 
 import { EventFeedItem } from '../screens/EventFeed'
@@ -12,8 +19,8 @@ const backIconSrc = {
 
 const PREVIEW_HEIGHT = 361
 const SPRING_CONFIG = {
-  friction: 6,
-  tension: 30
+  friction: 8,
+  tension: 40
 }
 
 interface Props {
@@ -27,12 +34,17 @@ export default function EventPreviewModal({
   initialLayout,
   onDismiss
 }: Props) {
+  const [isRevealed, setRevealState] = React.useState(false)
   const { width: windowWidth } = Dimensions.get('screen')
   const colorScheme = useColorScheme()
   const [leftAnimValue] = React.useState(new Animated.Value(initialLayout.px))
   const [topAnimValue] = React.useState(new Animated.Value(initialLayout.py))
-  const [widthAnimValue] = React.useState(new Animated.Value(initialLayout.width))
-  const [heightAnimValue] = React.useState(new Animated.Value(initialLayout.height))
+  const [widthAnimValue] = React.useState(
+    new Animated.Value(initialLayout.width)
+  )
+  const [heightAnimValue] = React.useState(
+    new Animated.Value(initialLayout.height)
+  )
 
   React.useEffect(() => {
     Animated.parallel([
@@ -51,11 +63,15 @@ export default function EventPreviewModal({
       Animated.spring(heightAnimValue, {
         toValue: PREVIEW_HEIGHT,
         ...SPRING_CONFIG
-      }),
-    ]).start()
+      })
+    ]).start(() => {
+      setRevealState(true)
+    })
   }, [])
 
   function handleDismissButtonPress() {
+    setRevealState(false)
+
     Animated.parallel([
       Animated.spring(leftAnimValue, {
         toValue: initialLayout.px,
@@ -72,32 +88,37 @@ export default function EventPreviewModal({
       Animated.spring(heightAnimValue, {
         toValue: initialLayout.height,
         ...SPRING_CONFIG
-      }),
+      })
     ]).start(onDismiss)
   }
 
   return (
-      <View style={styles.root} pointerEvents="box-none">
-        <Animated.View
-          style={[
-            styles.preview,
-            {
-              left: leftAnimValue,
-              top: topAnimValue,
-              width: widthAnimValue,
-              height: heightAnimValue
-            }
-          ]}
-        >
-          <EventPreview {...{ item }} />
-        </Animated.View>
+    <View style={styles.root} pointerEvents="box-none">
+      <Animated.View
+        style={[
+          styles.preview,
+          {
+            left: leftAnimValue,
+            top: topAnimValue,
+            width: widthAnimValue,
+            height: heightAnimValue
+          }
+        ]}
+      >
+        <EventPreview {...{ item }} />
+      </Animated.View>
 
-        <TouchableOpacity style={styles.dismissButton} onPress={handleDismissButtonPress}>
+      {isRevealed ? (
+        <TouchableOpacity
+          style={styles.dismissButton}
+          onPress={handleDismissButtonPress}
+        >
           <Image
             source={backIconSrc[colorScheme === 'dark' ? 'dark' : 'default']}
           />
         </TouchableOpacity>
-      </View>
+      ) : null}
+    </View>
   )
 }
 
@@ -116,6 +137,6 @@ const styles = StyleSheet.create({
     left: 0,
     top: 30,
 
-    padding: 30,
+    padding: 30
   }
 })

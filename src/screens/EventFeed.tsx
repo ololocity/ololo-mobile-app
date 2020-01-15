@@ -71,6 +71,7 @@ const DATA: SectionData = [
 export default function EventFeed() {
   const [activeItem, setActiveItem] = React.useState(undefined)
   const [activeItemLayout, setActiveItemLayout] = React.useState(undefined)
+  const hasActiveItem = activeItem && activeItemLayout
 
   function handleItemPress(item, layout) {
     setActiveItemLayout(layout)
@@ -86,6 +87,7 @@ export default function EventFeed() {
     <>
       <SafeAreaView style={styles.root}>
         <SectionList
+          scrollEnabled={!hasActiveItem}
           style={styles.list}
           contentContainerStyle={styles.listContent}
           sections={DATA}
@@ -105,7 +107,7 @@ export default function EventFeed() {
           )}
         />
       </SafeAreaView>
-      {activeItem && activeItemLayout ? (
+      {hasActiveItem ? (
         <EventPreviewModal
           item={activeItem}
           initialLayout={activeItemLayout}
