@@ -35,7 +35,7 @@ const EVENTS = [
     locationName: 'ololoErkindik',
     startsAt: 1579092422351,
     durationMinutes: 60,
-    coverImageUrl: getUnsplashImageUrl('WLUHO9A_xik', 375, 361)
+    coverImageUrl: getUnsplashImageUrl('hfk6xOjQlFk', 375, 361)
   },
   {
     id: 'event2',
@@ -44,16 +44,16 @@ const EVENTS = [
     locationName: 'ololoErkindik',
     startsAt: 1579092422351,
     durationMinutes: 60,
-    coverImageUrl: getUnsplashImageUrl('WLUHO9A_xik', 375, 361)
+    coverImageUrl: getUnsplashImageUrl('JAvWcpZmyUQ', 375, 361)
   },
   {
     id: 'event3',
     hostName: 'Михаил Романенко',
-    title: 'Бесплатный воркшоп по фотографии',
+    title: 'Бесплатный воркшоп по оригами',
     locationName: 'ololoVictory',
     startsAt: 1579092422351,
     durationMinutes: 60,
-    coverImageUrl: getUnsplashImageUrl('WLUHO9A_xik', 375, 361)
+    coverImageUrl: getUnsplashImageUrl('vhVj--1y31Y', 375, 361)
   }
 ]
 const [todayEvent, ...restEvents] = EVENTS
