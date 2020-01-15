@@ -54,7 +54,9 @@ export default function EventFeedItem({ item }: Props) {
       onPress={handlePress}
       style={styles.root}
     >
-      <Animated.View style={[styles.root, {transform: [{scale: scaleAnimValue}]}]}>
+      <Animated.View
+        style={[styles.root, { transform: [{ scale: scaleAnimValue }] }]}
+      >
         <Image
           style={styles.picture}
           source={{ uri: getRandomUnsplashImage(item.id) }}

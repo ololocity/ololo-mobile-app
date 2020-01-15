@@ -12,7 +12,14 @@ export default function EventFeedSectionTitle({ title }: Props) {
 
   return (
     <View style={styles.root}>
-      <Text style={[styles.titleText, colorScheme === 'dark' && styles.titleTextDark]}>{title}</Text>
+      <Text
+        style={[
+          styles.titleText,
+          colorScheme === 'dark' && styles.titleTextDark
+        ]}
+      >
+        {title}
+      </Text>
     </View>
   )
 }

@@ -8,7 +8,7 @@ import EventFeedItem from '../components/EventFeedItem'
 import i18n from '../localization'
 
 export interface EventFeedItem {
-  id: string,
+  id: string
   hostName: string
   title: string
   locationName: string
