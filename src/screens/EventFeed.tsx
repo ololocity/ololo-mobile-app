@@ -1,9 +1,11 @@
 import React from 'react'
-import { View, Text, SectionList, StyleSheet } from 'react-native'
+import { SectionList, StyleSheet } from 'react-native'
 
 import SafeAreaView from '../components/SafeAreaView'
 import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
+
+import i18n from '../localization'
 
 export interface EventFeedItem {
   id: string,
@@ -25,7 +27,7 @@ interface SectionData {
 
 const DATA: SectionData = [
   {
-    title: 'Сегодня',
+    title: i18n.t('eventFeed.now'),
     data: [
       {
         id: 'event1',
@@ -38,7 +40,7 @@ const DATA: SectionData = [
     ]
   },
   {
-    title: 'Другие ивенты',
+    title: i18n.t('eventFeed.futureEvents'),
     data: [
       {
         id: 'event2',
