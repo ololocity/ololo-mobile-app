@@ -75,7 +75,7 @@ export default function EventFeed() {
 
   function handleItemPress(item, layout) {
     if (!hasActiveItem) {
-      setActiveItemLayout(({ ...layout, py: layout.py - lastScrollY.current }))
+      setActiveItemLayout({ ...layout, py: layout.py - lastScrollY.current })
       setActiveItem(item)
     }
   }
@@ -85,7 +85,11 @@ export default function EventFeed() {
     setActiveItemLayout(undefined)
   }
 
-  function handleScroll({ nativeEvent: { contentOffset: { y } } }) {
+  function handleScroll({
+    nativeEvent: {
+      contentOffset: { y }
+    }
+  }) {
     lastScrollY.current = y
   }
 

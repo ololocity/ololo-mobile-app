@@ -56,7 +56,11 @@ export default function EventFeedItem({ item, onPress, isActive }: Props) {
       <Animated.View
         ref={rootRef}
         onLayout={handleRootLayout}
-        style={[styles.root, isActive && styles.rootActive, { transform: [{ scale: scaleAnimValue }] }]}
+        style={[
+          styles.root,
+          isActive && styles.rootActive,
+          { transform: [{ scale: scaleAnimValue }] }
+        ]}
       >
         <EventPreview {...{ item }} />
       </Animated.View>
@@ -66,7 +70,7 @@ export default function EventFeedItem({ item, onPress, isActive }: Props) {
 
 const styles = StyleSheet.create({
   root: {
-    height: 230,
+    height: 230
   },
   rootActive: {
     opacity: 0
