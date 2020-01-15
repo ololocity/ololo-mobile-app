@@ -23,7 +23,7 @@ const AppContainer = createAppContainer(
       Auth: AuthStack
     },
     {
-      initialRouteName: 'App'
+      initialRouteName: 'Onboarding'
     }
   )
 )
