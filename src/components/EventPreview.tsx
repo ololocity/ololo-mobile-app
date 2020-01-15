@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, Animated, StyleSheet } from 'react-native'
 import format from 'date-fns/format'
 import add from 'date-fns/add'
 
@@ -10,9 +10,10 @@ const locationIconSrc = require('../assets/map-marker.png')
 
 interface Props {
   item: EventFeedItem
+  revealAnimValue?: Animated.Value
 }
 
-function EventPreview({ item }: Props) {
+function EventPreview({ item, revealAnimValue }: Props) {
   const startsAt = new Date(item.startsAt)
   const endsAt = add(new Date(item.startsAt), { minutes: item.durationMinutes })
   const dateLabel = format(startsAt, 'MMMM dd')
@@ -20,9 +21,21 @@ function EventPreview({ item }: Props) {
     format(startsAt, 'HH:mm'),
     format(endsAt, 'HH:mm')
   ].join('-')
+  const borderRadius = revealAnimValue
+    ? revealAnimValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [13, 0]
+      })
+    : 13
+  const paddingTop = revealAnimValue
+    ? revealAnimValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [16, 86]
+      })
+    : 16
 
   return (
-    <View style={styles.root}>
+    <Animated.View style={[styles.root, { paddingTop, borderRadius }]}>
       <Image style={styles.picture} source={{ uri: item.coverImageUrl }} />
 
       <View>
@@ -52,7 +65,7 @@ function EventPreview({ item }: Props) {
           </Text>
         </View>
       </View>
-    </View>
+    </Animated.View>
   )
 }
 
@@ -65,7 +78,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 16,
     marginBottom: 16,
-    borderRadius: 13,
     overflow: 'hidden',
 
     backgroundColor: '#333'

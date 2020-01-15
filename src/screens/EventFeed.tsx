@@ -1,7 +1,6 @@
 import React from 'react'
-import { SectionList, StyleSheet } from 'react-native'
+import { View, SectionList, StyleSheet } from 'react-native'
 
-import SafeAreaView from '../components/SafeAreaView'
 import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
 import EventPreviewModal from '../components/EventPreviewModal'
@@ -84,29 +83,27 @@ export default function EventFeed() {
   }
 
   return (
-    <>
-      <SafeAreaView style={styles.root}>
-        <SectionList
-          scrollEnabled={!hasActiveItem}
-          style={styles.list}
-          contentContainerStyle={styles.listContent}
-          sections={DATA}
-          stickySectionHeadersEnabled={false}
-          keyExtractor={(_, index) => index.toString()}
-          renderItem={({ item }) => (
-            <EventFeedItem
-              isActive={activeItem && activeItem.id === item.id}
-              {...{
-                item,
-                onPress: dimensions => handleItemPress(item, dimensions)
-              }}
-            />
-          )}
-          renderSectionHeader={({ section: { title } }) => (
-            <EventFeedSectionTitle {...{ title }} />
-          )}
-        />
-      </SafeAreaView>
+    <View style={styles.root}>
+      <SectionList
+        scrollEnabled={!hasActiveItem}
+        style={styles.list}
+        contentContainerStyle={styles.listContent}
+        sections={DATA}
+        stickySectionHeadersEnabled={false}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => (
+          <EventFeedItem
+            isActive={activeItem && activeItem.id === item.id}
+            {...{
+              item,
+              onPress: dimensions => handleItemPress(item, dimensions)
+            }}
+          />
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <EventFeedSectionTitle {...{ title }} />
+        )}
+      />
       {hasActiveItem ? (
         <EventPreviewModal
           item={activeItem}
@@ -114,7 +111,7 @@ export default function EventFeed() {
           onDismiss={handlePreviewModalDismiss}
         />
       ) : null}
-    </>
+    </View>
   )
 }
 
@@ -126,6 +123,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   listContent: {
+    paddingTop: 45,
     paddingHorizontal: 16
   }
 })
