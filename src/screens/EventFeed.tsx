@@ -74,8 +74,10 @@ export default function EventFeed() {
   const hasActiveItem = activeItem && activeItemLayout
 
   function handleItemPress(item, layout) {
-    setActiveItemLayout(({ ...layout, py: layout.py - lastScrollY.current }))
-    setActiveItem(item)
+    if (!hasActiveItem) {
+      setActiveItemLayout(({ ...layout, py: layout.py - lastScrollY.current }))
+      setActiveItem(item)
+    }
   }
 
   function handlePreviewModalDismiss() {
