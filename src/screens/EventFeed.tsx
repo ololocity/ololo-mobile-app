@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, SectionList, StyleSheet } from 'react-native'
+import { View, SectionList, StyleSheet, BackHandler } from 'react-native'
 
 import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
@@ -83,6 +83,8 @@ export default function EventFeed() {
   function handlePreviewModalDismiss() {
     setActiveItem(undefined)
     setActiveItemLayout(undefined)
+
+    return true
   }
 
   function handleScroll({
@@ -92,6 +94,13 @@ export default function EventFeed() {
   }) {
     lastScrollY.current = y
   }
+
+  React.useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handlePreviewModalDismiss);
+    return function cleanup() {
+      backHandler.remove();
+    }
+  }, [])
 
   return (
     <View style={styles.root}>
