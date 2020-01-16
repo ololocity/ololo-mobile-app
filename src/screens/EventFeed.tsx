@@ -1,9 +1,11 @@
 import React from 'react'
-import { SectionList, StyleSheet } from 'react-native'
+import { View, SectionList, StyleSheet } from 'react-native'
 
-import SafeAreaView from '../components/SafeAreaView'
 import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
+import EventPreviewModal from '../components/EventPreviewModal'
+
+import { getUnsplashImageUrl } from '../util/misc'
 
 import i18n from '../localization'
 
@@ -14,6 +16,7 @@ export interface EventFeedItem {
   locationName: string
   startsAt: number
   durationMinutes: number
+  coverImageUrl: string
 }
 
 interface SectionItem {
@@ -21,62 +24,107 @@ interface SectionItem {
   data: Array<EventFeedItem>
 }
 
-interface SectionData {
-  [index: number]: SectionItem
-}
+interface SectionData extends Array<SectionItem> {}
 
+const EVENTS = [
+  {
+    id: 'event1',
+    hostName: 'Павел Исаенко',
+    title: 'Платный воркшоп по фотографии',
+    locationName: 'ololoErkindik',
+    startsAt: 1579092422351,
+    durationMinutes: 60,
+    coverImageUrl: getUnsplashImageUrl('hfk6xOjQlFk', 375, 361)
+  },
+  {
+    id: 'event2',
+    hostName: 'Николай Соколов',
+    title: 'Платный воркшоп по интерфейсам',
+    locationName: 'ololoErkindik',
+    startsAt: 1579092422351,
+    durationMinutes: 60,
+    coverImageUrl: getUnsplashImageUrl('JAvWcpZmyUQ', 375, 361)
+  },
+  {
+    id: 'event3',
+    hostName: 'Михаил Романенко',
+    title: 'Бесплатный воркшоп по оригами',
+    locationName: 'ololoVictory',
+    startsAt: 1579092422351,
+    durationMinutes: 60,
+    coverImageUrl: getUnsplashImageUrl('vhVj--1y31Y', 375, 361)
+  }
+]
+const [todayEvent, ...restEvents] = EVENTS
 const DATA: SectionData = [
   {
     title: i18n.t('eventFeed.now'),
-    data: [
-      {
-        id: 'event1',
-        hostName: 'Павел Исаенко',
-        title: 'Платный воркшоп по фотографии',
-        locationName: 'ololoErkindik',
-        startsAt: 1579092422351,
-        durationMinutes: 60
-      }
-    ]
+    data: [todayEvent]
   },
   {
     title: i18n.t('eventFeed.futureEvents'),
-    data: [
-      {
-        id: 'event2',
-        hostName: 'Николай Соколов',
-        title: 'Платный воркшоп по интерфейсам',
-        locationName: 'ololoErkindik',
-        startsAt: 1579092422351,
-        durationMinutes: 60
-      },
-      {
-        id: 'event3',
-        hostName: 'Михаил Романенко',
-        title: 'Бесплатный воркшоп по фотографии',
-        locationName: 'ololoVictory',
-        startsAt: 1579092422351,
-        durationMinutes: 60
-      }
-    ]
+    data: restEvents
   }
 ]
 
 export default function EventFeed() {
+  const [activeItem, setActiveItem] = React.useState(undefined)
+  const [activeItemLayout, setActiveItemLayout] = React.useState(undefined)
+  const lastScrollY = React.useRef(0)
+  const hasActiveItem = activeItem && activeItemLayout
+
+  function handleItemPress(item, layout) {
+    if (!hasActiveItem) {
+      setActiveItemLayout({ ...layout, py: layout.py - lastScrollY.current })
+      setActiveItem(item)
+    }
+  }
+
+  function handlePreviewModalDismiss() {
+    setActiveItem(undefined)
+    setActiveItemLayout(undefined)
+  }
+
+  function handleScroll({
+    nativeEvent: {
+      contentOffset: { y }
+    }
+  }) {
+    lastScrollY.current = y
+  }
+
   return (
-    <SafeAreaView style={styles.root}>
+    <View style={styles.root}>
       <SectionList
+        scrollEnabled={!hasActiveItem}
         style={styles.list}
         contentContainerStyle={styles.listContent}
         sections={DATA}
         stickySectionHeadersEnabled={false}
         keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }) => <EventFeedItem {...{ item }} />}
+        onScroll={handleScroll}
+        scrollEventThrottle={1}
+        renderItem={({ item }) => (
+          <EventFeedItem
+            isActive={activeItem && activeItem.id === item.id}
+            {...{
+              item,
+              onPress: dimensions => handleItemPress(item, dimensions)
+            }}
+          />
+        )}
         renderSectionHeader={({ section: { title } }) => (
           <EventFeedSectionTitle {...{ title }} />
         )}
       />
-    </SafeAreaView>
+      {hasActiveItem ? (
+        <EventPreviewModal
+          item={activeItem}
+          initialLayout={activeItemLayout}
+          onDismiss={handlePreviewModalDismiss}
+        />
+      ) : null}
+    </View>
   )
 }
 
@@ -88,6 +136,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   listContent: {
+    paddingTop: 45,
+    paddingBottom: 20,
     paddingHorizontal: 16
   }
 })
