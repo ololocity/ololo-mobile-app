@@ -83,8 +83,6 @@ export default function EventFeed() {
   function handlePreviewModalDismiss() {
     setActiveItem(undefined)
     setActiveItemLayout(undefined)
-
-    return true
   }
 
   function handleScroll({
@@ -96,11 +94,20 @@ export default function EventFeed() {
   }
 
   React.useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', handlePreviewModalDismiss);
+    function handleBackButtonPress () {
+      if (hasActiveItem) {
+        handlePreviewModalDismiss()
+        return true
+      }
+
+      BackHandler.exitApp()
+    }
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButtonPress);
     return function cleanup() {
       backHandler.remove();
     }
-  }, [])
+  }, [hasActiveItem])
 
   return (
     <View style={styles.root}>
