@@ -33,25 +33,29 @@ export default function OnboardingAnimatedIcon({
   // We'll play reveal animation on component mount and then set it to a falsy value, to
   // substitute it with scroll-bounded interpolation
   // If it is not a first slide — we'll set it to `undefined` right away
-  const [revealAnimationValue, setRevealAnimationValue] = React.useState(isFirst ? new Animated.Value(0) : undefined)
+  const [revealAnimationValue, setRevealAnimationValue] = React.useState(
+    isFirst ? new Animated.Value(0) : undefined
+  )
 
   const { width: screenWidth } = Dimensions.get('window')
   const animationRef = React.useRef<LottieView>()
   const timestamps: AnimationTimestamp = animationTimestamps[pageKey]
   const pageSnapPoint = screenWidth * index
-  const animationProgress = revealAnimationValue || scrollPosition.interpolate({
-    inputRange: [
-      pageSnapPoint - (screenWidth * 0.39),
-      pageSnapPoint,
-      pageSnapPoint + (screenWidth * 0.39),
-    ],
-    outputRange: [
-      getProgressByFrame(timestamps.started),
-      getProgressByFrame(timestamps.revealed),
-      getProgressByFrame(timestamps.ended)
-    ],
-    extrapolate: 'clamp'
-  })
+  const animationProgress =
+    revealAnimationValue ||
+    scrollPosition.interpolate({
+      inputRange: [
+        pageSnapPoint - screenWidth * 0.39,
+        pageSnapPoint,
+        pageSnapPoint + screenWidth * 0.39
+      ],
+      outputRange: [
+        getProgressByFrame(timestamps.started),
+        getProgressByFrame(timestamps.revealed),
+        getProgressByFrame(timestamps.ended)
+      ],
+      extrapolate: 'clamp'
+    })
 
   React.useEffect(() => {
     if (isFirst) {
@@ -60,7 +64,7 @@ export default function OnboardingAnimatedIcon({
       }
 
       Animated.timing(revealAnimationValue, {
-        toValue: revealAnimationEndProgress,
+        toValue: revealAnimationEndProgress
       }).start(onAnimationCompleted)
     }
   }, [isFirst])
