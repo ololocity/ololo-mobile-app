@@ -13,6 +13,7 @@ import { useNavigation } from 'react-navigation-hooks'
 
 import SafeAreaView from '../components/SafeAreaView'
 import OnboardingSlide from '../components/OnboardingSlide'
+import OnboardingFooter from '../components/OnboardingFooter'
 
 import { colors } from '../util/style'
 import * as Store from '../util/store'
@@ -20,26 +21,22 @@ import * as Store from '../util/store'
 import logoSrc from '../assets/ololo-logo.png'
 import i18n from '../localization'
 
-const PAGE_INDICATOR_SIZE = 8
-const CURRENT_PAGE_INDICATOR_SIZE = 12
-const PAGE_INDICATOR_HIT_SLOP = 12
-
-const slideI18nKeys = ['events', 'networking', 'feedback']
-const slideCount = slideI18nKeys.length
+const pageI18nKeys = ['events', 'networking', 'feedback']
+const pageCount = pageI18nKeys.length
 
 export default function OnboardingScreen() {
   const navigation = useNavigation()
-  const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0)
-  const scrollViewRef = React.useRef()
+  const [currentPageIndex, setCurrentPageIndex] = React.useState(0)
+  const scrollViewRef = React.useRef<ScrollView>()
   const { width: screenWidth } = Dimensions.get('window')
-  const isOnLastPage = currentSlideIndex === slideCount - 1
+  const isOnLastPage = currentPageIndex === pageCount - 1
   const isSkipEnabled = !isOnLastPage
 
   function handleScroll(event) {
     const offsetX = event.nativeEvent.contentOffset.x
 
     if (offsetX >= 0) {
-      setCurrentSlideIndex(Math.round(offsetX / screenWidth))
+      setCurrentPageIndex(Math.round(offsetX / screenWidth))
     }
   }
 
@@ -63,7 +60,7 @@ export default function OnboardingScreen() {
       return handleSkipPress()
     }
 
-    scrollToIndex(currentSlideIndex + 1)
+    scrollToIndex(currentPageIndex + 1)
   }
 
   return (
@@ -78,7 +75,7 @@ export default function OnboardingScreen() {
         scrollEventThrottle={150}
         onScroll={handleScroll}
       >
-        {slideI18nKeys.map((item, index) => (
+        {pageI18nKeys.map((item, index) => (
           <OnboardingSlide
             key={index.toString()}
             title={i18n.t(`onboardingScreen.slides.${item}.title`)}
@@ -90,54 +87,12 @@ export default function OnboardingScreen() {
         <View style={styles.logo}>
           <Image source={logoSrc} />
         </View>
-        <View style={styles.footer} pointerEvents="auto">
-          <TouchableOpacity
-            onPress={handleSkipPress}
-            hitSlop={{
-              top: PAGE_INDICATOR_HIT_SLOP,
-              left: PAGE_INDICATOR_HIT_SLOP,
-              bottom: PAGE_INDICATOR_HIT_SLOP,
-              right: PAGE_INDICATOR_HIT_SLOP
-            }}
-            style={[
-              styles.navButton,
-              { width: screenWidth / 3 },
-              !isSkipEnabled && styles.navButtonDisabled
-            ]}
-            disabled={!isSkipEnabled}
-          >
-            <Text style={[styles.navButtonText, styles.navButtonSkipText]}>
-              {i18n.t('onboardingScreen.skip')}
-            </Text>
-          </TouchableOpacity>
-
-          <View style={styles.pager}>
-            {slideI18nKeys.map((_, index) => (
-              <TouchableWithoutFeedback
-                key={index.toString()}
-                onPress={() => handlePageIndicatorPress(index)}
-              >
-                <View
-                  style={[
-                    styles.page,
-                    index === currentSlideIndex && styles.pageCurrent
-                  ]}
-                />
-              </TouchableWithoutFeedback>
-            ))}
-          </View>
-
-          <TouchableOpacity
-            onPress={handleContinuePress}
-            style={[styles.navButton, { width: screenWidth / 3 }]}
-          >
-            <Text style={[styles.navButtonText, styles.navButtonContinueText]}>
-              {isOnLastPage
-                ? i18n.t('onboardingScreen.start')
-                : i18n.t('onboardingScreen.next')}
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <OnboardingFooter
+          onContinuePress={handleContinuePress}
+          onSkipPress={handleSkipPress}
+          onPageIndicatorPress={handlePageIndicatorPress}
+          {...{ pageCount, currentPageIndex }}
+        />
       </SafeAreaView>
     </View>
   )
@@ -158,53 +113,6 @@ const styles = StyleSheet.create({
   logo: {
     marginTop: 47,
     alignItems: 'center'
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-
-  navButton: {
-    paddingVertical: 30,
-    paddingHorizontal: 25
-  },
-  navButtonDisabled: {
-    opacity: 0
-  },
-  navButtonText: {
-    fontSize: 12
-  },
-  navButtonSkipText: {
-    color: colors.white
-  },
-  navButtonContinueText: {
-    textAlign: 'right',
-    fontWeight: 'bold',
-    color: colors.yellow
-  },
-  pager: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  page: {
-    position: 'relative',
-    zIndex: 10,
-
-    width: PAGE_INDICATOR_SIZE,
-    height: PAGE_INDICATOR_SIZE,
-    borderRadius: PAGE_INDICATOR_SIZE / 2,
-    marginHorizontal: 6,
-
-    backgroundColor: '#5999F1'
-  },
-  pageCurrent: {
-    width: CURRENT_PAGE_INDICATOR_SIZE,
-    height: CURRENT_PAGE_INDICATOR_SIZE,
-    borderRadius: CURRENT_PAGE_INDICATOR_SIZE / 2,
-
-    backgroundColor: colors.yellow
   },
   scroll: {
     ...StyleSheet.absoluteFillObject
