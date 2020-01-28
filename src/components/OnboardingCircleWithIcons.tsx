@@ -2,20 +2,22 @@ import React from 'react'
 import { Animated, View, Text, StyleSheet, Dimensions } from 'react-native'
 import MaskedView from '@react-native-community/masked-view'
 
+import OnboardingAnimatedIcon from './OnboardingAnimatedIcon'
+
 import { CONTENT_HEIGHT } from './OnboardingSlide'
 
-const CIRCLE_SIZE = 240
+export const CIRCLE_SIZE = 240
 
 interface Props {
   scrollPosition: Animated.Value
   pageCount: number
-  currentPageIndex: number
+  pageKeys: Array<string>
 }
 
 export default function OnboardingCircleWithIcons({
   scrollPosition,
   pageCount,
-  currentPageIndex
+  pageKeys
 }: Props) {
   const { width: screenWidth } = Dimensions.get('window')
   const scrollOffsetWidth = pageCount * screenWidth
@@ -23,31 +25,38 @@ export default function OnboardingCircleWithIcons({
     inputRange: [0, scrollOffsetWidth],
     outputRange: [0, -scrollOffsetWidth]
   })
+
   return (
-    <MaskedView
-      style={styles.root}
-      pointerEvents="none"
-      maskElement={
-        <View style={styles.circleWrapper}>
-          <View style={styles.circle} />
+    <View style={styles.root} pointerEvents="none">
+      <MaskedView
+        style={styles.wrapper}
+        maskElement={
+          <View style={styles.circleWrapper}>
+            <View style={styles.circle} />
+          </View>
+        }
+      >
+        <View style={styles.content} pointerEvents="none">
+          <Animated.View
+            style={[styles.pages, { transform: [{ translateX }] }]}
+          >
+            {Array(pageCount)
+              .fill(null)
+              .map((_, index) => (
+                <View
+                  key={index.toString()}
+                  style={[styles.page, { width: screenWidth }]}
+                >
+                  <OnboardingAnimatedIcon
+                    pageKey={pageKeys[index]}
+                    {...{ index, scrollPosition }}
+                  />
+                </View>
+              ))}
+          </Animated.View>
         </View>
-      }
-    >
-      <View style={styles.content}>
-        <Animated.View style={[styles.pages, { transform: [{ translateX }] }]}>
-          {Array(pageCount)
-            .fill(null)
-            .map((_, index) => (
-              <View
-                key={index.toString()}
-                style={[styles.page, { width: screenWidth }]}
-              >
-                <Text>{index + 1}</Text>
-              </View>
-            ))}
-        </Animated.View>
-      </View>
-    </MaskedView>
+      </MaskedView>
+    </View>
   )
 }
 
@@ -57,9 +66,12 @@ const styles = StyleSheet.create({
 
     flex: 1,
 
-    alignItems: 'center',
-    justifyContent: 'center',
     marginBottom: CONTENT_HEIGHT
+  },
+  wrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   circleWrapper: {
@@ -80,7 +92,7 @@ const styles = StyleSheet.create({
   content: {
     ...StyleSheet.absoluteFillObject,
 
-    backgroundColor: 'rgba(255,255,255,0.1)'
+    backgroundColor: '#438DEF'
   },
   pages: {
     position: 'absolute',

@@ -23,8 +23,8 @@ import * as Store from '../util/store'
 import logoSrc from '../assets/ololo-logo.png'
 import i18n from '../localization'
 
-const pageI18nKeys = ['events', 'networking', 'feedback']
-const pageCount = pageI18nKeys.length
+const pageKeys = ['events', 'networking', 'feedback']
+const pageCount = pageKeys.length
 
 export default function OnboardingScreen() {
   const navigation = useNavigation()
@@ -80,7 +80,7 @@ export default function OnboardingScreen() {
           { useNativeDriver: true, listener: handleScroll }
         )}
       >
-        {pageI18nKeys.map((item, index) => (
+        {pageKeys.map((item, index) => (
           <OnboardingSlide
             key={index.toString()}
             title={i18n.t(`onboardingScreen.slides.${item}.title`)}
@@ -93,7 +93,7 @@ export default function OnboardingScreen() {
           <Image source={logoSrc} />
         </View>
         <OnboardingCircleWithIcons
-          {...{ scrollPosition, pageCount, currentPageIndex }}
+          {...{ scrollPosition, pageCount, pageKeys }}
         />
         <OnboardingFooter
           onContinuePress={handleContinuePress}
