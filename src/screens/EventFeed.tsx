@@ -94,7 +94,7 @@ export default function EventFeed() {
   }
 
   React.useEffect(() => {
-    function handleBackButtonPress () {
+    function handleBackButtonPress() {
       if (hasActiveItem) {
         handlePreviewModalDismiss()
         return true
@@ -103,9 +103,12 @@ export default function EventFeed() {
       BackHandler.exitApp()
     }
 
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButtonPress);
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      handleBackButtonPress
+    )
     return function cleanup() {
-      backHandler.remove();
+      backHandler.remove()
     }
   }, [hasActiveItem])
 

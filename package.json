@@ -7,11 +7,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "@react-native-community/masked-view": "^0.1.5",
+    "@react-native-community/masked-view": "^0.1.6",
     "date-fns": "^2.9.0",
     "expo": "~36.0.0",
     "expo-localization": "^8.0.0",
     "i18n-js": "^3.5.1",
+    "lottie-react-native": "2.6.1",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "~0.61.4",

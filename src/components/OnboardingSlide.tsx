@@ -5,7 +5,7 @@ import SafeAreaView from './SafeAreaView'
 
 import { colors } from '../util/style'
 
-const CIRCLE_SIZE = 240
+export const CONTENT_HEIGHT = 100
 
 interface Props {
   title: string
@@ -24,10 +24,6 @@ export default function OnboardingSlide({
     <View style={[styles.root, { width }]}>
       <SafeAreaView style={styles.wrapper}>
         <View style={styles.container}>
-          <View style={styles.circleWrapper}>
-            <View style={styles.circle} />
-          </View>
-
           <View style={styles.content}>
             <View style={styles.title}>
               <Text style={[styles.contentText, styles.titleText]}>
@@ -51,7 +47,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
 
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'flex-end'
   },
   container: {
@@ -59,24 +55,14 @@ const styles = StyleSheet.create({
 
     paddingTop: 103,
     paddingBottom: 80,
-    paddingHorizontal: 25
-  },
-  circleWrapper: {
-    flex: 1,
+    paddingHorizontal: 25,
 
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  circle: {
-    width: CIRCLE_SIZE,
-    height: CIRCLE_SIZE,
-    borderRadius: CIRCLE_SIZE / 2,
-
-    backgroundColor: 'white',
-    opacity: 0.1
+    justifyContent: 'flex-end'
   },
   content: {
-    alignItems: 'center'
+    height: CONTENT_HEIGHT,
+    alignItems: 'center',
+    justifyContent: 'flex-end'
   },
   title: {
     marginBottom: 20
