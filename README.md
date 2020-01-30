@@ -17,8 +17,8 @@ To run the project locally, the recommended approach is to use [Expo CLI](https:
 Then, run the following commands in the project directory:
 
 ```
-    npm install
-    expo start
+$ npm install
+$ expo start
 ```
 
 ## Contributing
