@@ -24,7 +24,7 @@ export default function AuthScreen() {
   const navigation = useNavigation()
   const inputRef = React.useRef()
   const [isInputFocused, setInputFocusState] = React.useState(false)
-  const [phoneNumber, setPhoneNumber] = React.useState('')
+  const [email, setEmail] = React.useState('')
 
   function handleInputFocus() {
     setInputFocusState(true)
@@ -35,12 +35,12 @@ export default function AuthScreen() {
   }
 
   function handleInputChange(nextValue) {
-    setPhoneNumber(nextValue)
+    setEmail(nextValue)
   }
 
   function handleSubmitButtonPress() {
-    if (phoneNumber) {
-      return navigation.navigate('AuthName', { phoneNumber })
+    if (email) {
+      return navigation.navigate('AuthName', { email })
     }
 
     if (inputRef.current) {
@@ -81,9 +81,9 @@ export default function AuthScreen() {
             </View>
 
             <TextInput
-              label={i18n.t('authScreen.phoneInputLabel')}
+              label={i18n.t('authScreen.emailInputLabel')}
               inputRef={inputRef}
-              inputProps={{ placeholder: '+996', keyboardType: 'phone-pad' }}
+              inputProps={{ keyboardType: 'email-address' }}
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
               onChange={handleInputChange}
@@ -94,7 +94,7 @@ export default function AuthScreen() {
         <View style={styles.footer}>
           <AuthButton
             onPress={handleSubmitButtonPress}
-            disabled={isInputFocused && !phoneNumber}
+            disabled={isInputFocused && !email}
             label={
               isInputFocused
                 ? i18n.t('authScreen.next')

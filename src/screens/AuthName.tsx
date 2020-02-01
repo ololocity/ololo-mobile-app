@@ -25,7 +25,7 @@ export default function AuthNameScreen() {
   const [name, setName] = React.useState('')
 
   function handleSubmitButtonPress() {
-    navigation.navigate('AuthEmail')
+    Keyboard.dismiss()
   }
 
   function handleTextInputChange(value) {
@@ -74,8 +74,8 @@ export default function AuthNameScreen() {
         <View style={styles.footer}>
           <AuthButton
             onPress={handleSubmitButtonPress}
-            disabled={!name}
-            label={i18n.t('authNameScreen.next')}
+            disabled
+            label={i18n.t('authNameScreen.finish')}
           />
         </View>
       </View>

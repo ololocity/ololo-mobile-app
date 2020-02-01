@@ -19,24 +19,16 @@ export default {
     }
   },
   authScreen: {
-    title: 'Enter your phone number',
+    title: 'Enter e-mail',
     subTitle: 'To sign up to an event',
-    phoneInputLabel: 'Phone number',
-
+    emailInputLabel: 'E-mail',
     logIn: 'Sign in',
     next: 'Next'
   },
   authNameScreen: {
     title: 'Enter your name',
     subTitle: 'To make it easier to connect with event attendees',
-    nameInputLabel: 'Full name',
-
-    next: 'Next'
-  },
-  authEmailScreen: {
-    title: 'Enter e-mail',
-    subTitle: 'as aditional communication method',
-    emailInputLabel: 'E-mail',
+    nameInputLabel: 'Name',
     subscribeText: 'Stay up to date with events',
     finish: 'Finish'
   },
