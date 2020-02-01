@@ -1,22 +1,36 @@
 import React from 'react'
-import { View, SectionList, StyleSheet, BackHandler } from 'react-native'
+import {
+  View,
+  Text,
+  SectionList,
+  StyleSheet,
+  BackHandler,
+  RefreshControl,
+  ActivityIndicator
+} from 'react-native'
+import { useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import { useColorScheme } from 'react-native-appearance'
 
 import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
 import EventPreviewModal from '../components/EventPreviewModal'
 
-import { getUnsplashImageUrl } from '../util/misc'
-
 import i18n from '../localization'
+import { colors } from '../util/style'
 
 export interface EventFeedItem {
   id: string
-  hostName: string
+  speakers: Array<{ name: string }>
   title: string
-  locationName: string
-  startsAt: number
-  durationMinutes: number
-  coverImageUrl: string
+  venue: {
+    name: string
+  }
+  startsAt: string
+  duration: number
+  coverImage: {
+    url: string
+  }
 }
 
 interface SectionItem {
@@ -26,52 +40,44 @@ interface SectionItem {
 
 interface SectionData extends Array<SectionItem> {}
 
-const EVENTS = [
+const allEventsQuery = gql`
   {
-    id: 'event1',
-    hostName: 'Павел Исаенко',
-    title: 'Платный воркшоп по фотографии',
-    locationName: 'ololoErkindik',
-    startsAt: 1579092422351,
-    durationMinutes: 60,
-    coverImageUrl: getUnsplashImageUrl('hfk6xOjQlFk', 375, 361)
-  },
-  {
-    id: 'event2',
-    hostName: 'Николай Соколов',
-    title: 'Платный воркшоп по интерфейсам',
-    locationName: 'ololoErkindik',
-    startsAt: 1579092422351,
-    durationMinutes: 60,
-    coverImageUrl: getUnsplashImageUrl('JAvWcpZmyUQ', 375, 361)
-  },
-  {
-    id: 'event3',
-    hostName: 'Михаил Романенко',
-    title: 'Бесплатный воркшоп по оригами',
-    locationName: 'ololoVictory',
-    startsAt: 1579092422351,
-    durationMinutes: 60,
-    coverImageUrl: getUnsplashImageUrl('vhVj--1y31Y', 375, 361)
+    allEvents(filter: { startsAt: { gte: "2020-01-01" } }) {
+      id
+      title
+      startsAt
+      coverImage {
+        url
+      }
+      duration
+      speakers {
+        name
+      }
+      venue {
+        name
+      }
+    }
   }
-]
-const [todayEvent, ...restEvents] = EVENTS
-const DATA: SectionData = [
-  {
-    title: i18n.t('eventFeed.now'),
-    data: [todayEvent]
-  },
-  {
-    title: i18n.t('eventFeed.futureEvents'),
-    data: restEvents
-  }
-]
+`
 
 export default function EventFeed() {
+  const colorScheme = useColorScheme()
   const [activeItem, setActiveItem] = React.useState(undefined)
   const [activeItemLayout, setActiveItemLayout] = React.useState(undefined)
+  const [isRefreshing, setRefreshingState] = React.useState(false)
   const lastScrollY = React.useRef(0)
   const hasActiveItem = activeItem && activeItemLayout
+
+  const { loading, error, data, refetch } = useQuery(allEventsQuery)
+  const sectionData =
+    data && Array.isArray(data.allEvents)
+      ? [
+          {
+            title: i18n.t('eventFeed.now'),
+            data: data.allEvents
+          }
+        ]
+      : undefined
 
   function handleItemPress(item, layout) {
     if (!hasActiveItem) {
@@ -83,6 +89,18 @@ export default function EventFeed() {
   function handlePreviewModalDismiss() {
     setActiveItem(undefined)
     setActiveItemLayout(undefined)
+  }
+
+  async function handleRefresh() {
+    setRefreshingState(true)
+
+    try {
+      await refetch()
+    } catch (e) {
+      console.log('Unable to refresh', e)
+    } finally {
+      setRefreshingState(false)
+    }
   }
 
   function handleScroll({
@@ -117,12 +135,52 @@ export default function EventFeed() {
       <SectionList
         scrollEnabled={!hasActiveItem}
         style={styles.list}
-        contentContainerStyle={styles.listContent}
-        sections={DATA}
+        contentContainerStyle={
+          sectionData ? styles.listContent : styles.emptyListContent
+        }
+        sections={sectionData}
         stickySectionHeadersEnabled={false}
         keyExtractor={(_, index) => index.toString()}
         onScroll={handleScroll}
         scrollEventThrottle={1}
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />
+        }
+        ListEmptyComponent={() => {
+          if (loading && !isRefreshing) {
+            return (
+              <ActivityIndicator style={StyleSheet.absoluteFill} size="large" />
+            )
+          }
+
+          if (!loading && error) {
+            return (
+              <View style={styles.placeholder}>
+                <Text
+                  style={[
+                    styles.placeholderText,
+                    colorScheme === 'dark' && styles.placeholderTextDark
+                  ]}
+                >
+                  Error loading events: {error.message}
+                </Text>
+              </View>
+            )
+          }
+
+          return (
+            <View style={styles.placeholder}>
+              <Text
+                style={[
+                  styles.placeholderText,
+                  colorScheme === 'dark' && styles.placeholderTextDark
+                ]}
+              >
+                No events yet V_____________V
+              </Text>
+            </View>
+          )
+        }}
         renderItem={({ item }) => (
           <EventFeedItem
             isActive={activeItem && activeItem.id === item.id}
@@ -158,5 +216,22 @@ const styles = StyleSheet.create({
     paddingTop: 45,
     paddingBottom: 20,
     paddingHorizontal: 16
+  },
+  emptyListContent: {
+    flex: 1
+  },
+  placeholder: {
+    flex: 1,
+
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    paddingHorizontal: 16
+  },
+  placeholderText: {
+    fontSize: 18
+  },
+  placeholderTextDark: {
+    color: colors.white
   }
 })

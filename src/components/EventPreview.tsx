@@ -15,7 +15,7 @@ interface Props {
 
 function EventPreview({ item, revealAnimValue }: Props) {
   const startsAt = new Date(item.startsAt)
-  const endsAt = add(new Date(item.startsAt), { minutes: item.durationMinutes })
+  const endsAt = add(new Date(item.startsAt), { minutes: item.duration })
   const dateLabel = format(startsAt, 'MMMM dd')
   const durationLabel = [
     format(startsAt, 'HH:mm'),
@@ -36,13 +36,15 @@ function EventPreview({ item, revealAnimValue }: Props) {
 
   return (
     <Animated.View style={[styles.root, { paddingTop, borderRadius }]}>
-      <Image style={styles.picture} source={{ uri: item.coverImageUrl }} />
+      <Image style={styles.picture} source={{ uri: item.coverImage.url }} />
 
       <View>
         <View>
-          <Text style={[styles.text, styles.hostText]}>
-            {String(item.hostName).toUpperCase()}
-          </Text>
+          {item.speakers.map((speaker, index) => (
+            <Text key={index.toString()} style={[styles.text, styles.hostText]}>
+              {String(speaker.name).toUpperCase()}
+            </Text>
+          ))}
         </View>
         <View>
           <Text style={[styles.text, styles.titleText]}>{item.title}</Text>
@@ -61,7 +63,7 @@ function EventPreview({ item, revealAnimValue }: Props) {
         <View style={styles.location}>
           <Image style={styles.locationIcon} source={locationIconSrc} />
           <Text style={[styles.text, styles.locationText]}>
-            {item.locationName}
+            {item.venue.name}
           </Text>
         </View>
       </View>

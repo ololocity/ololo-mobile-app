@@ -6,10 +6,13 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  Animated
+  Animated,
+  ActivityIndicator
 } from 'react-native'
 import { useColorScheme } from 'react-native-appearance'
 import Markdown from 'react-native-markdown-display'
+import gql from 'graphql-tag'
+import { useQuery } from '@apollo/react-hooks'
 
 import { EventFeedItem } from '../screens/EventFeed'
 import EventPreview from './EventPreview'
@@ -22,10 +25,13 @@ const SPRING_CONFIG = {
   friction: 8,
   tension: 40
 }
-const dummyEventDescription = `
-Reprehenderit non irure dolore ullamco aute. Enim dolor ipsum quis tempor dolor deserunt nostrud do quis minim enim ipsum. Esse ad excepteur enim reprehenderit duis consequat mollit. Dolor labore exercitation voluptate aute dolore esse dolor occaecat amet laboris enim.
 
-Cupidatat esse quis tempor voluptate Lorem reprehenderit tempor officia cupidatat proident consectetur eiusmod consequat aliquip. Eiusmod officia dolor fugiat tempor ullamco proident ut pariatur nostrud eu officia consectetur irure sunt.
+const eventDescriptionQuery = gql`
+  query EventDescriptionQuery($eventId: ItemId) {
+    event(filter: { id: { eq: $eventId } }) {
+      description
+    }
+  }
 `
 
 interface Props {
@@ -42,6 +48,11 @@ export default function EventPreviewModal({
   const [isRevealed, setRevealState] = React.useState(false)
   const { width: windowWidth, height: windowHeight } = Dimensions.get('screen')
   const colorScheme = useColorScheme()
+  const { loading, error, data } = useQuery(eventDescriptionQuery, {
+    variables: {
+      eventId: item.id
+    }
+  })
 
   const [revealAnimValue] = React.useState(new Animated.Value(0))
   const previewLeft = revealAnimValue.interpolate({
@@ -104,17 +115,22 @@ export default function EventPreviewModal({
           contentContainerStyle={styles.contentContainer}
           scrollEnabled={isRevealed}
         >
-          <Markdown
-            style={{
-              root: {
-                color: colorScheme === 'dark' ? colors.white : colors.black,
-                fontSize: 13
-              }
-            }}
-            mergeStyle
-          >
-            {dummyEventDescription}
-          </Markdown>
+          {loading ? (
+            <ActivityIndicator />
+          ) : null}
+          {data && data.event ? (
+            <Markdown
+              style={{
+                root: {
+                  color: colorScheme === 'dark' ? colors.white : colors.black,
+                  fontSize: 13
+                }
+              }}
+              mergeStyle
+            >
+              {data.event.description}
+            </Markdown>
+          ) : null}
         </ScrollView>
       </Animated.View>
 
