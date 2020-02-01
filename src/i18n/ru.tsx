@@ -44,6 +44,7 @@ export default {
   },
   eventFeed: {
     now: 'Сегодня',
-    futureEvents: 'Другие ивенты'
+    futureEvents: 'Другие мероприятия',
+    allEvents: 'Мероприятия'
   }
 }

@@ -17,28 +17,8 @@ import EventFeedItem from '../components/EventFeedItem'
 import EventPreviewModal from '../components/EventPreviewModal'
 
 import i18n from '../localization'
+import { getEventFeedSections } from '../util/eventFeed'
 import { colors } from '../util/style'
-
-export interface EventFeedItem {
-  id: string
-  speakers: Array<{ name: string }>
-  title: string
-  venue: {
-    name: string
-  }
-  startsAt: string
-  duration: number
-  coverImage: {
-    url: string
-  }
-}
-
-interface SectionItem {
-  title: string
-  data: Array<EventFeedItem>
-}
-
-interface SectionData extends Array<SectionItem> {}
 
 const allEventsQuery = gql`
   {
@@ -71,12 +51,7 @@ export default function EventFeed() {
   const { loading, error, data, refetch } = useQuery(allEventsQuery)
   const sectionData =
     data && Array.isArray(data.allEvents)
-      ? [
-          {
-            title: i18n.t('eventFeed.now'),
-            data: data.allEvents
-          }
-        ]
+      ? getEventFeedSections(data.allEvents)
       : undefined
 
   function handleItemPress(item, layout) {
