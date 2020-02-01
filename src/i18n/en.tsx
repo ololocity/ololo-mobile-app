@@ -43,6 +43,9 @@ export default {
   eventFeed: {
     now: 'Now',
     futureEvents: 'Future Events',
-    allEvents: 'Events'
+    allEvents: 'Events',
+
+    signUp: 'Sign up',
+    signedUp: 'Going'
   }
 }

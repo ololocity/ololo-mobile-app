@@ -6,7 +6,8 @@ import {
   StyleSheet,
   BackHandler,
   RefreshControl,
-  ActivityIndicator
+  ActivityIndicator,
+  Animated
 } from 'react-native'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -19,6 +20,7 @@ import EventPreviewModal from '../components/EventPreviewModal'
 import i18n from '../localization'
 import { getEventFeedSections } from '../util/eventFeed'
 import { colors } from '../util/style'
+import EventSignUpButton from '../components/EventSignUpButton'
 
 const allEventsQuery = gql`
   {
@@ -42,6 +44,7 @@ const allEventsQuery = gql`
 
 export default function EventFeed() {
   const colorScheme = useColorScheme()
+  const [previewAnimValue] = React.useState(new Animated.Value(0))
   const [activeItem, setActiveItem] = React.useState(undefined)
   const [activeItemLayout, setActiveItemLayout] = React.useState(undefined)
   const [isRefreshing, setRefreshingState] = React.useState(false)
@@ -174,6 +177,13 @@ export default function EventFeed() {
           item={activeItem}
           initialLayout={activeItemLayout}
           onDismiss={handlePreviewModalDismiss}
+          revealAnimValue={previewAnimValue}
+        />
+      ) : null}
+      {hasActiveItem ? (
+        <EventSignUpButton
+          eventId={activeItem.id}
+          previewAnimValue={previewAnimValue}
         />
       ) : null}
     </View>
