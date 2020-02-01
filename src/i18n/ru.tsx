@@ -44,5 +44,5 @@ export default {
 
     signUp: 'Пойду',
     signedUp: 'Иду'
-  },
+  }
 }

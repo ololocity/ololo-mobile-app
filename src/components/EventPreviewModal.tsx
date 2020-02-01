@@ -116,9 +116,7 @@ export default function EventPreviewModal({
           contentContainerStyle={styles.contentContainer}
           scrollEnabled={isRevealed}
         >
-          {loading ? (
-            <ActivityIndicator />
-          ) : null}
+          {loading ? <ActivityIndicator /> : null}
           {data && data.event ? (
             <Markdown
               style={{

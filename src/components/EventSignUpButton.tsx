@@ -1,5 +1,11 @@
 import React from 'react'
-import { TouchableOpacity, View, Text, StyleSheet, Animated } from 'react-native'
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  StyleSheet,
+  Animated
+} from 'react-native'
 import * as Haptics from 'expo-haptics'
 
 import SafeAreaView from './SafeAreaView'
