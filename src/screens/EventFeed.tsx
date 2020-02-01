@@ -12,6 +12,7 @@ import {
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { useColorScheme } from 'react-native-appearance'
+import format from 'date-fns/format'
 
 import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
@@ -23,8 +24,8 @@ import { colors } from '../util/style'
 import EventSignUpButton from '../components/EventSignUpButton'
 
 const allEventsQuery = gql`
-  {
-    allEvents(filter: { startsAt: { gte: "2020-01-01" } }) {
+  query EventDescriptionQuery($startsAt: DateTime) {
+    allEvents(filter: { startsAt: { gte: $startsAt } }) {
       id
       title
       startsAt
@@ -51,9 +52,13 @@ export default function EventFeed() {
   const lastScrollY = React.useRef(0)
   const hasActiveItem = activeItem && activeItemLayout
 
-  const { loading, error, data, refetch } = useQuery(allEventsQuery)
+  const { loading, error, data, refetch } = useQuery(allEventsQuery, {
+    variables: {
+      startsAt: format(new Date(), 'yyyy-MM-dd')
+    }
+  })
   const sectionData =
-    data && Array.isArray(data.allEvents)
+    data && Array.isArray(data.allEvents) && data.allEvents.length > 0
       ? getEventFeedSections(data.allEvents)
       : undefined
 
@@ -140,7 +145,7 @@ export default function EventFeed() {
                     colorScheme === 'dark' && styles.placeholderTextDark
                   ]}
                 >
-                  Error loading events: {error.message}
+                  {i18n.t('eventFeed.listError')}
                 </Text>
               </View>
             )
@@ -154,7 +159,7 @@ export default function EventFeed() {
                   colorScheme === 'dark' && styles.placeholderTextDark
                 ]}
               >
-                No events yet V_____________V
+                {i18n.t('eventFeed.emptyList')}
               </Text>
             </View>
           )

@@ -37,6 +37,9 @@ export default {
     futureEvents: 'Future Events',
     allEvents: 'Events',
 
+    listError: 'Couldn\'t load events. Please, try again',
+    emptyList: 'There are no events at the moment',
+
     signUp: 'Sign up',
     signedUp: 'Going'
   }
