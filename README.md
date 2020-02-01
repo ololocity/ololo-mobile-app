@@ -14,6 +14,13 @@ An app to help users find interesting Events in Ololohaus, register to them, lea
 
 To run the project locally, the recommended approach is to use [Expo CLI](https://docs.expo.io/versions/latest/workflow/expo-cli/). If you don't have it installed run `npm install -g expo-cli` to install it globally.
 
+Create `.env` file in the project root, containing required env-specific variables:
+
+```
+API_ENDPOINT_URL=
+API_AUTH_TOKEN=
+```
+
 Then, run the following commands in the project directory:
 
 ```
