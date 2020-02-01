@@ -1,7 +1,8 @@
 import React from 'react'
 import { Animated, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import * as Haptics from 'expo-haptics'
 
-import { EventFeedItem as EventFeedItemType } from '../screens/EventFeed'
+import { EventFeedItemType } from '../util/eventFeed'
 import EventPreview from './EventPreview'
 
 interface Props {
@@ -45,6 +46,7 @@ export default function EventFeedItem({ item, onPress, isActive }: Props) {
 
   function handlePress() {
     onPress(rootSize)
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
   }
 
   return (

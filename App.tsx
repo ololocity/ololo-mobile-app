@@ -1,13 +1,16 @@
 import React from 'react'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
-import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
+import { ApolloProvider } from '@apollo/react-hooks'
 
 import AppLoading from './src/screens/AppLoading'
 import Onboarding from './src/screens/Onboarding'
 import EventFeed from './src/screens/EventFeed'
 import Auth from './src/screens/Auth'
 import AuthName from './src/screens/AuthName'
+
+import { client } from './src/util/db'
 
 const AuthStack = createStackNavigator({ Auth, AuthName })
 const AppStack = createStackNavigator({ EventFeed }, { headerMode: 'none' })
@@ -31,7 +34,9 @@ export default function App() {
 
   return (
     <AppearanceProvider>
-      <AppContainer theme={theme} />
+      <ApolloProvider {...{ client }}>
+        <AppContainer {...{ theme }} />
+      </ApolloProvider>
     </AppearanceProvider>
   )
 }

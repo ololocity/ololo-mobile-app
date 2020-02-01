@@ -3,7 +3,8 @@ export const colors = {
   black: '#000000',
   blue: '#3080EC',
   yellow: '#F1C40F',
-  red: '#FF1744'
+  red: '#FF1744',
+  green: '#27AE60'
 }
 
 export const uiColors = {
