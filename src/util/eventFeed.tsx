@@ -36,10 +36,10 @@ export function getEventFeedSections(
     }
   }
 
-  return nowEvents.length > 0 ? [
-    { title: i18n.t('eventFeed.now'), data: nowEvents },
-    { title: i18n.t('eventFeed.futureEvents'), data: futureEvents }
-  ] : [
-    { title: i18n.t('eventFeed.allEvents'), data: futureEvents }
-  ]
+  return nowEvents.length > 0
+    ? [
+        { title: i18n.t('eventFeed.now'), data: nowEvents },
+        { title: i18n.t('eventFeed.futureEvents'), data: futureEvents }
+      ]
+    : [{ title: i18n.t('eventFeed.allEvents'), data: futureEvents }]
 }
