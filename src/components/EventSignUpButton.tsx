@@ -12,6 +12,8 @@ import SafeAreaView from './SafeAreaView'
 import i18n from '../localization'
 
 import { colors } from '../util/style'
+import { useAuth } from '../util/auth'
+import { useNavigation } from 'react-navigation-hooks'
 
 interface Props {
   eventId: string
@@ -19,6 +21,8 @@ interface Props {
 }
 
 export default function EventSignUpButton({ previewAnimValue }: Props) {
+  const { isLoggedIn } = useAuth()
+  const navigation = useNavigation()
   const [isSignedUp, setSignedUpState] = React.useState(false)
   const translateY = previewAnimValue.interpolate({
     inputRange: [0, 1],
@@ -26,6 +30,10 @@ export default function EventSignUpButton({ previewAnimValue }: Props) {
   })
 
   function handlePress() {
+    if (!isLoggedIn) {
+      return navigation.navigate('Auth')
+    }
+
     setSignedUpState(!isSignedUp)
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
   }
