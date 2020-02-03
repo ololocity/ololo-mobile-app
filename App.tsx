@@ -12,6 +12,8 @@ import AuthName from './src/screens/AuthName'
 
 import NavigationService from './src/NavigationService'
 import { client } from './src/util/db'
+import { compose } from './src/util/misc'
+import { withAuth } from './src/util/auth'
 
 const AuthStack = createStackNavigator({ Auth, AuthName })
 const AppStack = createStackNavigator({ EventFeed }, { headerMode: 'none' })
@@ -30,7 +32,7 @@ const AppContainer = createAppContainer(
   )
 )
 
-export default function App() {
+function App() {
   const theme = useColorScheme()
 
   return (
@@ -46,3 +48,5 @@ export default function App() {
     </AppearanceProvider>
   )
 }
+
+export default compose(withAuth)(App)
