@@ -10,7 +10,10 @@ import EventFeed from './src/screens/EventFeed'
 import Auth from './src/screens/Auth'
 import AuthName from './src/screens/AuthName'
 
+import NavigationService from './src/NavigationService'
 import { client } from './src/util/db'
+import { compose } from './src/util/misc'
+import { withAuth } from './src/util/auth'
 
 const AuthStack = createStackNavigator({ Auth, AuthName })
 const AppStack = createStackNavigator({ EventFeed }, { headerMode: 'none' })
@@ -29,14 +32,21 @@ const AppContainer = createAppContainer(
   )
 )
 
-export default function App() {
+function App() {
   const theme = useColorScheme()
 
   return (
     <AppearanceProvider>
       <ApolloProvider {...{ client }}>
-        <AppContainer {...{ theme }} />
+        <AppContainer
+          ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef)
+          }}
+          {...{ theme }}
+        />
       </ApolloProvider>
     </AppearanceProvider>
   )
 }
+
+export default compose(withAuth)(App)

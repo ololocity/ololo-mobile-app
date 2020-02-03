@@ -25,6 +25,7 @@ export default {
     subTitle: 'Чтобы зарегистрироваться на мероприятие',
     emailInputLabel: 'E-mail',
     logIn: 'Войти',
+    fbAuth: 'Войти с помощью Facebook',
     next: 'Далее'
   },
   authNameScreen: {
@@ -36,7 +37,7 @@ export default {
   },
   eventFeed: {
     now: 'Сегодня',
-    futureEvents: 'Другие мероприятия',
+    futureEvents: 'Скоро',
     allEvents: 'Мероприятия',
 
     listError: 'Не удалось загрузить мероприятия. Попробуйте еще раз',
@@ -44,5 +45,11 @@ export default {
 
     signUp: 'Пойду',
     signedUp: 'Иду'
+  },
+  userNav: {
+    logOut: {
+      title: 'Выход',
+      message: 'Вы действительно хотите выйти?'
+    }
   }
 }

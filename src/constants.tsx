@@ -1,4 +1,22 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { API_ENDPOINT_URL, API_AUTH_TOKEN } from 'react-native-dotenv'
+import {
+  API_ENDPOINT_URL,
+  API_AUTH_TOKEN,
+  FIREBASE_API_KEY,
+  FIREBASE_AUTH_DOMAIN,
+  FIREBASE_DATABASE_URL,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKET,
+  FACEBOOK_APP_ID
+} from 'react-native-dotenv'
 
-export default { API_ENDPOINT_URL, API_AUTH_TOKEN }
+export default {
+  API_ENDPOINT_URL,
+  API_AUTH_TOKEN,
+  FIREBASE_API_KEY,
+  FIREBASE_AUTH_DOMAIN,
+  FIREBASE_DATABASE_URL,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKET,
+  FACEBOOK_APP_ID
+}

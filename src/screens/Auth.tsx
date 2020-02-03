@@ -1,12 +1,12 @@
 import React from 'react'
 import {
   View,
-  Animated,
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
   StyleSheet,
   Platform,
+  TextInput as RNTextInput,
   Text
 } from 'react-native'
 import { useColorScheme } from 'react-native-appearance'
@@ -14,6 +14,7 @@ import { useNavigation } from 'react-navigation-hooks'
 
 import AuthHeader, { HEIGHT as HEADER_HEIGHT } from '../components/AuthHeader'
 import TextInput from '../components/TextInput'
+import FacebookAuthButton from '../components/FacebookAuthButton'
 import AuthButton from '../components/AuthButton'
 import { colors } from '../util/style'
 
@@ -22,7 +23,7 @@ import i18n from '../localization'
 export default function AuthScreen() {
   const colorScheme = useColorScheme()
   const navigation = useNavigation()
-  const inputRef = React.useRef()
+  const inputRef = React.useRef<RNTextInput>()
   const [isInputFocused, setInputFocusState] = React.useState(false)
   const [email, setEmail] = React.useState('')
 
@@ -92,6 +93,9 @@ export default function AuthScreen() {
         </TouchableWithoutFeedback>
 
         <View style={styles.footer}>
+          <View style={styles.fbAuthButtonWrapper}>
+            <FacebookAuthButton />
+          </View>
           <AuthButton
             onPress={handleSubmitButtonPress}
             disabled={isInputFocused && !email}
@@ -153,6 +157,13 @@ const styles = StyleSheet.create({
     fontSize: 13
   },
   footer: {
+    position: 'relative',
     flexDirection: 'row'
+  },
+  fbAuthButtonWrapper: {
+    position: 'absolute',
+    top: -64,
+    left: 16,
+    right: 16
   }
 })

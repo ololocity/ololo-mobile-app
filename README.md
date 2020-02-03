@@ -19,6 +19,12 @@ Create `.env` file in the project root, containing required env-specific variabl
 ```
 API_ENDPOINT_URL=
 API_AUTH_TOKEN=
+FIREBASE_API_KEY=
+FIREBASE_AUTH_DOMAIN=
+FIREBASE_DATABASE_URL=
+FIREBASE_PROJECT_ID=
+FIREBASE_STORAGE_BUCKET=
+FACEBOOK_APP_ID=
 ```
 
 Then, run the following commands in the project directory:
