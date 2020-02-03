@@ -14,14 +14,15 @@ import gql from 'graphql-tag'
 import { useColorScheme } from 'react-native-appearance'
 import format from 'date-fns/format'
 
+import UserNav from '../components/UserNav'
 import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
 import EventPreviewModal from '../components/EventPreviewModal'
+import EventSignUpButton from '../components/EventSignUpButton'
 
-import i18n from '../localization'
 import { getEventFeedSections } from '../util/eventFeed'
 import { colors } from '../util/style'
-import EventSignUpButton from '../components/EventSignUpButton'
+import i18n from '../localization'
 
 const allEventsQuery = gql`
   query EventDescriptionQuery($startsAt: DateTime) {
@@ -191,6 +192,7 @@ export default function EventFeed() {
           previewAnimValue={previewAnimValue}
         />
       ) : null}
+      {!hasActiveItem ? <UserNav /> : null}
     </View>
   )
 }

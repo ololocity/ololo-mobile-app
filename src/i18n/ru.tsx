@@ -25,6 +25,7 @@ export default {
     subTitle: 'Чтобы зарегистрироваться на мероприятие',
     emailInputLabel: 'E-mail',
     logIn: 'Войти',
+    fbAuth: 'Войти с помощью Facebook',
     next: 'Далее'
   },
   authNameScreen: {
@@ -44,5 +45,11 @@ export default {
 
     signUp: 'Пойду',
     signedUp: 'Иду'
+  },
+  userNav: {
+    logOut: {
+      title: 'Выход',
+      message: 'Вы действительно хотите выйти?'
+    }
   }
 }

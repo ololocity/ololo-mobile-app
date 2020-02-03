@@ -23,6 +23,7 @@ export default {
     subTitle: 'To sign up to an event',
     emailInputLabel: 'E-mail',
     logIn: 'Sign in',
+    fbAuth: 'Login with Facebook',
     next: 'Next'
   },
   authNameScreen: {
@@ -37,10 +38,16 @@ export default {
     futureEvents: 'Future Events',
     allEvents: 'Events',
 
-    listError: 'Couldn\'t load events. Please, try again',
+    listError: "Couldn't load events. Please, try again",
     emptyList: 'There are no events at the moment',
 
     signUp: 'Sign up',
     signedUp: 'Going'
+  },
+  userNav: {
+    logOut: {
+      title: 'Log Out',
+      message: 'Are you sure you want to log out?'
+    }
   }
 }
