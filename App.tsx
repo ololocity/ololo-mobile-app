@@ -10,6 +10,7 @@ import EventFeed from './src/screens/EventFeed'
 import Auth from './src/screens/Auth'
 import AuthName from './src/screens/AuthName'
 
+import NavigationService from './src/NavigationService'
 import { client } from './src/util/db'
 
 const AuthStack = createStackNavigator({ Auth, AuthName })
@@ -35,7 +36,12 @@ export default function App() {
   return (
     <AppearanceProvider>
       <ApolloProvider {...{ client }}>
-        <AppContainer {...{ theme }} />
+        <AppContainer
+          ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef)
+          }}
+          {...{ theme }}
+        />
       </ApolloProvider>
     </AppearanceProvider>
   )
