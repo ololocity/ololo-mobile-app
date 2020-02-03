@@ -47,6 +47,7 @@ export function useAuth() {
 
 export function withAuth(WrappedComponent) {
   return function AuthStateObserverHOC(props) {
+    const previousUserDataRef = React.useRef()
     const [userData, setUserData] = React.useState(undefined)
 
     React.useEffect(() => {
@@ -59,8 +60,12 @@ export function withAuth(WrappedComponent) {
 
         // Logged out
         setUserData(undefined)
-        NavigationService.navigate('Auth')
+        if (previousUserDataRef.current && !nextUserData) {
+          NavigationService.navigate('Auth')
+        }
       })
+
+      previousUserDataRef.current = userData
 
       return function cleanup() {
         unsubscribe()
