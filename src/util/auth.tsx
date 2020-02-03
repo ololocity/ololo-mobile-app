@@ -9,7 +9,7 @@ export async function loginWithFacebook() {
   await Facebook.initializeAsync(Constants.FACEBOOK_APP_ID)
 
   const { type, token } = await Facebook.logInWithReadPermissionsAsync({
-    permissions: ['public_profile']
+    permissions: ['public_profile', 'email']
   })
 
   if (type === 'success') {
@@ -55,13 +55,22 @@ export function withAuth(WrappedComponent) {
         if (nextUserData) {
           // Authenticated
           setUserData(nextUserData)
+
+          if (Array.isArray(nextUserData.providerData) && nextUserData.providerData.length > 0) {
+            const { email } = nextUserData.providerData[0]
+
+            if (email) {
+              firebase.auth().currentUser.updateEmail(email)
+            }
+          }
+
           return NavigationService.navigate('App')
         }
 
         // Logged out
         setUserData(undefined)
         if (previousUserDataRef.current && !nextUserData) {
-          NavigationService.navigate('Auth')
+          // Handle logout event somehow in the future
         }
       })
 
@@ -70,7 +79,7 @@ export function withAuth(WrappedComponent) {
       return function cleanup() {
         unsubscribe()
       }
-    }, [userData, setUserData])
+    }, [userData])
 
     const ctxValue = React.useMemo(() => ({ userData }), [userData])
 
