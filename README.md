@@ -1,6 +1,6 @@
-# Ololo Mobile App
+# ololo Mobile App
 
-An app to help users find interesting Events in Ololohaus, register to them, leave feedback and connect with other visitors.
+An app to help users find interesting Events in [ololohaus](http://ololo.city/), register to them, leave feedback and connect with other visitors.
 
 [Design in Figma](https://www.figma.com/file/aobEccw8dYCQiFu7SvpoK9/05-%7C-%D0%91%D0%B0%D0%B7%D0%BE%D0%B2%D1%8B%D0%B9-UI-(Ololo-App)?node-id=0%3A1)
 
