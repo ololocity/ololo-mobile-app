@@ -37,7 +37,7 @@ export default {
   },
   eventFeed: {
     now: 'Сегодня',
-    futureEvents: 'Другие мероприятия',
+    futureEvents: 'Скоро',
     allEvents: 'Мероприятия',
 
     listError: 'Не удалось загрузить мероприятия. Попробуйте еще раз',

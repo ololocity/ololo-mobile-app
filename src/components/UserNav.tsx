@@ -5,6 +5,8 @@ import { useSafeArea } from 'react-native-safe-area-context'
 import * as Auth from '../util/auth'
 import NavigationService from '../NavigationService'
 
+import i18n from '../localization'
+
 const AVATAR_SIZE = 48
 
 export default function UserNav() {
@@ -15,13 +17,17 @@ export default function UserNav() {
   // TODO: Show user menu with options
   function handleProfilePress() {
     if (isLoggedIn) {
-      Alert.alert('Log Out', 'Are you sure you want to log out?', [
-        { text: 'Cancel', onPress: () => {}, style: 'cancel' },
-        {
-          text: 'OK',
-          onPress: Auth.logout
-        }
-      ])
+      Alert.alert(
+        i18n.t('userNav.logOut.title'),
+        i18n.t('userNav.logOut.message'),
+        [
+          { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+          {
+            text: 'OK',
+            onPress: Auth.logout
+          }
+        ]
+      )
     } else {
       NavigationService.navigate('Auth')
     }
