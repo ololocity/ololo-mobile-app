@@ -1,6 +1,5 @@
 import React from 'react'
 import { Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
-
 import * as Auth from '../util/auth'
 
 import i18n from '../localization'
