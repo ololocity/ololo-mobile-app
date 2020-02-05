@@ -46,6 +46,11 @@ export default {
     signUp: 'Пойду',
     signedUp: 'Иду'
   },
+  eventFeedback: {
+    rateButton: {
+      label: 'Оцените мероприятие'
+    }
+  },
   userNav: {
     logOut: {
       title: 'Выход',

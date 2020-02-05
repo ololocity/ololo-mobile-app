@@ -1,72 +1,64 @@
 import React from 'react'
 import {
-  Animated,
-  TouchableOpacity,
   Text,
+  TouchableOpacity,
   StyleSheet,
   View,
   TextInput,
   Image,
-  SafeAreaView
+  Dimensions
 } from 'react-native'
-import EventFeedbackRating from '../components/EventFeedBackRating'
+import BottomSheet from 'reanimated-bottom-sheet'
+
+import EventFeedbackRateButton, { HEIGHT as RATE_BUTTON_HEIGHT } from './EventFeedbackRateButton'
+import EventFeedbackRating from './EventFeedbackRating'
+
 import { colors } from '../util/style'
-import { BottomSheet } from 'react-native-btr'
 
 const doneIconSrc = require('../assets/done-feedback.png')
 
-export default function EventFeedBack({ handlePress, isVisible }) {
-  // const [rating, setRating] = React.useState(5),
-  const [commentValue, setCommentValue] = React.useState('Оставить комментарий')
+export default function EventFeedback() {
+  const sheetRef = React.useRef()
+  const { height: screenHeight } = Dimensions.get('screen')
+
+  function handleRatingChange(nextRating) {
+    console.log({ nextRating })
+  }
+
+  function handleRateButtonPress() {
+    if (sheetRef.current) {
+      sheetRef.current.snapTo(1)
+    }
+  }
 
   return (
     <BottomSheet
-      visible={isVisible}
-      onBackButtonPress={handlePress}
-      onBackdropPress={handlePress}
-    >
-      <Animated.View style={styles.root}>
-        <Text style={styles.eventTitle}>Название мероприятия</Text>
-        <View style={styles.line} />
-        <Text style={styles.rateTitleText}>Оцените мероприятие</Text>
-        <EventFeedbackRating />
-        <View style={styles.notToComeContainer}>
-          <SafeAreaView>
-            <TouchableOpacity style={styles.notToComeButton}>
-              <Text style={styles.notToComeLabel}>Я не смог прийти</Text>
-            </TouchableOpacity>
-          </SafeAreaView>
+      ref={sheetRef}
+      snapPoints={[RATE_BUTTON_HEIGHT, screenHeight - 120]}
+      initialSnap={0}
+      borderRadius={20}
+      renderContent={() => (
+        <View style={[styles.root, { height: screenHeight }]}>
+          <EventFeedbackRateButton onPress={handleRateButtonPress} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.eventTitle}>Название мероприятия</Text>
+            <View style={styles.line} />
+            <View style={styles.rateTitle}>
+              <Text style={styles.rateTitleText}>Оцените мероприятие</Text>
+            </View>
+            <EventFeedbackRating onChange={handleRatingChange} />
+          </View>
         </View>
-
-        {/* <View style={styles.leaveComment}>
-        <TextInput editable maxLength={40} value={commentValue} />
-      </View>
-      <View style={styles.sendCommentContainer}>
-        <SafeAreaView>
-          <TouchableOpacity style={styles.sendCommentButton}>
-            <Text style={styles.sendCommentLabel}>Отправить</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
-      </View> */}
-        {/* <View style={styles.doneStep}>
-        <Text style={styles.doneStepTitle}>Спасибо!</Text>
-        <Image source={doneIconSrc} />
-        <Text style={styles.doneStepBottomText}>
-          Ваш отзыв очень важен для нас
-        </Text>
-      </View> */}
-      </Animated.View>
-    </BottomSheet>
+      )}
+    />
   )
 }
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: colors.blue,
-    height: 520,
-    padding: 24,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20
+    paddingHorizontal: 24,
+
+    backgroundColor: colors.blue
   },
   eventTitle: {
     fontSize: 34,
@@ -81,27 +73,12 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     opacity: 0.5
   },
+  rateTitle: {
+    marginBottom: 16
+  },
   rateTitleText: {
-    marginLeft: 20,
     textAlign: 'center',
     fontSize: 23,
-    fontWeight: 'bold',
-    color: colors.white
-  },
-  notToComeContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0
-  },
-  notToComeButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 48
-  },
-  notToComeLabel: {
-    fontSize: 16,
     fontWeight: 'bold',
     color: colors.white
   },

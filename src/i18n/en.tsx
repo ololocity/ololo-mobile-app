@@ -44,6 +44,11 @@ export default {
     signUp: 'Sign up',
     signedUp: 'Going'
   },
+  eventFeedback: {
+    rateButton: {
+      label: 'Leave feedback'
+    }
+  },
   userNav: {
     logOut: {
       title: 'Log Out',

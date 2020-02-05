@@ -13,7 +13,7 @@ import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { useColorScheme } from 'react-native-appearance'
 import format from 'date-fns/format'
-import EventFeedbackButton from '../components/EventFeedbackButton'
+import EventFeedback from '../components/EventFeedback'
 import UserNav from '../components/UserNav'
 import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
@@ -178,7 +178,7 @@ export default function EventFeed() {
           <EventFeedSectionTitle {...{ title }} />
         )}
       />
-      <EventFeedbackButton />
+      <EventFeedback />
       {hasActiveItem ? (
         <EventPreviewModal
           item={activeItem}

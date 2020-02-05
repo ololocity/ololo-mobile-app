@@ -16,3 +16,7 @@ export function compose(...funcs: Array<Function>) {
   }
   return funcs.reduce((a, b) => (...args) => a(b(...args)))
 }
+
+export function clamp (value: number, min: number, max: number): number {
+  return Math.min(Math.max(min, value), max)
+}
