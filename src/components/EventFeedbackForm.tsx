@@ -157,11 +157,11 @@ export default function EventFeedbackForm({
 
 const styles = StyleSheet.create({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    paddingTop: 8
   },
   eventTitle: {
-    paddingVertical: 24,
-    marginBottom: 24,
+    paddingBottom: 24,
 
     borderBottomColor: 'rgba(255, 255, 255, 0.5)',
     borderBottomWidth: 0.5
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     color: colors.white
   },
   rateTitle: {
-    marginBottom: 16
+    paddingVertical: 16
   },
   rateTitleText: {
     textAlign: 'center',

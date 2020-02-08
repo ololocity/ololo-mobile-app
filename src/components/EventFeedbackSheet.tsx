@@ -12,6 +12,9 @@ import EventFeedbackSuccess from './EventFeedbackSuccess'
 import { colors } from '../util/style'
 
 export const SHEET_TOP_MARGIN = 120
+const BORDER_RADIUS = 20
+const DRAG_INDICATOR_HEIGHT = 4
+const HEADER_HEIGHT = BORDER_RADIUS + DRAG_INDICATOR_HEIGHT
 
 interface Props {
   eventId: string
@@ -32,7 +35,7 @@ function EventFeedbackSheet({ eventId, eventTitle, onDismiss }: Props) {
     inputRange: [0, 0.8],
     outputRange: [1, 0]
   })
-  const minHeight = screenHeight - SHEET_TOP_MARGIN
+  const minHeight = screenHeight - SHEET_TOP_MARGIN - HEADER_HEIGHT
 
   function handleRateButtonPress() {
     if (sheetRef.current) {
@@ -54,16 +57,16 @@ function EventFeedbackSheet({ eventId, eventTitle, onDismiss }: Props) {
   return (
     <BottomSheet
       ref={sheetRef}
-      snapPoints={[RATE_BUTTON_HEIGHT, screenHeight - SHEET_TOP_MARGIN]}
+      snapPoints={[RATE_BUTTON_HEIGHT + HEADER_HEIGHT, screenHeight - SHEET_TOP_MARGIN]}
       initialSnap={0}
-      borderRadius={20}
       callbackNode={bottomSheetY}
+      renderHeader={() => (
+        <View style={styles.header}>
+          <View style={styles.headerDragIndicator} />
+        </View>
+      )}
       renderContent={() => (
-        <View
-          enabled
-          behavior="height"
-          style={[styles.root, { minHeight }]}
-        >
+        <View style={[styles.root, { minHeight }]}>
           <Animated.View style={[styles.content, { minHeight, opacity: contentOpacity }]}>
             {isSubmitted ? (
               <EventFeedbackSuccess />
@@ -96,6 +99,23 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     height: RATE_BUTTON_HEIGHT
+  },
+  header: {
+    height: HEADER_HEIGHT,
+    borderTopLeftRadius: BORDER_RADIUS,
+    borderTopRightRadius: BORDER_RADIUS,
+    paddingTop: 8,
+    flexDirection: 'row',
+    justifyContent: 'center',
+
+    backgroundColor: colors.blue
+  },
+  headerDragIndicator: {
+    width: 40,
+    height: DRAG_INDICATOR_HEIGHT,
+    borderRadius: 5,
+    backgroundColor: colors.white,
+    opacity: 0.65
   },
   content: {
     paddingHorizontal: 24

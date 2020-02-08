@@ -7,7 +7,7 @@ import i18n from '../localization'
 
 const buttonImgSrc = require('../assets/event-feedback-button-icon.png')
 
-export const HEIGHT = 88
+export const HEIGHT = 82
 
 interface Props {
   onPress: () => void
