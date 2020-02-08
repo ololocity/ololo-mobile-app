@@ -49,7 +49,9 @@ export default {
   eventFeedback: {
     rateButton: {
       label: 'Оцените мероприятие'
-    }
+    },
+    callToAction: 'Оцените мероприятие',
+    noShow: 'Я не смог прийти'
   },
   userNav: {
     logOut: {

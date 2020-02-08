@@ -47,7 +47,9 @@ export default {
   eventFeedback: {
     rateButton: {
       label: 'Leave feedback'
-    }
+    },
+    callToAction: 'Rate the event',
+    noShow: "I couldn't come"
   },
   userNav: {
     logOut: {
