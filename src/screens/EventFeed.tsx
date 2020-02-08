@@ -13,7 +13,7 @@ import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { useColorScheme } from 'react-native-appearance'
 import format from 'date-fns/format'
-
+import EventFeedbackSheet from '../components/EventFeedbackSheet'
 import UserNav from '../components/UserNav'
 import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
@@ -61,6 +61,11 @@ export default function EventFeed() {
   const sectionData =
     data && Array.isArray(data.allEvents) && data.allEvents.length > 0
       ? getEventFeedSections(data.allEvents)
+      : undefined
+
+  const feedbackEvent =
+    data && Array.isArray(data.allEvents) && data.allEvents.length > 0
+      ? data.allEvents[0]
       : undefined
 
   function handleItemPress(item, layout) {
@@ -113,6 +118,8 @@ export default function EventFeed() {
       backHandler.remove()
     }
   }, [hasActiveItem])
+
+  function handleFeedbackDismiss() {}
 
   return (
     <View style={styles.root}>
@@ -178,6 +185,13 @@ export default function EventFeed() {
           <EventFeedSectionTitle {...{ title }} />
         )}
       />
+      {!hasActiveItem && feedbackEvent ? (
+        <EventFeedbackSheet
+          eventId={feedbackEvent.id}
+          eventTitle={feedbackEvent.title}
+          onDismiss={handleFeedbackDismiss}
+        />
+      ) : null}
       {hasActiveItem ? (
         <EventPreviewModal
           item={activeItem}

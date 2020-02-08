@@ -46,6 +46,34 @@ export default {
     signUp: 'Пойду',
     signedUp: 'Иду'
   },
+  eventFeedback: {
+    rateButton: {
+      label: 'Оцените мероприятие'
+    },
+
+    form: {
+      callToAction: 'Оцените мероприятие',
+
+      commentPlaceholder: 'Оставить комментарий',
+      commentLabel: 'Комментарий',
+
+      negativeDetails: {
+        title: 'Что не понравилось?',
+
+        event: 'Доклад',
+        speaker: 'Спикер',
+        venue: 'Помещение',
+        organization: 'Организация',
+        price: 'Цена'
+      },
+
+      submit: 'Отправить',
+      noShow: 'Я не смог прийти'
+    },
+
+    successTitle: 'Спасибо!',
+    successDescription: 'Ваш отзыв очень важен для нас'
+  },
   userNav: {
     logOut: {
       title: 'Выход',
