@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableOpacity
 } from 'react-native'
+import { BarCodeScanner } from 'expo-barcode-scanner'
 
 import NetworkingScannerOverlay from './NetworkingScannerOverlay'
 
@@ -19,17 +20,20 @@ const scannerTabIcon = require('../assets/networking-tab-scanner.png')
 
 interface Props {
   height: number
+  onCardScan: (connection: Object) => void
 }
 
-export default function NetworkingTool({ height }: Props) {
+export default function NetworkingTool({ height, onCardScan }: Props) {
   const scrollViewRef = React.useRef()
   const { width: screenWidth } = Dimensions.get('window')
   const [isScanning, setScanningState] = React.useState(false)
+  const [hasScanned, setScannedState] = React.useState(false)
   const [scrollPosition] = React.useState(new Animated.Value(0))
   const indicatorTranslateX = scrollPosition.interpolate({
     inputRange: [0, screenWidth],
-    outputRange: [0, screenWidth  / 2]
+    outputRange: [0, screenWidth / 2]
   })
+  const [hasPermission, setHasPermission] = React.useState(undefined)
 
   function scrollToIndex(index: number) {
     if (scrollViewRef.current) {
@@ -53,6 +57,22 @@ export default function NetworkingTool({ height }: Props) {
     }
   }
 
+  function handleCodeScan({ type, data }) {
+    if (type === BarCodeScanner.Constants.BarCodeType.qr) {
+      setScannedState(true)
+      onCardScan({ data })
+    }
+  }
+
+  React.useEffect(() => {
+    if (isScanning) {
+      ;(async () => {
+        const { status } = await BarCodeScanner.requestPermissionsAsync()
+        setHasPermission(status === 'granted')
+      })()
+    }
+  }, [isScanning])
+
   return (
     <View style={styles.root}>
       <Animated.ScrollView
@@ -67,14 +87,26 @@ export default function NetworkingTool({ height }: Props) {
           { useNativeDriver: true, listener: handleScroll }
         )}
       >
-        <View style={[styles.tab, styles.cardTab, { width: screenWidth }]}></View>
+        <View
+          style={[styles.tab, styles.cardTab, { width: screenWidth }]}
+        ></View>
         <View style={[styles.tab, styles.scannerTab, { width: screenWidth }]}>
+          {isScanning && hasPermission ? (
+            <BarCodeScanner
+              style={StyleSheet.absoluteFill}
+              onBarCodeScanned={hasScanned ? undefined : handleCodeScan}
+              barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+            />
+          ) : null}
           <NetworkingScannerOverlay height={height} />
         </View>
       </Animated.ScrollView>
       <View style={styles.tabs}>
         <TouchableOpacity style={styles.tabButton} onPress={handleCardTabPress}>
-          <Image source={cardTabIcon} style={[styles.tabIcon, !isScanning && styles.tabIconActive]} />
+          <Image
+            source={cardTabIcon}
+            style={[styles.tabIcon, !isScanning && styles.tabIconActive]}
+          />
           <Text
             style={[
               styles.tabButtonLabel,
@@ -85,7 +117,10 @@ export default function NetworkingTool({ height }: Props) {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.tabButton} onPress={handleScanTabPress}>
-        <Image source={scannerTabIcon} style={[styles.tabIcon, isScanning && styles.tabIconActive]} />
+          <Image
+            source={scannerTabIcon}
+            style={[styles.tabIcon, isScanning && styles.tabIconActive]}
+          />
           <Text
             style={[
               styles.tabButtonLabel,
@@ -95,7 +130,15 @@ export default function NetworkingTool({ height }: Props) {
             {i18n.t('networking.scannerTab.name')}
           </Text>
         </TouchableOpacity>
-        <Animated.View style={[styles.activeTabIndicator, { width: screenWidth / 2, transform: [{ translateX: indicatorTranslateX }] }]} />
+        <Animated.View
+          style={[
+            styles.activeTabIndicator,
+            {
+              width: screenWidth / 2,
+              transform: [{ translateX: indicatorTranslateX }]
+            }
+          ]}
+        />
       </View>
     </View>
   )

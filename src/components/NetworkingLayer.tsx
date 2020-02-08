@@ -1,5 +1,11 @@
 import React from 'react'
-import { TouchableOpacity, StyleSheet, Text, View, Dimensions } from 'react-native'
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions
+} from 'react-native'
 import { useSafeArea } from 'react-native-safe-area-context'
 import BottomSheet from 'reanimated-bottom-sheet'
 
@@ -8,10 +14,12 @@ import NetworkingTool from './NetworkingTool'
 
 import i18n from '../localization'
 import SheetHeader, { BORDER_RADIUS } from './SheetHeader'
+import NetworkingActiveConnection from './NetworkingActiveConnection'
 
 export default function NetworkingLayer() {
   const { height: screenHeight } = Dimensions.get('window')
   const [isActive, seActiveState] = React.useState(false)
+  const [activeConnection, setActiveConnection] = React.useState(undefined)
   const insets = useSafeArea()
   const sheetHeight = screenHeight - 120
 
@@ -19,10 +27,22 @@ export default function NetworkingLayer() {
     seActiveState(true)
   }
 
+  function handleCardScan(nextConnection: Object) {
+    setActiveConnection(nextConnection)
+  }
+
+  function handleConnectionDismiss() {
+    setActiveConnection(undefined)
+  }
+
   return isActive ? (
     <View style={styles.overlay}>
       <View style={[styles.sheet, { height: sheetHeight }]}>
-        <NetworkingTool height={sheetHeight} />
+        {activeConnection ? (
+          <NetworkingActiveConnection onDismiss={handleConnectionDismiss} />
+        ) : (
+          <NetworkingTool height={sheetHeight} onCardScan={handleCardScan} />
+        )}
         <View style={styles.header}>
           <SheetHeader transparent />
         </View>
