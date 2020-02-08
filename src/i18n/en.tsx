@@ -49,7 +49,12 @@ export default {
       label: 'Leave feedback'
     },
     callToAction: 'Rate the event',
-    noShow: "I couldn't come"
+    noShow: "I couldn't come",
+
+    success: {
+      title: 'Thank you!',
+      description: 'Your feedback is very valuable to us'
+    }
   },
   userNav: {
     logOut: {

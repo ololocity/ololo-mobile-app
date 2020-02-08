@@ -5,7 +5,7 @@ import { useSafeArea } from 'react-native-safe-area-context'
 import { colors } from '../util/style'
 import i18n from '../localization'
 
-const buttonImgSrc = require('../assets/event-fb-btn-icon.png')
+const buttonImgSrc = require('../assets/event-feedback-button-icon.png')
 
 export const HEIGHT = 88
 

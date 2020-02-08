@@ -51,7 +51,10 @@ export default {
       label: 'Оцените мероприятие'
     },
     callToAction: 'Оцените мероприятие',
-    noShow: 'Я не смог прийти'
+    noShow: 'Я не смог прийти',
+
+    successTitle: 'Спасибо!',
+    successDescription: 'Ваш отзыв очень важен для нас'
   },
   userNav: {
     logOut: {
