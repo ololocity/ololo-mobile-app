@@ -119,6 +119,10 @@ export default function EventFeed() {
     }
   }, [hasActiveItem])
 
+  function handleFeedbackDismiss() {
+
+  }
+
   return (
     <View style={styles.root}>
       <SectionList
@@ -183,10 +187,11 @@ export default function EventFeed() {
           <EventFeedSectionTitle {...{ title }} />
         )}
       />
-      {feedbackEvent ? (
+      {!hasActiveItem && feedbackEvent ? (
         <EventFeedbackSheet
           eventId={feedbackEvent.id}
           eventTitle={feedbackEvent.title}
+          onDismiss={handleFeedbackDismiss}
         />
       ) : null}
       {hasActiveItem ? (

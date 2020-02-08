@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  StyleSheet,
-  View,
-  Dimensions
-} from 'react-native'
+import { StyleSheet, View, Dimensions } from 'react-native'
 import BottomSheet from 'reanimated-bottom-sheet'
 import Animated from 'react-native-reanimated'
 
@@ -15,7 +11,7 @@ import EventFeedbackSuccess from './EventFeedbackSuccess'
 
 import { colors } from '../util/style'
 
-const SHEET_TOP_MARGIN = 120
+export const SHEET_TOP_MARGIN = 120
 
 interface Props {
   eventId: string
@@ -23,11 +19,7 @@ interface Props {
   onDismiss: () => void
 }
 
-function EventFeedbackSheet({
-  eventId,
-  eventTitle,
-  onDismiss
-}: Props) {
+function EventFeedbackSheet({ eventId, eventTitle, onDismiss }: Props) {
   const sheetRef = React.useRef()
   const [bottomSheetY] = React.useState(new Animated.Value(1))
   const [isSubmitted, setSubmittedState] = React.useState(false)
@@ -40,6 +32,7 @@ function EventFeedbackSheet({
     inputRange: [0, 0.8],
     outputRange: [1, 0]
   })
+  const minHeight = screenHeight - SHEET_TOP_MARGIN
 
   function handleRateButtonPress() {
     if (sheetRef.current) {
@@ -67,13 +60,19 @@ function EventFeedbackSheet({
       callbackNode={bottomSheetY}
       renderContent={() => (
         <View
-          style={[styles.root, { height: screenHeight - SHEET_TOP_MARGIN }]}
+          enabled
+          behavior="height"
+          style={[styles.root, { minHeight }]}
         >
-          <Animated.View style={[styles.content, { opacity: contentOpacity }]}>
+          <Animated.View style={[styles.content, { minHeight, opacity: contentOpacity }]}>
             {isSubmitted ? (
               <EventFeedbackSuccess />
             ) : (
-                <EventFeedbackForm onSubmit={handleSubmit} onDismiss={handleDismiss} title={eventTitle}/>
+              <EventFeedbackForm
+                onSubmit={handleSubmit}
+                onDismiss={handleDismiss}
+                title={eventTitle}
+              />
             )}
           </Animated.View>
           <Animated.View
@@ -99,8 +98,6 @@ const styles = StyleSheet.create({
     height: RATE_BUTTON_HEIGHT
   },
   content: {
-    flex: 1,
-
     paddingHorizontal: 24
   }
 })

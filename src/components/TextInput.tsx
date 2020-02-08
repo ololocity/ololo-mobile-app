@@ -11,13 +11,14 @@ import { useColorScheme } from 'react-native-appearance'
 import { colors } from '../util/style'
 
 interface Props {
-  inputProps: Object
+  inputProps?: Object
   inputRef?: any
   style?: any
   inputWrapperStyle?: any
-  inputStyle?: any
+  inputStyle?: any,
+  focusColor?: string,
+  placeholder?: string,
 
-  value?: any
   onFocus?: Function
   onBlur?: Function
   onChange?: Function
@@ -28,13 +29,17 @@ interface Props {
 export default function TextInput({
   inputProps = {},
   inputRef,
-  label,
+  style,
   inputWrapperStyle,
   inputStyle,
-  style,
-  onChange,
+  focusColor = colors.blue,
+  placeholder,
+
   onFocus,
-  onBlur
+  onBlur,
+  onChange,
+
+  label,
 }) {
   const colorScheme = useColorScheme()
   const [isFocused, setFocusState] = React.useState(false)
@@ -44,6 +49,14 @@ export default function TextInput({
   const hasValue = Boolean(value)
   const shouldFloat = hasLabel && (isFocused || hasValue)
   const hasError = false
+
+  function getLabelText () {
+    if (placeholder && !isFocused && !value) {
+      return placeholder
+    }
+
+    return label
+  }
 
   function handleChange(value: any) {
     setValue(value)
@@ -76,17 +89,19 @@ export default function TextInput({
           styles.field,
           colorScheme === 'dark' && styles.fieldDark,
           inputWrapperStyle,
-          isFocused && styles.fieldFocused,
+          isFocused && { borderBottomColor: focusColor },
           hasError && styles.fieldHasError
         ]}
       >
         <RNTextInput
           {...inputProps}
           ref={inputRef}
-          placeholder={
-            hasLabel && !isFocused ? undefined : inputProps.placeholder
-          }
-          style={[styles.input, hasError && styles.inputHasError, inputStyle]}
+          style={[
+            styles.input,
+            colorScheme === 'dark' && styles.inputdDark,
+            hasError && styles.inputHasError,
+            inputStyle
+          ]}
           onChangeText={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -102,10 +117,11 @@ export default function TextInput({
               style={[
                 styles.labelText,
                 colorScheme === 'dark' && styles.labelTextDark,
-                shouldFloat && styles.labelTextFloating
+                shouldFloat && styles.labelTextFloating,
+                shouldFloat && { color: focusColor }
               ]}
             >
-              {label}
+              {getLabelText()}
             </Text>
           </View>
         ) : null}
@@ -129,15 +145,15 @@ const styles = StyleSheet.create({
   fieldDark: {
     borderBottomColor: 'rgba(255, 255, 255, 0.16)'
   },
-  fieldFocused: {
-    borderBottomColor: colors.blue
-  },
   fieldHasError: {
     borderBottomColor: colors.red
   },
 
   input: {
     paddingVertical: 8
+  },
+  inputdDark: {
+    color: colors.white
   },
   inputHasError: {},
 
@@ -165,7 +181,6 @@ const styles = StyleSheet.create({
   labelTextFloating: {
     fontSize: 12,
     fontWeight: '500',
-    lineHeight: 16,
-    color: 'rgba(47, 128, 237, 1)'
+    lineHeight: 16
   }
 })

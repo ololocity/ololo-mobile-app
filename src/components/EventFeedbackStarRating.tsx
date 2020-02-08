@@ -40,7 +40,7 @@ function EventFeedbackRating(props: Props) {
   const panCallback = React.useCallback(
     throttle(([nextSelectedStar]) => {
       if (nextSelectedStar > 0) {
-        props.onChange(clamp(nextSelectedStar, 1, 5))
+        props.onChange(clamp(nextSelectedStar, 0, 5))
       }
     }, 60),
     []
