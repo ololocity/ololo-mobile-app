@@ -16,11 +16,7 @@ export default function EventNegativeFeedbackIcon({ source, isActive }: Props) {
     <MaskedView
       style={styles.root}
       maskElement={
-        <Image
-          source={source}
-          style={styles.icon}
-          resizeMode="contain"
-        />
+        <Image source={source} style={styles.icon} resizeMode="contain" />
       }
     >
       <View style={[styles.content, isActive && styles.contentActive]} />

@@ -15,9 +15,9 @@ interface Props {
   inputRef?: any
   style?: any
   inputWrapperStyle?: any
-  inputStyle?: any,
-  focusColor?: string,
-  placeholder?: string,
+  inputStyle?: any
+  focusColor?: string
+  placeholder?: string
 
   onFocus?: Function
   onBlur?: Function
@@ -39,7 +39,7 @@ export default function TextInput({
   onBlur,
   onChange,
 
-  label,
+  label
 }) {
   const colorScheme = useColorScheme()
   const [isFocused, setFocusState] = React.useState(false)
@@ -50,7 +50,7 @@ export default function TextInput({
   const shouldFloat = hasLabel && (isFocused || hasValue)
   const hasError = false
 
-  function getLabelText () {
+  function getLabelText() {
     if (placeholder && !isFocused && !value) {
       return placeholder
     }

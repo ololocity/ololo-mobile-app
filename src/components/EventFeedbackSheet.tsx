@@ -57,7 +57,10 @@ function EventFeedbackSheet({ eventId, eventTitle, onDismiss }: Props) {
   return (
     <BottomSheet
       ref={sheetRef}
-      snapPoints={[RATE_BUTTON_HEIGHT + HEADER_HEIGHT, screenHeight - SHEET_TOP_MARGIN]}
+      snapPoints={[
+        RATE_BUTTON_HEIGHT + HEADER_HEIGHT,
+        screenHeight - SHEET_TOP_MARGIN
+      ]}
       initialSnap={0}
       callbackNode={bottomSheetY}
       renderHeader={() => (
@@ -67,7 +70,9 @@ function EventFeedbackSheet({ eventId, eventTitle, onDismiss }: Props) {
       )}
       renderContent={() => (
         <View style={[styles.root, { minHeight }]}>
-          <Animated.View style={[styles.content, { minHeight, opacity: contentOpacity }]}>
+          <Animated.View
+            style={[styles.content, { minHeight, opacity: contentOpacity }]}
+          >
             {isSubmitted ? (
               <EventFeedbackSuccess />
             ) : (

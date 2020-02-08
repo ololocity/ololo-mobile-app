@@ -119,9 +119,7 @@ export default function EventFeed() {
     }
   }, [hasActiveItem])
 
-  function handleFeedbackDismiss() {
-
-  }
+  function handleFeedbackDismiss() {}
 
   return (
     <View style={styles.root}>

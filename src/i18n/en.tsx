@@ -62,11 +62,11 @@ export default {
         speaker: 'Speaker',
         venue: 'Venue',
         organization: 'Organization',
-        price: 'Price',
+        price: 'Price'
       },
 
       submit: 'Send',
-      noShow: "I couldn't come",
+      noShow: "I couldn't come"
     },
 
     success: {

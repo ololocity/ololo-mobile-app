@@ -98,7 +98,9 @@ export default function EventFeedbackForm({
               {rating < 4 ? (
                 <View style={styles.negativeDetails}>
                   <View style={styles.negativeDetailsTitle}>
-                    <Text style={styles.negativeDetailsTitleText}>{i18n.t('eventFeedback.form.negativeDetails.title')}</Text>
+                    <Text style={styles.negativeDetailsTitleText}>
+                      {i18n.t('eventFeedback.form.negativeDetails.title')}
+                    </Text>
                   </View>
 
                   {Object.entries(NEGATIVE_DETAILS).map(([key, item]) => {
@@ -114,7 +116,14 @@ export default function EventFeedbackForm({
                             isActive={isActive}
                           />
 
-                          <Text style={[styles.negativeDetailText, isActive && styles.negativeDetailActiveText]}>{item.label}</Text>
+                          <Text
+                            style={[
+                              styles.negativeDetailText,
+                              isActive && styles.negativeDetailActiveText
+                            ]}
+                          >
+                            {item.label}
+                          </Text>
                         </View>
                       </TouchableWithoutFeedback>
                     )

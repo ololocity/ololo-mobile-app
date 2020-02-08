@@ -64,7 +64,7 @@ export default {
         speaker: 'Спикер',
         venue: 'Помещение',
         organization: 'Организация',
-        price: 'Цена',
+        price: 'Цена'
       },
 
       submit: 'Отправить',
