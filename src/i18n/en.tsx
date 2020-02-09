@@ -92,6 +92,10 @@ export default {
       name: 'Scanner',
 
       description: 'Point the camera to QR code to connect'
+    },
+    activeConnection: {
+      title: 'Contact added',
+      addMore: 'Add one more'
     }
   }
 }

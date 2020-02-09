@@ -1,13 +1,6 @@
 import React from 'react'
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions
-} from 'react-native'
+import { StyleSheet, View, Dimensions } from 'react-native'
 import { useSafeArea } from 'react-native-safe-area-context'
-import BottomSheet from 'reanimated-bottom-sheet'
 
 import ActionButton from './ActionButton'
 import NetworkingTool from './NetworkingTool'
@@ -18,13 +11,13 @@ import NetworkingActiveConnection from './NetworkingActiveConnection'
 
 export default function NetworkingLayer() {
   const { height: screenHeight } = Dimensions.get('window')
-  const [isActive, seActiveState] = React.useState(false)
+  const [isActive, setActiveState] = React.useState(false)
   const [activeConnection, setActiveConnection] = React.useState(undefined)
   const insets = useSafeArea()
   const sheetHeight = screenHeight - 120
 
   function handleButtonPress() {
-    seActiveState(true)
+    setActiveState(true)
   }
 
   function handleCardScan(nextConnection: Object) {
@@ -34,12 +27,18 @@ export default function NetworkingLayer() {
   function handleConnectionDismiss() {
     setActiveConnection(undefined)
   }
+  function handleCloseButtonPress() {
+    setActiveState(false), setActiveConnection(undefined)
+  }
 
   return isActive ? (
     <View style={styles.overlay}>
       <View style={[styles.sheet, { height: sheetHeight }]}>
         {activeConnection ? (
-          <NetworkingActiveConnection onDismiss={handleConnectionDismiss} />
+          <NetworkingActiveConnection
+            onDismiss={handleConnectionDismiss}
+            onCloseButtonPress={handleCloseButtonPress}
+          />
         ) : (
           <NetworkingTool height={sheetHeight} onCardScan={handleCardScan} />
         )}

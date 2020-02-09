@@ -92,6 +92,10 @@ export default {
       name: 'Сканер',
 
       description: 'Наведите на QR-код, чтобы познакомиться'
+    },
+    activeConnection: {
+      title: 'Контакт добавлен',
+      addMore: 'Добавить еще'
     }
   }
 }
