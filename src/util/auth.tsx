@@ -5,6 +5,8 @@ import Constants from '../constants'
 import firebase from './firebase'
 import NavigationService from '../NavigationService'
 
+const EMAIL_AUTH_REDIRECT_URL = 'https://app.ololo.kg/api/verify-email'
+
 export async function loginWithFacebook() {
   await Facebook.initializeAsync(Constants.FACEBOOK_APP_ID)
 
@@ -24,6 +26,15 @@ export async function loginWithFacebook() {
         // Handle Errors here.
       })
   }
+}
+
+export async function loginWithEmail(email: string) {
+  const actionCodeSettings = {
+    url: `${EMAIL_AUTH_REDIRECT_URL}?email=${email}`,
+    handleCodeInApp: true
+  }
+
+  return firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
 }
 
 export async function logout() {
@@ -56,7 +67,10 @@ export function withAuth(WrappedComponent) {
           // Authenticated
           setUserData(nextUserData)
 
-          if (Array.isArray(nextUserData.providerData) && nextUserData.providerData.length > 0) {
+          if (
+            Array.isArray(nextUserData.providerData) &&
+            nextUserData.providerData.length > 0
+          ) {
             const { email } = nextUserData.providerData[0]
 
             if (email) {
