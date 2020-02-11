@@ -17,6 +17,8 @@ import TextInput from '../components/TextInput'
 import FacebookAuthButton from '../components/FacebookAuthButton'
 import AuthButton from '../components/AuthButton'
 import { colors } from '../util/style'
+import * as Auth from '../util/auth';
+
 
 import i18n from '../localization'
 
@@ -41,7 +43,7 @@ export default function AuthScreen() {
 
   function handleSubmitButtonPress() {
     if (email) {
-      return navigation.navigate('AuthName', { email })
+      return Auth.loginWithEmail(email)
     }
 
     if (inputRef.current) {

@@ -26,6 +26,27 @@ export async function loginWithFacebook() {
   }
 }
 
+export async function loginWithEmail(email: string) {
+  const actionCodeSettings = {
+    url: 'http://ololo.city',
+    // This must be true.
+    handleCodeInApp: true,
+    iOS: {
+      bundleId: 'expo.host'
+    },
+    android: {
+      packageName: 'expo.host',
+      installApp: true,
+      minimumVersion: '12'
+    }
+  }
+
+  return firebase
+    .auth()
+    .sendSignInLinkToEmail(email, actionCodeSettings)
+}
+
+
 export async function logout() {
   return firebase.auth().signOut()
 }
