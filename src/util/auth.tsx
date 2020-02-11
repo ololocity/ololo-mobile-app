@@ -30,7 +30,7 @@ export async function loginWithFacebook() {
 
 export async function loginWithEmail(email: string) {
   const actionCodeSettings = {
-    url: `${EMAIL_AUTH_REDIRECT_URL}?email=${email}`
+    url: `${EMAIL_AUTH_REDIRECT_URL}?email=${email}`,
     handleCodeInApp: true
   }
 
