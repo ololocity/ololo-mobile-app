@@ -44,6 +44,36 @@ export default {
     signUp: 'Sign up',
     signedUp: 'Going'
   },
+  eventFeedback: {
+    rateButton: {
+      label: 'Leave feedback'
+    },
+
+    form: {
+      callToAction: 'Rate the event',
+
+      commentPlaceholder: 'Leave comment',
+      commentLabel: 'Comment',
+
+      negativeDetails: {
+        title: "What exactly you didn't like",
+
+        event: 'Event',
+        speaker: 'Speaker',
+        venue: 'Venue',
+        organization: 'Organization',
+        price: 'Price'
+      },
+
+      submit: 'Send',
+      noShow: "I couldn't come"
+    },
+
+    success: {
+      title: 'Thank you!',
+      description: 'Your feedback is very valuable to us'
+    }
+  },
   userNav: {
     logOut: {
       title: 'Log Out',
