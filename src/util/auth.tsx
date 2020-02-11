@@ -34,11 +34,8 @@ export async function loginWithEmail(email: string) {
     handleCodeInApp: true
   }
 
-  return firebase
-    .auth()
-    .sendSignInLinkToEmail(email, actionCodeSettings)
+  return firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
 }
-
 
 export async function logout() {
   return firebase.auth().signOut()
@@ -70,7 +67,10 @@ export function withAuth(WrappedComponent) {
           // Authenticated
           setUserData(nextUserData)
 
-          if (Array.isArray(nextUserData.providerData) && nextUserData.providerData.length > 0) {
+          if (
+            Array.isArray(nextUserData.providerData) &&
+            nextUserData.providerData.length > 0
+          ) {
             const { email } = nextUserData.providerData[0]
 
             if (email) {
