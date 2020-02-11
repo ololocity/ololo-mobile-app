@@ -28,17 +28,8 @@ export async function loginWithFacebook() {
 
 export async function loginWithEmail(email: string) {
   const actionCodeSettings = {
-    url: 'http://ololo.city',
-    // This must be true.
-    handleCodeInApp: true,
-    iOS: {
-      bundleId: 'expo.host'
-    },
-    android: {
-      packageName: 'expo.host',
-      installApp: true,
-      minimumVersion: '12'
-    }
+    url: 'https://app.ololo.kg/api/verify-email?email=' + email,
+    handleCodeInApp: true
   }
 
   return firebase
