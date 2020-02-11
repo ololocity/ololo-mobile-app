@@ -12,7 +12,7 @@ interface Props {
   selectedStar: Animated.Value<number>
 }
 
-const { onChange, interpolate, greaterThan, useCode, set, debug } = Animated
+const { interpolate, greaterThan } = Animated
 
 function RatingStar({ index, selectedStar }: Props) {
   const activeValue = withSpringTransition(greaterThan(selectedStar, index))

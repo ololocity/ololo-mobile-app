@@ -11,6 +11,7 @@ import {
 import { BarCodeScanner } from 'expo-barcode-scanner'
 
 import NetworkingScannerOverlay from './NetworkingScannerOverlay'
+import QRCode from 'react-native-qrcode-svg'
 
 import { colors } from '../util/style'
 import i18n from '../localization'
@@ -18,9 +19,12 @@ import i18n from '../localization'
 const cardTabIcon = require('../assets/networking-tab-card.png')
 const scannerTabIcon = require('../assets/networking-tab-scanner.png')
 
+const QRCODE = '123e4567-e89b-12d3-a456-426655440000'
+
 interface Props {
   height: number
   onCardScan: (connection: Object) => void
+  onPress: () => void
 }
 
 export default function NetworkingTool({ height, onCardScan }: Props) {
@@ -48,7 +52,6 @@ export default function NetworkingTool({ height, onCardScan }: Props) {
   function handleScanTabPress() {
     scrollToIndex(1)
   }
-
   function handleScroll(event) {
     const offsetX = event.nativeEvent.contentOffset.x
 
@@ -87,9 +90,11 @@ export default function NetworkingTool({ height, onCardScan }: Props) {
           { useNativeDriver: true, listener: handleScroll }
         )}
       >
-        <View
-          style={[styles.tab, styles.cardTab, { width: screenWidth }]}
-        ></View>
+        <View style={[styles.tab, styles.cardTab, { width: screenWidth }]}>
+          <View style={styles.qrCodeBackground}>
+            <QRCode size={200} value={QRCODE} />
+          </View>
+        </View>
         <View style={[styles.tab, styles.scannerTab, { width: screenWidth }]}>
           {isScanning && hasPermission ? (
             <BarCodeScanner
@@ -159,7 +164,17 @@ const styles = StyleSheet.create({
     position: 'relative'
   },
   cardTab: {
-    backgroundColor: colors.blue
+    backgroundColor: colors.blue,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  qrCodeBackground: {
+    width: 289,
+    height: 289,
+    backgroundColor: colors.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 33
   },
   scannerTab: {
     backgroundColor: colors.black
