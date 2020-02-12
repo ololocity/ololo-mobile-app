@@ -14,7 +14,7 @@ import { useNavigation } from 'react-navigation-hooks'
 
 import AuthHeader, { HEIGHT as HEADER_HEIGHT } from '../components/AuthHeader'
 import TextInput from '../components/TextInput'
-import AuthCheckEmailButton from '../components/AuthCheckEmailButton'
+import ActionButton from '../components/ActionButton'
 import { colors } from '../util/style'
 import * as Auth from '../util/auth'
 
@@ -24,7 +24,7 @@ export default function AuthCheckEmailScreen() {
   const colorScheme = useColorScheme()
   const navigation = useNavigation()
 
-  function handleCheckEmailPress() {
+  function handleButtonPress() {
     return true
   }
 
@@ -59,9 +59,10 @@ export default function AuthCheckEmailScreen() {
                 </Text>
               </View>
             </View>
-          <View style={styles.AuthCheckEmailButtonWrapper}>
-            <AuthCheckEmailButton 
-              onPress={handleCheckEmailPress}
+          <View>
+            <ActionButton
+              onPress={handleButtonPress}
+              label={i18n.t('authCheckEmailScreen.checkEmail')}
             />
           </View>
           </View>
