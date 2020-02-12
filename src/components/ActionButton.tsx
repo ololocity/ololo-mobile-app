@@ -21,7 +21,7 @@ export default function ActionButton({
   label,
   color = colors.blue,
   iconSource,
-  textColor
+  textColor = colors.white
 }: Props) {
   return (
     <TouchableOpacity

@@ -4,10 +4,8 @@ import { useSafeArea } from 'react-native-safe-area-context'
 
 import ActionButton from './ActionButton'
 import NetworkingSheet from './NetworkingSheet'
-import NetworkingTool from './NetworkingTool'
 
 import i18n from '../localization'
-import { colors } from '../util/style'
 
 const DEFAULT_BUTTON_BOTTOM_MARGIN = 16
 
@@ -35,7 +33,6 @@ function NetworkingLayer() {
       <ActionButton
         onPress={handleButtonPress}
         label={i18n.t('networking.actionButton')}
-        textColor={colors.white}
       />
     </View>
   )
