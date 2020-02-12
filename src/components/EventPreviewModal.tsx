@@ -159,6 +159,7 @@ export default function EventPreviewModal({
       </Animated.View>
     </View>
   )
+  paddingVertical: 24
 }
 
 const styles = StyleSheet.create({
