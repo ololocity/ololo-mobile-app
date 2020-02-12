@@ -1,20 +1,35 @@
 import React from 'react'
-import { TouchableOpacity, Text, StyleSheet } from 'react-native'
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Image,
+  ImageSourcePropType
+} from 'react-native'
 import { colors } from '../util/style'
 
 interface Props {
   label: string
   onPress: () => void
   color?: string
+  iconSource?: ImageSourcePropType
+  textColor?: string
 }
 
-export default function ActionButton({ onPress, label, color = colors.blue }: Props) {
+export default function ActionButton({
+  onPress,
+  label,
+  color = colors.blue,
+  iconSource,
+  textColor
+}: Props) {
   return (
     <TouchableOpacity
       style={[styles.root, { backgroundColor: color }]}
       onPress={onPress}
     >
-      <Text style={styles.labelText}>{label}</Text>
+      <Image source={iconSource} />
+      <Text style={[styles.labelText, { color: textColor }]}>{label}</Text>
     </TouchableOpacity>
   )
 }
@@ -24,10 +39,10 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
     height: 48,
     paddingHorizontal: 49,
-    borderRadius: 24
+    borderRadius: 24,
+    justifyContent: 'space-between'
   },
   labelText: {
     textAlign: 'center',

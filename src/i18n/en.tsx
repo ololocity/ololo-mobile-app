@@ -96,6 +96,8 @@ export default {
     activeConnection: {
       title: 'Contact added',
       addMore: 'Add one more'
-    }
+    },
+    scanQRCode: 'Scan the code to connect',
+    pointToQRCode: 'Point to QR-code to connect'
   }
 }

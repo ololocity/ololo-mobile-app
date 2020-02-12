@@ -94,6 +94,9 @@ export default function NetworkingTool({ height, onCardScan }: Props) {
           <View style={styles.qrCodeBackground}>
             <QRCode size={200} value={QRCODE} />
           </View>
+          <Text style={styles.cardTabBottomText}>
+            {i18n.t('networking.scanQRCode')}
+          </Text>
         </View>
         <View style={[styles.tab, styles.scannerTab, { width: screenWidth }]}>
           {hasPermission ? (
@@ -103,9 +106,14 @@ export default function NetworkingTool({ height, onCardScan }: Props) {
               barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
             />
           ) : null}
+
           <NetworkingScannerOverlay height={height} />
+          <Text style={styles.cardTabBottomText}>
+            {i18n.t('networking.pointToQRCode')}
+          </Text>
         </View>
       </Animated.ScrollView>
+
       <View style={styles.tabs}>
         <TouchableOpacity style={styles.tabButton} onPress={handleCardTabPress}>
           <Image
@@ -135,6 +143,7 @@ export default function NetworkingTool({ height, onCardScan }: Props) {
             {i18n.t('networking.scannerTab.name')}
           </Text>
         </TouchableOpacity>
+
         <Animated.View
           style={[
             styles.activeTabIndicator,
@@ -168,13 +177,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  cardTabBottomText: {
+    fontSize: 18,
+    fontWeight: '500',
+    letterSpacing: 0.5,
+    lineHeight: 21,
+    position: 'absolute',
+    bottom: 50,
+    color: colors.white,
+    left: 20,
+    right: 20,
+    textAlign: 'center'
+  },
   qrCodeBackground: {
     width: 289,
     height: 289,
     backgroundColor: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 33
+    borderRadius: 33,
+    marginBottom: 24
   },
   scannerTab: {
     backgroundColor: colors.black

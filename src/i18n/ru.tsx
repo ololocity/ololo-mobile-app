@@ -96,6 +96,8 @@ export default {
     activeConnection: {
       title: 'Контакт добавлен',
       addMore: 'Добавить еще'
-    }
+    },
+    scanQRCode: 'Отсканируй код, чтобы познакомиться',
+    pointToQRCode: 'Наведите на QR-код,чтобы познакомиться'
   }
 }
