@@ -42,7 +42,8 @@ export default function AuthScreen() {
 
   function handleSubmitButtonPress() {
     if (email) {
-      return Auth.loginWithEmail(email)
+      Auth.loginWithEmail(email)
+      return navigation.navigate('AuthCheckEmail', { email })
     }
 
     if (inputRef.current) {
