@@ -65,6 +65,9 @@ export default function AuthCheckEmailScreen() {
               label={i18n.t('authCheckEmailScreen.checkEmail')}
             />
           </View>
+            <View style={styles.AuthCheckEmailButtonWrapper}>
+              <AuthCheckEmailButton onPress={handleCheckEmailPress} />
+            </View>
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: 16
   },
   header: {
     marginBottom: 24
@@ -115,5 +118,4 @@ const styles = StyleSheet.create({
   subTitleText: {
     fontSize: 13
   }
-
 })
