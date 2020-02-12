@@ -96,7 +96,7 @@ export default function NetworkingTool({ height, onCardScan }: Props) {
           </View>
         </View>
         <View style={[styles.tab, styles.scannerTab, { width: screenWidth }]}>
-          {isScanning && hasPermission ? (
+          {hasPermission ? (
             <BarCodeScanner
               style={StyleSheet.absoluteFill}
               onBarCodeScanned={hasScanned ? undefined : handleCodeScan}
