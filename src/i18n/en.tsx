@@ -84,5 +84,25 @@ export default {
       title: 'Log Out',
       message: 'Are you sure you want to log out?'
     }
+  },
+  networking: {
+    actionButton: 'Connect',
+
+    cardTab: {
+      name: 'Card',
+
+      description: 'Show your card to connect'
+    },
+    scannerTab: {
+      name: 'Scanner',
+
+      description: 'Point the camera to QR code to connect'
+    },
+    activeConnection: {
+      title: 'Contact added',
+      addMore: 'Add one more'
+    },
+    scanQRCode: 'Scan the code to connect',
+    pointToQRCode: 'Point to QR-code to connect'
   }
 }

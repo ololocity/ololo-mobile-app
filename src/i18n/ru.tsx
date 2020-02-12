@@ -84,5 +84,25 @@ export default {
       title: 'Выход',
       message: 'Вы действительно хотите выйти?'
     }
+  },
+  networking: {
+    actionButton: 'Познакомиться',
+
+    cardTab: {
+      name: 'Визитка',
+
+      description: 'Отсканируй код, чтобы познакомиться'
+    },
+    scannerTab: {
+      name: 'Сканер',
+
+      description: 'Наведите на QR-код, чтобы познакомиться'
+    },
+    activeConnection: {
+      title: 'Контакт добавлен',
+      addMore: 'Добавить еще'
+    },
+    scanQRCode: 'Отсканируй код, чтобы познакомиться',
+    pointToQRCode: 'Наведите на QR-код,чтобы познакомиться'
   }
 }

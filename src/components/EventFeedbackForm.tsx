@@ -10,7 +10,7 @@ import {
 import { useSafeArea } from 'react-native-safe-area-context'
 
 import TextInput from './TextInput'
-import { SHEET_TOP_MARGIN } from './EventFeedbackSheet'
+import { SHEET_TOP_MARGIN } from './EventFeedbackLayer'
 import EventFeedbackStarRating from './EventFeedbackStarRating'
 
 import { colors } from '../util/style'

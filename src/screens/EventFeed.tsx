@@ -13,7 +13,8 @@ import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { useColorScheme } from 'react-native-appearance'
 import format from 'date-fns/format'
-import EventFeedbackSheet from '../components/EventFeedbackSheet'
+import EventFeedbackLayer from '../components/EventFeedbackLayer'
+import NetworkingLayer from '../components/NetworkingLayer'
 import UserNav from '../components/UserNav'
 import EventFeedSectionTitle from '../components/EventFeedSectionTitle'
 import EventFeedItem from '../components/EventFeedItem'
@@ -63,10 +64,8 @@ export default function EventFeed() {
       ? getEventFeedSections(data.allEvents)
       : undefined
 
-  const feedbackEvent =
-    data && Array.isArray(data.allEvents) && data.allEvents.length > 0
-      ? data.allEvents[0]
-      : undefined
+  // TODO: Determine feedback event from user's visited events
+  const feedbackEvent = undefined
 
   function handleItemPress(item, layout) {
     if (!hasActiveItem) {
@@ -186,12 +185,13 @@ export default function EventFeed() {
         )}
       />
       {!hasActiveItem && feedbackEvent ? (
-        <EventFeedbackSheet
+        <EventFeedbackLayer
           eventId={feedbackEvent.id}
           eventTitle={feedbackEvent.title}
           onDismiss={handleFeedbackDismiss}
         />
       ) : null}
+      <NetworkingLayer />
       {hasActiveItem ? (
         <EventPreviewModal
           item={activeItem}

@@ -37,7 +37,6 @@ function EventPreview({ item, revealAnimValue }: Props) {
   return (
     <Animated.View style={[styles.root, { paddingTop, borderRadius }]}>
       <Image style={styles.picture} source={{ uri: item.coverImage.url }} />
-
       <View>
         <View>
           {item.speakers.map((speaker, index) => (
