@@ -31,8 +31,7 @@ const {
   stopClock,
   clockRunning,
   call,
-  not,
-  debug
+  not
 } = Animated
 
 const springConfig = {
@@ -179,7 +178,6 @@ function NetworkingSheet({ onDismiss }: Props) {
           {activeConnection ? (
             <NetworkingActiveConnection
               onDismiss={handleConnectionDismiss}
-              onCloseButtonPress={onDismiss}
             />
           ) : (
             <NetworkingTool

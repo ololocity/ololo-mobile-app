@@ -9,6 +9,8 @@ import NetworkingTool from './NetworkingTool'
 import i18n from '../localization'
 import { colors } from '../util/style'
 
+const DEFAULT_BUTTON_BOTTOM_MARGIN = 16
+
 function NetworkingLayer() {
   const [isActive, setActiveState] = React.useState(false)
   const insets = useSafeArea()
@@ -24,7 +26,7 @@ function NetworkingLayer() {
   return isActive ? (
     <NetworkingSheet onDismiss={handleSheetDismiss} />
   ) : (
-    <View style={[styles.buttonContainer, { bottom: insets.bottom }]}>
+    <View style={[styles.buttonContainer, { bottom: insets.bottom || DEFAULT_BUTTON_BOTTOM_MARGIN }]}>
       <ActionButton
         onPress={handleButtonPress}
         label={i18n.t('networking.actionButton')}
