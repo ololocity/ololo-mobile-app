@@ -7,7 +7,6 @@ import i18n from '../localization'
 import { colors } from '../util/style'
 
 export default function AuthCheckEmailButton({ onPress }) {
-
   return (
     <View
       style={[
@@ -18,17 +17,11 @@ export default function AuthCheckEmailButton({ onPress }) {
         }
       ]}
     >
-      <TouchableOpacity
-        style={styles.button}
-        onPress={onPress}
-      >
-        <View
-          style={[
-            styles.content,
-            { borderRadius: 24, height: 48 }
-          ]}
-        >
-          <Text style={styles.labelText}>{i18n.t('authCheckEmailScreen.checkEmail')}</Text>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
+        <View style={[styles.content, { borderRadius: 24, height: 48 }]}>
+          <Text style={styles.labelText}>
+            {i18n.t('authCheckEmailScreen.checkEmail')}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -55,4 +48,3 @@ const styles = StyleSheet.create({
     color: colors.white
   }
 })
-
