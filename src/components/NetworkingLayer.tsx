@@ -26,7 +26,12 @@ function NetworkingLayer() {
   return isActive ? (
     <NetworkingSheet onDismiss={handleSheetDismiss} />
   ) : (
-    <View style={[styles.buttonContainer, { bottom: insets.bottom || DEFAULT_BUTTON_BOTTOM_MARGIN }]}>
+    <View
+      style={[
+        styles.buttonContainer,
+        { bottom: insets.bottom || DEFAULT_BUTTON_BOTTOM_MARGIN }
+      ]}
+    >
       <ActionButton
         onPress={handleButtonPress}
         label={i18n.t('networking.actionButton')}

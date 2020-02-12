@@ -176,9 +176,7 @@ function NetworkingSheet({ onDismiss }: Props) {
           ]}
         >
           {activeConnection ? (
-            <NetworkingActiveConnection
-              onDismiss={handleConnectionDismiss}
-            />
+            <NetworkingActiveConnection onDismiss={handleConnectionDismiss} />
           ) : (
             <NetworkingTool
               height={sheetHeight}

@@ -57,7 +57,7 @@ export default function NetworkingScannerOverlay({ height }: Props) {
             }
           ]}
         />
-                <View
+        <View
           style={[
             styles.targetCorner,
             {
@@ -68,7 +68,7 @@ export default function NetworkingScannerOverlay({ height }: Props) {
             }
           ]}
         />
-                <View
+        <View
           style={[
             styles.targetCorner,
             {
@@ -79,7 +79,7 @@ export default function NetworkingScannerOverlay({ height }: Props) {
             }
           ]}
         />
-                <View
+        <View
           style={[
             styles.targetCorner,
             {

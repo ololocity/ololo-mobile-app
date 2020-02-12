@@ -34,7 +34,9 @@ export default function NetworkingContactInfo({
             <Image source={{ uri: photoURL }} style={styles.avatarPicture} />
           </View>
         ) : null}
-        <Text numberOfLines={2} style={styles.fullName}>{fullName}</Text>
+        <Text numberOfLines={2} style={styles.fullName}>
+          {fullName}
+        </Text>
         <Image source={checkedIconSrc} />
       </View>
       <TouchableOpacity

@@ -12,7 +12,8 @@ import i18n from '../localization'
 const DEFAULT_BUTTON_BOTTOM_MARGIN = 16
 
 const FAKE_CONNECTION = {
-  photoURL: 'https://images.unsplash.com/photo-1524150224918-8a8eded72c34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&h=300&q=80',
+  photoURL:
+    'https://images.unsplash.com/photo-1524150224918-8a8eded72c34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&h=300&q=80',
   fullName: 'Константин Соколов',
   phoneNumber: '+996755755855',
   email: 'sokolov@gmail.com'
@@ -25,9 +26,7 @@ interface Props {
 const backIconSrc = require('../assets/header-left-back-dark.png')
 const addMoreIconSrc = require('../assets/networking-active-connection-add-more.png')
 
-export default function NetworkingActiveConnection({
-  onDismiss
-}: Props) {
+export default function NetworkingActiveConnection({ onDismiss }: Props) {
   const insets = useSafeArea()
   const connection = FAKE_CONNECTION
 
@@ -49,7 +48,12 @@ export default function NetworkingActiveConnection({
           email={connection.email}
         />
       </View>
-      <View style={[styles.footer, { paddingBottom: insets.bottom || DEFAULT_BUTTON_BOTTOM_MARGIN }]}>
+      <View
+        style={[
+          styles.footer,
+          { paddingBottom: insets.bottom || DEFAULT_BUTTON_BOTTOM_MARGIN }
+        ]}
+      >
         <ActionButton
           label={i18n.t('networking.activeConnection.addMore')}
           onPress={onDismiss}
@@ -85,7 +89,7 @@ const styles = StyleSheet.create({
     lineHeight: 32,
     letterSpacing: 0.5,
 
-    color: colors.white,
+    color: colors.white
   },
   footer: {
     flexDirection: 'row',

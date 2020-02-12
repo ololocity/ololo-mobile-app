@@ -28,9 +28,7 @@ export default function ActionButton({
       style={[styles.root, { backgroundColor: color }]}
       onPress={onPress}
     >
-      {iconSource ? (
-        <Image style={styles.icon} source={iconSource} />
-      ) : null}
+      {iconSource ? <Image style={styles.icon} source={iconSource} /> : null}
       <Text style={[styles.labelText, { color: textColor }]}>{label}</Text>
     </TouchableOpacity>
   )
