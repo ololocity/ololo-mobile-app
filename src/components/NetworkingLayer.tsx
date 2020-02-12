@@ -10,6 +10,7 @@ import NetworkingSheet from './NetworkingSheet'
 import NetworkingTool from './NetworkingTool'
 
 import i18n from '../localization'
+
 function NetworkingLayer() {
   const [isActive, setActiveState] = React.useState(false)
   const insets = useSafeArea()

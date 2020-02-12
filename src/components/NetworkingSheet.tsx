@@ -36,9 +36,9 @@ const {
 } = Animated
 
 const springConfig = {
-  damping: 12,
+  damping: 30,
   mass: 1,
-  stiffness: 100,
+  stiffness: 300,
   overshootClamping: true,
   restSpeedThreshold: 0.001,
   restDisplacementThreshold: 0.001
@@ -169,7 +169,7 @@ function NetworkingSheet({ onDismiss }: Props) {
       <TouchableWithoutFeedback onPress={handleOverlayPress}>
         <Animated.View style={[styles.overlay, { opacity: overlayOpacity }]} />
       </TouchableWithoutFeedback>
-      <PanGestureHandler {...gestureHandler}>
+      <PanGestureHandler activeOffsetY={[-10, 10]} {...gestureHandler}>
         <Animated.View
           style={[
             styles.sheet,
