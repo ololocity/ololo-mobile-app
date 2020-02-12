@@ -28,7 +28,9 @@ export default function ActionButton({
       style={[styles.root, { backgroundColor: color }]}
       onPress={onPress}
     >
-      <Image source={iconSource} />
+      {iconSource ? (
+        <Image style={styles.icon} source={iconSource} />
+      ) : null}
       <Text style={[styles.labelText, { color: textColor }]}>{label}</Text>
     </TouchableOpacity>
   )
@@ -43,6 +45,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 49,
     borderRadius: 24,
     justifyContent: 'space-between'
+  },
+  icon: {
+    marginRight: 16
   },
   labelText: {
     textAlign: 'center',
