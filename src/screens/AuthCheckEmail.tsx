@@ -59,12 +59,12 @@ export default function AuthCheckEmailScreen() {
                 </Text>
               </View>
             </View>
-          <View>
-            <ActionButton
-              onPress={handleButtonPress}
-              label={i18n.t('authCheckEmailScreen.checkEmail')}
-            />
-          </View>
+            <View>
+              <ActionButton
+                onPress={handleButtonPress}
+                label={i18n.t('authCheckEmailScreen.checkEmail')}
+              />
+            </View>
             <View style={styles.AuthCheckEmailButtonWrapper}>
               <AuthCheckEmailButton onPress={handleCheckEmailPress} />
             </View>
