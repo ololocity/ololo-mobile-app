@@ -28,6 +28,11 @@ export default {
     fbAuth: 'Войти с помощью Facebook',
     next: 'Далее'
   },
+  authCheckEmailScreen: {
+    title: 'Проверьте почту',
+    subTitle: 'Код был отправлен на почту',
+    checkEmail: 'Проверить почту'
+  },
   authNameScreen: {
     title: 'Введите имя',
     subTitle: 'Чтобы посетителям мероприятий было легче с вами знакомиться',

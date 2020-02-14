@@ -9,13 +9,14 @@ import Onboarding from './src/screens/Onboarding'
 import EventFeed from './src/screens/EventFeed'
 import Auth from './src/screens/Auth'
 import AuthName from './src/screens/AuthName'
+import AuthCheckEmail from './src/screens/AuthCheckEmail'
 
 import NavigationService from './src/NavigationService'
 import { client } from './src/util/db'
 import { compose } from './src/util/misc'
 import { withAuth } from './src/util/auth'
 
-const AuthStack = createStackNavigator({ Auth, AuthName })
+const AuthStack = createStackNavigator({ Auth, AuthName, AuthCheckEmail })
 const AppStack = createStackNavigator({ EventFeed }, { headerMode: 'none' })
 
 const AppContainer = createAppContainer(

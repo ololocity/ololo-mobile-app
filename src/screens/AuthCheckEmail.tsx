@@ -14,41 +14,18 @@ import { useNavigation } from 'react-navigation-hooks'
 
 import AuthHeader, { HEIGHT as HEADER_HEIGHT } from '../components/AuthHeader'
 import TextInput from '../components/TextInput'
-import FacebookAuthButton from '../components/FacebookAuthButton'
-import AuthButton from '../components/AuthButton'
+import ActionButton from '../components/ActionButton'
 import { colors } from '../util/style'
 import * as Auth from '../util/auth'
 
 import i18n from '../localization'
 
-export default function AuthScreen() {
+export default function AuthCheckEmailScreen() {
   const colorScheme = useColorScheme()
   const navigation = useNavigation()
-  const inputRef = React.useRef<RNTextInput>()
-  const [isInputFocused, setInputFocusState] = React.useState(false)
-  const [email, setEmail] = React.useState('')
 
-  function handleInputFocus() {
-    setInputFocusState(true)
-  }
-
-  function handleInputBlur() {
-    setInputFocusState(false)
-  }
-
-  function handleInputChange(nextValue) {
-    setEmail(nextValue)
-  }
-
-  function handleSubmitButtonPress() {
-    if (email) {
-      Auth.loginWithEmail(email)
-      return navigation.navigate('AuthCheckEmail', { email })
-    }
-
-    if (inputRef.current) {
-      inputRef.current.focus()
-    }
+  function handleButtonPress() {
+    return true
   }
 
   return (
@@ -68,7 +45,7 @@ export default function AuthScreen() {
                     colorScheme === 'dark' && styles.titleTextDark
                   ]}
                 >
-                  {i18n.t('authScreen.title')}
+                  {i18n.t('authCheckEmailScreen.title')}
                 </Text>
               </View>
               <View>
@@ -78,42 +55,24 @@ export default function AuthScreen() {
                     colorScheme === 'dark' && styles.titleTextDark
                   ]}
                 >
-                  {i18n.t('authScreen.subTitle')}
+                  {i18n.t('authCheckEmailScreen.subTitle')}
                 </Text>
               </View>
             </View>
-
-            <TextInput
-              label={i18n.t('authScreen.emailInputLabel')}
-              inputRef={inputRef}
-              inputProps={{ keyboardType: 'email-address' }}
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-              onChange={handleInputChange}
-            />
+            <View>
+              <ActionButton
+                onPress={handleButtonPress}
+                label={i18n.t('authCheckEmailScreen.checkEmail')}
+              />
+            </View>
           </View>
         </TouchableWithoutFeedback>
-
-        <View style={styles.footer}>
-          <View style={styles.fbAuthButtonWrapper}>
-            <FacebookAuthButton />
-          </View>
-          <AuthButton
-            onPress={handleSubmitButtonPress}
-            disabled={isInputFocused && !email}
-            label={
-              isInputFocused
-                ? i18n.t('authScreen.next')
-                : i18n.t('authScreen.logIn')
-            }
-          />
-        </View>
       </View>
     </KeyboardAvoidingView>
   )
 }
 
-AuthScreen.navigationOptions = ({ navigation }) => ({
+AuthCheckEmailScreen.navigationOptions = ({ navigation }) => ({
   headerTransparent: true,
   header: () => (
     <AuthHeader
@@ -126,9 +85,7 @@ AuthScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-
     paddingTop: HEADER_HEIGHT,
-
     backgroundColor: colors.white
   },
   rootDark: {
@@ -139,7 +96,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-
+    justifyContent: 'center',
     paddingHorizontal: 16
   },
   header: {
@@ -157,15 +114,5 @@ const styles = StyleSheet.create({
   },
   subTitleText: {
     fontSize: 13
-  },
-  footer: {
-    position: 'relative',
-    flexDirection: 'row'
-  },
-  fbAuthButtonWrapper: {
-    position: 'absolute',
-    top: -64,
-    left: 16,
-    right: 16
   }
 })

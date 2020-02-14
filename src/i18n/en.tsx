@@ -33,6 +33,11 @@ export default {
     subscribeText: 'Stay up to date with events',
     finish: 'Finish'
   },
+  authCheckEmailScreen: {
+    title: 'Check e-mail',
+    subTitle: 'The code was sent to your e-mail',
+    checkEmail: 'Check e-mail'
+  },
   eventFeed: {
     now: 'Now',
     futureEvents: 'Future Events',
