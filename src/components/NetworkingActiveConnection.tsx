@@ -59,6 +59,7 @@ export default function NetworkingActiveConnection({ onDismiss }: Props) {
           onPress={onDismiss}
           color={colors.yellow}
           iconSource={addMoreIconSrc}
+          textColor={colors.black}
         />
       </View>
     </View>

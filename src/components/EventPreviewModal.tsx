@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   Dimensions,
   View,
@@ -17,7 +17,8 @@ import { useQuery } from '@apollo/react-hooks'
 import EventPreview from './EventPreview'
 import { EventFeedItemType } from '../util/eventFeed'
 import { colors } from '../util/style'
-
+import { PanGestureHandler, State } from 'react-native-gesture-handler'
+import { onGestureEvent, useValues } from 'react-native-redash'
 const backIconSrc = require('../assets/header-left-back-dark.png')
 
 const PREVIEW_HEIGHT = 361
@@ -48,6 +49,14 @@ export default function EventPreviewModal({
   revealAnimValue
 }: Props) {
   const [isRevealed, setRevealState] = React.useState(false)
+  const [
+    gestureX,
+    gestureY,
+    gestureVelocityY,
+    gestureState,
+    translateX,
+    translateY
+  ] = useValues([0, 0, 0, State.UNDETERMINED], [])
   const { width: windowWidth, height: windowHeight } = Dimensions.get('screen')
   const colorScheme = useColorScheme()
   const { loading, data } = useQuery(eventDescriptionQuery, {
@@ -102,62 +111,78 @@ export default function EventPreviewModal({
       ...SPRING_CONFIG
     }).start(onDismiss)
   }
-
+  const gestureHandler = onGestureEvent({
+    translationX: gestureX,
+    translationY: gestureY,
+    velocityY: gestureVelocityY,
+    state: gestureState
+  })
   return (
-    <View style={styles.root} pointerEvents="box-none">
-      <Animated.View
-        style={[
-          styles.scrollWrapper,
-          { height: contentHeight, top: contentTop }
-        ]}
-      >
-        <ScrollView
-          style={[styles.scroll, colorScheme === 'dark' && styles.scrollDark]}
-          contentContainerStyle={styles.contentContainer}
-          scrollEnabled={isRevealed}
-        >
-          {loading ? <ActivityIndicator /> : null}
-          {data && data.event ? (
-            <Markdown
-              style={{
-                root: {
-                  color: colorScheme === 'dark' ? colors.white : colors.black,
-                  fontSize: 13
-                }
-              }}
-              mergeStyle
+    <TouchableOpacity>
+      <PanGestureHandler {...gestureHandler}>
+        <Animated.View style={styles.root} pointerEvents="box-none">
+          <Animated.View
+            style={[
+              styles.scrollWrapper,
+              { height: contentHeight, top: contentTop }
+            ]}
+          >
+            <ScrollView
+              style={[
+                styles.scroll,
+                colorScheme === 'dark' && styles.scrollDark
+              ]}
+              contentContainerStyle={styles.contentContainer}
+              scrollEnabled={isRevealed}
             >
-              {data.event.description}
-            </Markdown>
-          ) : null}
-        </ScrollView>
-      </Animated.View>
+              {loading ? <ActivityIndicator /> : null}
+              {data && data.event ? (
+                <Markdown
+                  style={{
+                    root: {
+                      color:
+                        colorScheme === 'dark' ? colors.white : colors.black,
+                      fontSize: 13
+                    }
+                  }}
+                  mergeStyle
+                >
+                  {data.event.description}
+                </Markdown>
+              ) : null}
+            </ScrollView>
+          </Animated.View>
 
-      <Animated.View
-        style={[
-          styles.preview,
-          {
-            left: previewLeft,
-            top: previewTop,
-            width: previewWidth,
-            height: previewHeight
-          }
-        ]}
-      >
-        <EventPreview {...{ item, revealAnimValue }} />
-      </Animated.View>
+          <Animated.View
+            style={[
+              styles.preview,
+              {
+                left: previewLeft,
+                top: previewTop,
+                width: previewWidth,
+                height: previewHeight
+              }
+            ]}
+          >
+            <EventPreview {...{ item, revealAnimValue }} />
+          </Animated.View>
 
-      <Animated.View
-        style={[styles.dismissButtonWrapper, { opacity: dismissButtonOpacity }]}
-      >
-        <TouchableOpacity
-          style={styles.dismissButton}
-          onPress={handleDismissButtonPress}
-        >
-          <Image source={backIconSrc} />
-        </TouchableOpacity>
-      </Animated.View>
-    </View>
+          <Animated.View
+            style={[
+              styles.dismissButtonWrapper,
+              { opacity: dismissButtonOpacity }
+            ]}
+          >
+            <TouchableOpacity
+              style={styles.dismissButton}
+              onPress={handleDismissButtonPress}
+            >
+              <Image source={backIconSrc} />
+            </TouchableOpacity>
+          </Animated.View>
+        </Animated.View>
+      </PanGestureHandler>
+    </TouchableOpacity>
   )
   paddingVertical: 24
 }

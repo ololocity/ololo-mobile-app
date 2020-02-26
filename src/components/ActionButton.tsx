@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     height: 48,
     paddingHorizontal: 49,
     borderRadius: 24,
-    justifyContent: 'space-between'
+    justifyContent: 'center'
   },
   icon: {
     marginRight: 16
