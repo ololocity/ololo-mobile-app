@@ -13,11 +13,12 @@ import { useColorScheme } from 'react-native-appearance'
 import Markdown from 'react-native-markdown-display'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
-
 import EventPreview from './EventPreview'
+import Reanimated from 'react-native-reanimated'
+import { onScroll } from 'react-native-redash'
 import { EventFeedItemType } from '../util/eventFeed'
 import { colors } from '../util/style'
-
+import { useSafeArea } from 'react-native-safe-area-context'
 const backIconSrc = require('../assets/header-left-back-dark.png')
 
 const PREVIEW_HEIGHT = 361
@@ -55,6 +56,7 @@ export default function EventPreviewModal({
       eventId: item.id
     }
   })
+  const [sheetY] = React.useState(new Reanimated.Value(0))
 
   const previewLeft = revealAnimValue.interpolate({
     inputRange: [0, 1],
@@ -84,7 +86,7 @@ export default function EventPreviewModal({
     inputRange: [0, 1],
     outputRange: [0, windowHeight]
   })
-
+  const { interpolate, Extrapolate } = Reanimated
   React.useEffect(() => {
     Animated.spring(revealAnimValue, {
       toValue: 1,
@@ -102,13 +104,29 @@ export default function EventPreviewModal({
       ...SPRING_CONFIG
     }).start(onDismiss)
   }
+  const headerHeight = sheetY.interpolate({
+    inputRange: [-PREVIEW_HEIGHT, 0],
+    outputRange: [0, PREVIEW_HEIGHT]
+  })
 
+  const headerOpacity = interpolate(sheetY, {
+    inputRange: [-PREVIEW_HEIGHT / 2, 0, PREVIEW_HEIGHT / 2],
+    outputRange: [0, 1, 0],
+    extrapolate: Extrapolate.CLAMP
+  })
   return (
-    <View style={styles.root} pointerEvents="box-none">
+    <Reanimated.ScrollView
+      onScroll={onScroll({ y: sheetY })}
+      style={styles.root}
+      pointerEvents="box-none"
+    >
       <Animated.View
         style={[
           styles.scrollWrapper,
-          { height: contentHeight, top: contentTop }
+          {
+            height: contentHeight,
+            top: contentTop
+          }
         ]}
       >
         <ScrollView
@@ -136,15 +154,17 @@ export default function EventPreviewModal({
       <Animated.View
         style={[
           styles.preview,
+          { height: headerHeight },
           {
             left: previewLeft,
             top: previewTop,
             width: previewWidth,
             height: previewHeight
+            // opacity: headerOpacity
           }
         ]}
       >
-        <EventPreview {...{ item, revealAnimValue }} />
+        <EventPreview {...{ item, revealAnimValue, sheetY }} />
       </Animated.View>
 
       <Animated.View
@@ -157,7 +177,7 @@ export default function EventPreviewModal({
           <Image source={backIconSrc} />
         </TouchableOpacity>
       </Animated.View>
-    </View>
+    </Reanimated.ScrollView>
   )
   paddingVertical: 24
 }
