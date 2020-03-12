@@ -125,9 +125,12 @@ export default function EventPreviewModal({
       >
         <Animated.ScrollView
           style={[styles.scroll, colorScheme === 'dark' && styles.scrollDark]}
-          contentContainerStyle={[styles.contentContainer, {
-            paddingBottom: ACTION_BUTTON_HEIGHT + insets.bottom
-           }]}
+          contentContainerStyle={[
+            styles.contentContainer,
+            {
+              paddingBottom: ACTION_BUTTON_HEIGHT + insets.bottom
+            }
+          ]}
           onScroll={Animated.event([
             { nativeEvent: { contentOffset: { y: scrollY } } }
           ])}
