@@ -12,8 +12,7 @@ export default function AppLoading() {
       let shouldSkipOnboarding = false
 
       try {
-        // Temporary switch off shouldSkipOnboarding check for development
-        // shouldSkipOnboarding = await Store.get('@ololo/skip-onboarding')
+        shouldSkipOnboarding = await Store.get('@ololo/skip-onboarding')
       } catch (error) {
         console.log(error)
       }

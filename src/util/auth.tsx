@@ -23,6 +23,7 @@ export async function loginWithFacebook() {
       .auth()
       .signInWithCredential(credential)
       .catch(error => {
+        console.log({ error })
         // Handle Errors here.
       })
   }
