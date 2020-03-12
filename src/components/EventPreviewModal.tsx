@@ -5,7 +5,6 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  ScrollView,
   Animated,
   ActivityIndicator
 } from 'react-native'
@@ -14,9 +13,11 @@ import Markdown from 'react-native-markdown-display'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 
+import { HEIGHT as ACTION_BUTTON_HEIGHT } from './ActionButton'
 import EventPreview from './EventPreview'
 import { EventFeedItemType } from '../util/eventFeed'
 import { colors } from '../util/style'
+import { useSafeArea } from 'react-native-safe-area-context'
 
 const backIconSrc = require('../assets/header-left-back-dark.png')
 
@@ -47,6 +48,7 @@ export default function EventPreviewModal({
   onDismiss,
   revealAnimValue
 }: Props) {
+  const insets = useSafeArea()
   const [isRevealed, setRevealState] = React.useState(false)
   const { width: windowWidth, height: windowHeight } = Dimensions.get('screen')
   const colorScheme = useColorScheme()
@@ -55,15 +57,22 @@ export default function EventPreviewModal({
       eventId: item.id
     }
   })
+  const [scrollY] = React.useState(new Animated.Value(0))
 
   const previewLeft = revealAnimValue.interpolate({
     inputRange: [0, 1],
     outputRange: [initialLayout.px, 0]
   })
-  const previewTop = revealAnimValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [initialLayout.py, 0]
-  })
+  const previewTop = isRevealed
+    ? scrollY.interpolate({
+        inputRange: [0, PREVIEW_HEIGHT],
+        outputRange: [0, -PREVIEW_HEIGHT],
+        extrapolate: 'clamp'
+      })
+    : revealAnimValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [initialLayout.py, 0]
+      })
   const previewWidth = revealAnimValue.interpolate({
     inputRange: [0, 1],
     outputRange: [initialLayout.width, windowWidth]
@@ -104,16 +113,27 @@ export default function EventPreviewModal({
   }
 
   return (
-    <View style={styles.root} pointerEvents="box-none">
+    <>
       <Animated.View
         style={[
           styles.scrollWrapper,
-          { height: contentHeight, top: contentTop }
+          {
+            height: contentHeight,
+            top: contentTop
+          }
         ]}
       >
-        <ScrollView
+        <Animated.ScrollView
           style={[styles.scroll, colorScheme === 'dark' && styles.scrollDark]}
-          contentContainerStyle={styles.contentContainer}
+          contentContainerStyle={[
+            styles.contentContainer,
+            {
+              paddingBottom: ACTION_BUTTON_HEIGHT + insets.bottom
+            }
+          ]}
+          onScroll={Animated.event([
+            { nativeEvent: { contentOffset: { y: scrollY } } }
+          ])}
           scrollEnabled={isRevealed}
         >
           {loading ? <ActivityIndicator /> : null}
@@ -130,7 +150,7 @@ export default function EventPreviewModal({
               {data.event.description}
             </Markdown>
           ) : null}
-        </ScrollView>
+        </Animated.ScrollView>
       </Animated.View>
 
       <Animated.View
@@ -143,6 +163,7 @@ export default function EventPreviewModal({
             height: previewHeight
           }
         ]}
+        pointerEvents="none"
       >
         <EventPreview {...{ item, revealAnimValue }} />
       </Animated.View>
@@ -157,9 +178,8 @@ export default function EventPreviewModal({
           <Image source={backIconSrc} />
         </TouchableOpacity>
       </Animated.View>
-    </View>
+    </>
   )
-  paddingVertical: 24
 }
 
 const styles = StyleSheet.create({

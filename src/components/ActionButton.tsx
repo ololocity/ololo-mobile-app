@@ -8,6 +8,8 @@ import {
 } from 'react-native'
 import { colors } from '../util/style'
 
+export const HEIGHT = 48
+
 interface Props {
   label: string
   onPress: () => void
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    height: 48,
+    height: HEIGHT,
     paddingHorizontal: 49,
     borderRadius: 24,
     justifyContent: 'space-between'
