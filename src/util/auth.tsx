@@ -23,6 +23,7 @@ export async function loginWithFacebook() {
       .auth()
       .signInWithCredential(credential)
       .catch(error => {
+        console.log({ error })
         // Handle Errors here.
       })
   }
@@ -35,6 +36,22 @@ export async function loginWithEmail(email: string) {
   }
 
   return firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
+}
+
+export async function confirmEmailWithLink(
+  email: string,
+  link: string
+): Promise<Object | undefined> {
+  try {
+    const credential = await firebase
+      .auth()
+      .signInWithEmailLink(String(email), link)
+
+    return credential
+  } catch (error) {
+    // Common errors could be invalid email and invalid or expired OTPs.
+    console.log(`Error verifying e-mail. Code: ${error.code}`)
+  }
 }
 
 export async function logout() {
@@ -51,7 +68,7 @@ export const AuthContext = React.createContext(DEFAULT_CONTEXT_VALUE)
 
 export function useAuth() {
   const { userData } = React.useContext(AuthContext)
-  const isLoggedIn = Boolean(userData)
+  const isLoggedIn = Boolean(firebase.auth().currentUser)
 
   return { isLoggedIn, userData }
 }

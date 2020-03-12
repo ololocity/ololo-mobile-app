@@ -11,10 +11,12 @@ import {
 } from 'react-native'
 import { useColorScheme } from 'react-native-appearance'
 import { useNavigation } from 'react-navigation-hooks'
+import { Linking } from 'expo'
 
 import AuthHeader, { HEIGHT as HEADER_HEIGHT } from '../components/AuthHeader'
-import TextInput from '../components/TextInput'
 import ActionButton from '../components/ActionButton'
+
+import useLinkingEffect from '../hooks/useLinkingEffect'
 import { colors } from '../util/style'
 import * as Auth from '../util/auth'
 
@@ -23,6 +25,15 @@ import i18n from '../localization'
 export default function AuthCheckEmailScreen() {
   const colorScheme = useColorScheme()
   const navigation = useNavigation()
+
+  const handleLinkingEvent = React.useCallback(url => {
+    let { queryParams } = Linking.parse(url)
+
+    if (typeof queryParams.link === 'string') {
+      Auth.confirmEmailWithLink(navigation.getParam('email'), queryParams.link)
+    }
+  }, [])
+  useLinkingEffect(handleLinkingEvent)
 
   function handleButtonPress() {
     return true
