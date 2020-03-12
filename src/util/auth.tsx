@@ -68,7 +68,7 @@ export const AuthContext = React.createContext(DEFAULT_CONTEXT_VALUE)
 
 export function useAuth() {
   const { userData } = React.useContext(AuthContext)
-  const isLoggedIn = firebase.auth().currentUser
+  const isLoggedIn = Boolean(firebase.auth().currentUser)
 
   return { isLoggedIn, userData }
 }

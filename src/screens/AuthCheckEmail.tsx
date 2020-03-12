@@ -27,7 +27,7 @@ export default function AuthCheckEmailScreen() {
   const navigation = useNavigation()
 
   const handleLinkingEvent = React.useCallback(url => {
-    let { path, queryParams } = Linking.parse(url)
+    let { queryParams } = Linking.parse(url)
 
     if (typeof queryParams.link === 'string') {
       Auth.confirmEmailWithLink(navigation.getParam('email'), queryParams.link)

@@ -23,7 +23,7 @@ export default function ActionButton({
   label,
   color = colors.blue,
   iconSource,
-  textColor
+  textColor = colors.white
 }: Props) {
   return (
     <TouchableOpacity
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     height: HEIGHT,
     paddingHorizontal: 49,
     borderRadius: 24,
-    justifyContent: 'space-between'
+    justifyContent: 'center'
   },
   icon: {
     marginRight: 16
