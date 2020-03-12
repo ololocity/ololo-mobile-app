@@ -2,7 +2,6 @@ import React from 'react'
 import { View, Text, Image, Animated, StyleSheet } from 'react-native'
 import format from 'date-fns/format'
 import add from 'date-fns/add'
-
 import { EventFeedItem } from '../screens/EventFeed'
 import { colors } from '../util/style'
 
