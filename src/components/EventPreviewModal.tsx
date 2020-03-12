@@ -5,7 +5,6 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  ScrollView,
   Animated,
   ActivityIndicator
 } from 'react-native'
@@ -13,10 +12,13 @@ import { useColorScheme } from 'react-native-appearance'
 import Markdown from 'react-native-markdown-display'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
+
+import { HEIGHT as ACTION_BUTTON_HEIGHT } from './ActionButton'
 import EventPreview from './EventPreview'
 import { EventFeedItemType } from '../util/eventFeed'
 import { colors } from '../util/style'
 import { useSafeArea } from 'react-native-safe-area-context'
+
 const backIconSrc = require('../assets/header-left-back-dark.png')
 
 const PREVIEW_HEIGHT = 361
@@ -46,6 +48,7 @@ export default function EventPreviewModal({
   onDismiss,
   revealAnimValue
 }: Props) {
+  const insets = useSafeArea()
   const [isRevealed, setRevealState] = React.useState(false)
   const { width: windowWidth, height: windowHeight } = Dimensions.get('screen')
   const colorScheme = useColorScheme()
@@ -122,7 +125,9 @@ export default function EventPreviewModal({
       >
         <Animated.ScrollView
           style={[styles.scroll, colorScheme === 'dark' && styles.scrollDark]}
-          contentContainerStyle={styles.contentContainer}
+          contentContainerStyle={[styles.contentContainer, {
+            paddingBottom: ACTION_BUTTON_HEIGHT + insets.bottom
+           }]}
           onScroll={Animated.event([
             { nativeEvent: { contentOffset: { y: scrollY } } }
           ])}
